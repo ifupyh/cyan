@@ -45,6 +45,8 @@ export const siteConfig: SiteConfig = {
 		border: true,
 		// 是否让卡片风格跟随主题色相
 		followTheme: false,
+		// 是否默认启用直角模式（所有卡片/容器/按钮 border-radius 归零）
+		sharpCorners: false,
 	},
 
 	// Favicon 配置

@@ -18,6 +18,7 @@ import {
 	getDefaultOverlayCardOpacity,
 	getDefaultOverlayOpacity,
 	getDefaultSakuraEnabled,
+	getDefaultSharpCorners,
 	getDefaultWavesEnabled,
 	getHue,
 	getStoredBannerCarouselEnabled,
@@ -27,6 +28,7 @@ import {
 	getStoredOverlayCardOpacity,
 	getStoredOverlayOpacity,
 	getStoredSakuraEnabled,
+	getStoredSharpCorners,
 	getStoredSelectedWallpaperIndex,
 	getStoredWallpaperMode,
 	getStoredWavesEnabled,
@@ -38,6 +40,7 @@ import {
 	setOverlayCardOpacity,
 	setOverlayOpacity,
 	setSakuraEnabled,
+	setSharpCorners,
 	setSelectedWallpaperIndex,
 	setWallpaperMode,
 	setWavesEnabled,
@@ -126,6 +129,8 @@ let bannerCarouselEnabled = $state(true);
 const defaultBannerCarouselEnabled = getDefaultBannerCarouselEnabled();
 let sakuraEnabled = $state(true);
 const defaultSakuraEnabled = getDefaultSakuraEnabled();
+let sharpCorners = $state(false);
+const defaultSharpCorners = getDefaultSharpCorners();
 let selectedWallpaperIndex: number | null = $state(null);
 let overlayOpacity = $state(getDefaultOverlayOpacity());
 const defaultOverlayOpacity = getDefaultOverlayOpacity();
@@ -167,6 +172,8 @@ const isBannerCarouselSwitchable =
 const isBuiltInWallpaperSwitchable = builtInWallpapers.length > 1;
 // 是否允许用户切换樱花特效
 const isSakuraSwitchable = sakuraConfig?.switchable ?? false;
+// 直角模式始终允许访客切换
+const isSharpCornersSwitchable = true;
 // 是否有任何横幅设置可显示（后续添加新设置时在此处添加条件）
 const hasBannerSettings =
 	isBuiltInWallpaperSwitchable ||
@@ -220,6 +227,7 @@ const hasAnyContent =
 	hasBannerSettings ||
 	hasOverlaySettings ||
 	isSakuraSwitchable ||
+	isSharpCornersSwitchable ||
 	homePortfolioIntroSettings.characters.length > 0;
 
 const introSettingsIsDefault = $derived(
@@ -398,6 +406,11 @@ function toggleBannerCarouselEnabled() {
 function toggleSakuraEnabled() {
 	sakuraEnabled = !sakuraEnabled;
 	setSakuraEnabled(sakuraEnabled);
+}
+
+function toggleSharpCorners() {
+	sharpCorners = !sharpCorners;
+	setSharpCorners(sharpCorners);
 }
 
 function getStoredIntroEnabled() {
@@ -685,6 +698,9 @@ onMount(() => {
 	// 从localStorage读取樱花特效状态
 	sakuraEnabled = getStoredSakuraEnabled();
 
+	// 从localStorage读取直角模式状态
+	sharpCorners = getStoredSharpCorners();
+
 	// 从localStorage读取全屏透明设置状态
 	overlayOpacity = getStoredOverlayOpacity();
 	overlayBlur = getStoredOverlayBlur();
@@ -875,6 +891,46 @@ $effect(() => {
                    class="slider" id="colorSlider" step="5" style="width: 100%">
         </div>
     </div>
+    {/if}
+
+    <!-- Sharp Corners Section -->
+    {#if isSharpCornersSwitchable}
+        <div
+            class="mt-2 mb-2 mobile-settings-section"
+            class:mobile-settings-section-hidden={mobileSettingsTab !== "appearance"}
+        >
+            <div class="flex gap-2 font-bold text-lg text-neutral-900 dark:text-neutral-100 transition relative ml-3 mb-2
+                before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
+                before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
+            >
+                直角模式
+                <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md active:scale-90"
+                        class:opacity-0={sharpCorners === defaultSharpCorners} class:pointer-events-none={sharpCorners === defaultSharpCorners} onclick={() => { sharpCorners = defaultSharpCorners; setSharpCorners(defaultSharpCorners); }}>
+                    <div class="text-(--btn-content)">
+                        <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
+                    </div>
+                </button>
+            </div>
+            <div class="space-y-1">
+                <button
+                    type="button"
+                    aria-pressed={sharpCorners}
+                    class="w-full btn-regular rounded-md py-2 px-3 flex items-center gap-3 text-left active:scale-95 touch-manipulation transition-all relative overflow-hidden"
+                    class:bg-(--btn-regular-bg-hover)={sharpCorners}
+                    onclick={toggleSharpCorners}
+                >
+                    <Icon icon="material-symbols:crop-square-rounded" class="text-[1.25rem] shrink-0"></Icon>
+                    <span class="text-sm flex-1">所有卡片与按钮使用直角</span>
+                    <div class="w-10 h-5 rounded-full transition-all duration-200 relative"
+                         class:bg-(--primary)={sharpCorners}
+                         class:bg-(--btn-regular-bg-active)={!sharpCorners}>
+                        <div class="absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200"
+                             class:left-0.5={!sharpCorners}
+                             class:left-5={sharpCorners}></div>
+                    </div>
+                </button>
+            </div>
+        </div>
     {/if}
 
     <!-- Wallpaper Mode Section -->

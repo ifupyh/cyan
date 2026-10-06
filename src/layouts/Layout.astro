@@ -64,12 +64,8 @@ const isPostListPage =
 // why doing this in Layout instead of GlobalStyles: https://github.com/withastro/astro/issues/6728#issuecomment-1502203757
 const configHue = siteConfig.themeColor.hue;
 
-// 获取导航栏透明模式配置
-const navbarTransparentMode =
-	backgroundWallpaper.common?.navbar?.transparentMode || "semi";
-// 判断是否应该显示顶部高光效果（只在full和semifull模式下显示）
-const shouldShowTopHighlight =
-	navbarTransparentMode === "full" || navbarTransparentMode === "semifull";
+// 顶部渐变高光已禁用（避免在导航栏上方形成白色"盒子"）
+const shouldShowTopHighlight = false;
 
 const enableBanner = backgroundWallpaper.mode === "banner";
 const backgroundImages = getBackgroundImages();
@@ -564,6 +560,14 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.site_url).toString()
           document.documentElement.setAttribute("data-banner-title-enabled", bannerTitleEnabled);
         }
       })();
+
+      // 初始化直角模式状态 - 在 html 元素上设置属性，CSS 会立即生效
+      (function applySharpCorners() {
+        const sharpCorners = localStorage.getItem("sharpCorners");
+        if (sharpCorners !== null) {
+          document.documentElement.setAttribute("data-sharp-corners", sharpCorners);
+        }
+      })();
     </script>
     <style
       define:vars={{
@@ -659,19 +663,19 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.site_url).toString()
      */
     #page-background-decoration {
       position: fixed;
-      top: var(--banner-height-home);
+      top: 0;
       right: 0;
       bottom: 0;
       left: 0;
       z-index: 0;
       pointer-events: none;
-      /* 从顶部取景并轻微放大，避开底部最柔焦的一圈，同时保留朦胧花瓣。 */
-      background: url('/assets/images/effects/cherry-border.webp') center top / 110% auto no-repeat;
+      /* 铺满整个视口：顶部与底部樱花分别对齐视口上下边缘 */
+      background: url('/assets/images/effects/cherry-border.webp') center top / 100% 100% no-repeat;
       opacity: 0.14;
     }
 
     body.no-banner-layout #page-background-decoration {
-      top: 5.5rem;
+      top: 0;
     }
 
     :root.dark #page-background-decoration {

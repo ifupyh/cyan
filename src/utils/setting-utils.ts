@@ -1385,6 +1385,37 @@ export function setSakuraEnabled(enabled: boolean): void {
 	);
 }
 
+// Sharp corners (直角模式) functions
+export function getDefaultSharpCorners(): boolean {
+	return siteConfig.card.sharpCorners ?? false;
+}
+
+export function getStoredSharpCorners(): boolean {
+	if (typeof localStorage === "undefined") {
+		return getDefaultSharpCorners();
+	}
+	const stored = localStorage.getItem("sharpCorners");
+	if (stored === null) {
+		return getDefaultSharpCorners();
+	}
+	return stored === "true";
+}
+
+export function applySharpCornersToDocument(enabled: boolean): void {
+	document.documentElement.setAttribute("data-sharp-corners", String(enabled));
+}
+
+export function setSharpCorners(enabled: boolean): void {
+	if (
+		typeof localStorage === "undefined" ||
+		typeof localStorage.setItem !== "function"
+	) {
+		return;
+	}
+	localStorage.setItem("sharpCorners", String(enabled));
+	applySharpCornersToDocument(enabled);
+}
+
 // Banner title functions
 export function getDefaultBannerTitleEnabled(): boolean {
 	return backgroundWallpaper.common?.homeText?.enable ?? true;

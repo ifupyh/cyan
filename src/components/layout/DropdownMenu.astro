@@ -91,7 +91,7 @@ const activePaths = [
 	{hasChildren ? (
 		<button 
 			class:list={[
-				"nav-link navbar-link btn-plain scale-animation rounded-lg h-10 font-bold px-4 active:scale-95 dropdown-trigger",
+				"nav-link navbar-link scale-animation h-10 font-bold px-4 active:scale-95 dropdown-trigger",
 				isActive && "nav-link-active",
 				isActive && "active",
 			]}
@@ -156,7 +156,7 @@ const activePaths = [
 			target={processedLink.external ? "_blank" : null}
 			aria-current={isActive ? "page" : undefined}
 			class:list={[
-				"nav-link navbar-link btn-plain scale-animation rounded-lg h-10 font-bold px-4 active:scale-95",
+				"nav-link navbar-link scale-animation h-10 font-bold px-4 active:scale-95",
 				isActive && "nav-link-active",
 				isActive && "active",
 			]}
