@@ -1,0 +1,49 @@
+---
+import PostListPagination from "@/components/common/PostListPagination.astro";
+import PostPage from "@/components/layout/PostPage.astro";
+import { siteConfig } from "@/config";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { getSortedPosts } from "@/utils/content-utils";
+import { url } from "@/utils/url-utils";
+
+// 文章列表第 2 页及以后（/posts/page/N/）
+export async function getStaticPaths() {
+	const posts = await getSortedPosts();
+	const pageSize = siteConfig.pagination.postsPerPage;
+	const totalPages = Math.max(1, Math.ceil(posts.length / pageSize));
+	return Array.from({ length: totalPages - 1 }, (_, i) => ({
+		params: { page: String(i + 2) },
+	}));
+}
+
+const pageParam = Astro.params.page;
+const currentPage = Number(pageParam);
+
+const posts = await getSortedPosts();
+const total = posts.length;
+const pageSize = siteConfig.pagination.postsPerPage;
+const totalPages = Math.max(1, Math.ceil(total / pageSize));
+const pagePosts = posts.slice(
+	(currentPage - 1) * pageSize,
+	currentPage * pageSize,
+);
+const basePath = url("/posts");
+---
+
+<MainGridLayout title={`文章 · 第 ${currentPage} 页`}>
+  <div class="post-list-header card-base px-4 py-5 md:px-6 md:py-6 mb-4 onload-animation flex items-end justify-between gap-4">
+    <h1 class="text-2xl md:text-3xl font-bold text-black/90 dark:text-white/90">
+      全部文章
+    </h1>
+    <span class="text-sm text-black/50 dark:text-white/50 whitespace-nowrap">
+      第 {currentPage} / {totalPages} 页
+    </span>
+  </div>
+  <PostPage page={{ data: pagePosts }} />
+  <PostListPagination
+    currentPage={currentPage}
+    totalPages={totalPages}
+    basePath={basePath}
+    class="mb-4"
+  />
+</MainGridLayout>
