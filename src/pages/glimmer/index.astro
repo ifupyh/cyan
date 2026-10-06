@@ -1,0 +1,220 @@
+---
+import { Icon } from "astro-icon/components";
+import AlbumCard from "@/components/pages/gallery/AlbumCard.astro";
+import AnimeCard from "@/components/pages/anime/AnimeCard.svelte";
+import { galleryConfig } from "@/config";
+import { myTools, thirdPartyTools } from "@/data/tools";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { getAnimeList } from "@/utils/anime-utils";
+import { getBangumiData } from "@/utils/bangumi-utils";
+import { getAlbumCover, scanAlbumPhotos } from "@/utils/gallery-utils";
+import { url } from "@/utils/url-utils";
+
+// 相册摘要（前 4 个）
+const albums = galleryConfig.albums.map((album) => {
+	const photos = scanAlbumPhotos(album.id);
+	const cover = getAlbumCover(album, photos);
+	return { ...album, cover, photoCount: photos.length };
+});
+const previewAlbums = albums.slice(0, 4);
+
+// 追番摘要（前 4 个）
+const animeList = await getAnimeList();
+const previewAnime = animeList.slice(0, 4);
+
+// 番组计划摘要（合并各分类，取前 4 个）
+const { bangumiData, tabs } = await getBangumiData();
+const previewBangumi = tabs
+	.flatMap((tab) => bangumiData[tab.id] || [])
+	.slice(0, 4);
+
+// 工具摘要（前 4 个）
+const previewTools = [...myTools, ...thirdPartyTools].slice(0, 4);
+---
+
+<MainGridLayout
+  title="浮光集"
+  description="一面收住照片，一面摊开短句。把看见的、想起的，都放在这里。"
+>
+  <!-- Hero -->
+  <div class="card-base-transparent px-6 py-8 md:px-9 mb-4 onload-animation">
+    <h1 class="text-3xl md:text-4xl font-bold text-black/90 dark:text-white/90 mb-3">
+      浮光集
+    </h1>
+    <p class="text-base text-black/60 dark:text-white/60 leading-relaxed">
+      一面收住照片，一面摊开短句。把看见的、想起的，都放在这里。
+    </p>
+  </div>
+
+  <!-- 相册集 -->
+  <section class="card-base-transparent px-6 py-6 md:px-9 mb-4 onload-animation">
+    <div class="flex items-end justify-between gap-4 mb-4">
+      <div class="flex items-baseline gap-3">
+        <h2 class="text-2xl font-bold text-black/90 dark:text-white/90">相册集</h2>
+        <span class="text-sm text-black/40 dark:text-white/40 uppercase tracking-widest">
+          Album Shelf
+        </span>
+      </div>
+      <a
+        href={url("/gallery/")}
+        class="inline-flex items-center gap-1 text-sm font-medium text-(--primary) hover:underline whitespace-nowrap"
+      >
+        查看全部
+        <Icon is:inline name="fa7-solid:arrow-right" class="text-xs" />
+      </a>
+    </div>
+    {
+      previewAlbums.length > 0 ? (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {previewAlbums.map((album) => (
+            <AlbumCard
+              id={album.id}
+              name={album.name}
+              cover={album.cover}
+              description={album.description}
+              date={album.date}
+              location={album.location}
+              tags={album.tags}
+              photoCount={album.photoCount}
+              encrypted={!!album.password}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="text-sm text-black/50 dark:text-white/50 py-6 text-center">暂无相册</p>
+      )
+    }
+  </section>
+
+  <!-- 追番 -->
+  <section class="card-base-transparent px-6 py-6 md:px-9 mb-4 onload-animation">
+    <div class="flex items-end justify-between gap-4 mb-4">
+      <div class="flex items-baseline gap-3">
+        <h2 class="text-2xl font-bold text-black/90 dark:text-white/90">追番</h2>
+        <span class="text-sm text-black/40 dark:text-white/40 uppercase tracking-widest">
+          Anime
+        </span>
+      </div>
+      <a
+        href={url("/anime/")}
+        class="inline-flex items-center gap-1 text-sm font-medium text-(--primary) hover:underline whitespace-nowrap"
+      >
+        查看全部
+        <Icon is:inline name="fa7-solid:arrow-right" class="text-xs" />
+      </a>
+    </div>
+    {
+      previewAnime.length > 0 ? (
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {previewAnime.map((anime) => (
+            <AnimeCard anime={anime} />
+          ))}
+        </div>
+      ) : (
+        <p class="text-sm text-black/50 dark:text-white/50 py-6 text-center">
+          暂无追番数据
+        </p>
+      )
+    }
+  </section>
+
+  <!-- 番组计划 -->
+  <section class="card-base-transparent px-6 py-6 md:px-9 mb-4 onload-animation">
+    <div class="flex items-end justify-between gap-4 mb-4">
+      <div class="flex items-baseline gap-3">
+        <h2 class="text-2xl font-bold text-black/90 dark:text-white/90">番组计划</h2>
+        <span class="text-sm text-black/40 dark:text-white/40 uppercase tracking-widest">
+          Bangumi
+        </span>
+      </div>
+      <a
+        href={url("/bangumi/")}
+        class="inline-flex items-center gap-1 text-sm font-medium text-(--primary) hover:underline whitespace-nowrap"
+      >
+        查看全部
+        <Icon is:inline name="fa7-solid:arrow-right" class="text-xs" />
+      </a>
+    </div>
+    {
+      previewBangumi.length > 0 ? (
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {previewBangumi.map((item) => (
+            <a
+              href={`https://bangumi.one/subject/${item.subject.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group block rounded-xl overflow-hidden border border-(--line-divider) bg-(--card-bg-transparent) transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+            >
+              <div class="relative aspect-2/3 overflow-hidden bg-neutral-100 dark:bg-neutral-800">
+                <img
+                  src={item.subject.images.common}
+                  alt={item.subject.name_cn || item.subject.name}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+              <div class="px-3 py-2">
+                <div class="text-sm font-medium text-black/80 dark:text-white/80 truncate">
+                  {item.subject.name_cn || item.subject.name}
+                </div>
+                <div class="mt-1 flex items-center gap-1 text-xs text-black/50 dark:text-white/50">
+                  <Icon is:inline name="material-symbols:star-rounded" class="text-[0.85rem]" />
+                  {item.subject.score?.toFixed(1) || "—"}
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="text-sm text-black/50 dark:text-white/50 py-6 text-center">
+          暂无番组计划数据
+        </p>
+      )
+    }
+  </section>
+
+  <!-- 工具 -->
+  <section class="card-base-transparent px-6 py-6 md:px-9 mb-4 onload-animation">
+    <div class="flex items-end justify-between gap-4 mb-4">
+      <div class="flex items-baseline gap-3">
+        <h2 class="text-2xl font-bold text-black/90 dark:text-white/90">工具</h2>
+        <span class="text-sm text-black/40 dark:text-white/40 uppercase tracking-widest">
+          Tools
+        </span>
+      </div>
+      <a
+        href={url("/tools/")}
+        class="inline-flex items-center gap-1 text-sm font-medium text-(--primary) hover:underline whitespace-nowrap"
+      >
+        查看全部
+        <Icon is:inline name="fa7-solid:arrow-right" class="text-xs" />
+      </a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {previewTools.map((tool) => (
+        <a
+          href={tool.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group flex items-start gap-3 rounded-xl border border-(--line-divider) bg-(--card-bg-transparent) p-4 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+        >
+          <span
+            class="h-10 w-10 shrink-0 rounded-lg flex items-center justify-center text-white"
+            style={`background: ${tool.accent}`}
+          >
+            <Icon is:inline name={tool.icon} class="text-[1.25rem]" />
+          </span>
+          <span class="min-w-0">
+            <span class="block text-sm font-semibold text-black/80 dark:text-white/80 truncate">
+              {tool.name}
+            </span>
+            <span class="mt-1 block text-xs text-black/50 dark:text-white/50 line-clamp-2">
+              {tool.description}
+            </span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+</MainGridLayout>

@@ -32,24 +32,11 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 	// 留言板
 	links.push(LinkPresets.Guestbook);
 
-	// 我的及其子菜单
+	// 我的（浮光集聚合页）
 	links.push({
 		name: "我的",
-		url: "#",
+		url: "/glimmer/",
 		icon: "material-symbols:person",
-		children: [
-			// 相册
-			LinkPresets.Gallery,
-
-			// 追番
-			LinkPresets.Anime,
-
-			// 番组计划
-			LinkPresets.Bangumi,
-
-			// 工具
-			LinkPresets.Tools,
-		],
 	});
 
 	// 关于及其子菜单
