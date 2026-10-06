@@ -33,9 +33,9 @@
  * 适用: 所有模式，所有设备
  * ============================================ */
 #navbar>div {
-    background-color: var(--card-bg);
+    background-color: transparent;
     border: 1px solid transparent;
-    border-radius: 0 0 0.75rem 0.75rem;
+    border-radius: 0;
     backdrop-filter: blur(0);
     @apply navbar-surface-transition;
 }
@@ -68,7 +68,7 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
     body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semi"]>div {
         backdrop-filter: blur(var(--navbar-glass-blur, 20px)) !important;
         background: rgba(255, 255, 255, var(--opacity-55)) !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
+        border-radius: 0 !important;
         box-shadow: var(--shadow-navbar) !important;
     }
 
@@ -88,7 +88,7 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
         backdrop-filter: blur(0) !important;
         background: transparent !important;
         border: none !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
+        border-radius: 0 !important;
         box-shadow: none !important;
     }
 
@@ -97,7 +97,7 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
     body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"].scrolled>div {
         backdrop-filter: blur(var(--navbar-glass-blur, 20px)) !important;
         background: rgba(255, 255, 255, var(--opacity-55)) !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
+        border-radius: 0 !important;
         box-shadow: var(--shadow-navbar) !important;
     }
 }
@@ -113,7 +113,7 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
     body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semi"][data-is-home="true"]>div {
         backdrop-filter: blur(var(--navbar-glass-blur, 20px)) !important;
         background: rgba(255, 255, 255, var(--opacity-55)) !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
+        border-radius: 0 !important;
         box-shadow: var(--shadow-navbar) !important;
     }
 
@@ -133,7 +133,7 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
         backdrop-filter: blur(0) !important;
         background: transparent !important;
         border: none !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
+        border-radius: 0 !important;
         box-shadow: none !important;
     }
 
@@ -142,7 +142,7 @@ body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"]:not(.scro
     body:has(#wallpaper-wrapper) #navbar[data-transparent-mode="semifull"][data-is-home="true"].scrolled>div {
         backdrop-filter: blur(var(--navbar-glass-blur, 20px)) !important;
         background: rgba(255, 255, 255, var(--opacity-55)) !important;
-        border-radius: 0 0 0.75rem 0.75rem !important;
+        border-radius: 0 !important;
         box-shadow: var(--shadow-navbar) !important;
     }
 }
@@ -308,7 +308,7 @@ body.wallpaper-transparent #navbar-wrapper #navbar[data-full-width="true"] > div
     html[data-wallpaper-mode="fullscreen"] #navbar-wrapper #navbar.firefly-navbar > .firefly-nav-shell,
     html[data-wallpaper-mode="none"] #navbar-wrapper #navbar.firefly-navbar > .firefly-nav-shell,
     body.wallpaper-transparent #navbar-wrapper #navbar.firefly-navbar > .firefly-nav-shell {
-        border-radius: 0 0 0.75rem 0.75rem !important;
+        border-radius: 0 !important;
     }
 }
 
@@ -340,13 +340,13 @@ body.wallpaper-transparent #navbar-wrapper #navbar[data-full-width="true"] > div
 }
 
 #navbar.firefly-navbar > .firefly-nav-shell {
-    background: color-mix(in oklab, var(--card-bg) 18%, transparent) !important;
+    background: transparent !important;
     border: 0 !important;
-    border-bottom: 1px solid color-mix(in oklab, var(--nav-accent-primary) 8%, transparent) !important;
+    border-bottom: 0 !important;
     border-radius: 0 !important;
-    box-shadow: 0 4px 16px rgb(0 0 0 / 0.02) !important;
-    backdrop-filter: blur(8px) saturate(1.08) !important;
-    -webkit-backdrop-filter: blur(8px) saturate(1.08) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
     padding-top: 0.85rem;
     padding-bottom: 0.85rem;
     height: auto;
@@ -359,13 +359,11 @@ body.wallpaper-transparent #navbar-wrapper #navbar[data-full-width="true"] > div
 
 #navbar.firefly-navbar.scrolled > .firefly-nav-shell,
 #navbar.firefly-navbar.navbar-sticky-shadow > .firefly-nav-shell {
-    background: color-mix(in oklab, var(--card-bg) 78%, transparent) !important;
-    border-bottom: 1px solid color-mix(in oklab, var(--nav-accent-primary) 24%, transparent) !important;
-    box-shadow:
-        0 8px 28px rgb(0 0 0 / 0.14),
-        0 0 42px color-mix(in oklab, var(--nav-accent-primary) 9%, transparent) !important;
-    backdrop-filter: blur(var(--navbar-glass-blur, 18px)) saturate(1.2) !important;
-    -webkit-backdrop-filter: blur(var(--navbar-glass-blur, 18px)) saturate(1.2) !important;
+    background: transparent !important;
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
     padding-top: 0.6rem;
     padding-bottom: 0.6rem;
 }
@@ -373,22 +371,22 @@ body.wallpaper-transparent #navbar-wrapper #navbar[data-full-width="true"] > div
 #wallpaper-wrapper~* #navbar.firefly-navbar > .firefly-nav-shell,
 body:has(#wallpaper-wrapper) #navbar.firefly-navbar > .firefly-nav-shell,
 body.wallpaper-transparent #navbar.firefly-navbar > .firefly-nav-shell {
-    background: color-mix(in oklab, var(--card-bg) 14%, transparent) !important;
-    border-bottom: 1px solid color-mix(in oklab, var(--nav-accent-primary) 7%, transparent) !important;
-    box-shadow: 0 4px 14px rgb(0 0 0 / 0.025) !important;
-    backdrop-filter: blur(6px) saturate(1.06) !important;
-    -webkit-backdrop-filter: blur(6px) saturate(1.06) !important;
+    background: transparent !important;
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 #wallpaper-wrapper~* #navbar.firefly-navbar.scrolled > .firefly-nav-shell,
 body:has(#wallpaper-wrapper) #navbar.firefly-navbar.scrolled > .firefly-nav-shell,
 body.wallpaper-transparent #navbar.firefly-navbar.scrolled > .firefly-nav-shell,
 body:has(#wallpaper-wrapper) #navbar.firefly-navbar.navbar-sticky-shadow > .firefly-nav-shell {
-    background: color-mix(in oklab, var(--card-bg) 68%, transparent) !important;
-    border-bottom-color: color-mix(in oklab, var(--nav-accent-primary) 22%, transparent) !important;
-    box-shadow: 0 8px 28px rgb(0 0 0 / 0.12) !important;
-    backdrop-filter: blur(var(--navbar-glass-blur, 18px)) saturate(1.2) !important;
-    -webkit-backdrop-filter: blur(var(--navbar-glass-blur, 18px)) saturate(1.2) !important;
+    background: transparent !important;
+    border-bottom-color: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
 #navbar.firefly-navbar .nav-container {
@@ -409,15 +407,16 @@ body:has(#wallpaper-wrapper) #navbar.firefly-navbar.navbar-sticky-shadow > .fire
     position: relative;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 0.4rem 0.8rem;
-    border-radius: 12px;
+    border-radius: 0;
+    background: transparent;
     white-space: nowrap;
     justify-self: start;
 }
 
 #navbar.firefly-navbar .nav-brand:hover {
     transform: scale(1.08) translateY(-2px);
-    background: color-mix(in oklab, var(--nav-accent-primary) 10%, transparent);
-    box-shadow: 0 8px 25px color-mix(in oklab, var(--nav-accent-primary) 25%, transparent);
+    background: transparent;
+    box-shadow: none;
 }
 
 #navbar.firefly-navbar .brand-name {
@@ -428,10 +427,6 @@ body:has(#wallpaper-wrapper) #navbar.firefly-navbar.navbar-sticky-shadow > .fire
 #navbar.firefly-navbar .nav-links {
     display: flex;
     gap: 0.2rem;
-    background: color-mix(in oklab, var(--card-bg) 8%, transparent);
-    padding: 0.25rem;
-    border-radius: 14px;
-    border: 1px solid color-mix(in oklab, var(--nav-accent-primary) 7%, transparent);
     justify-self: end;
     max-width: 100%;
     overflow: visible;
@@ -448,7 +443,6 @@ body:has(#wallpaper-wrapper) #navbar.firefly-navbar.navbar-sticky-shadow > .fire
     text-decoration: none;
     font-size: 0.88rem;
     font-weight: 600;
-    border-radius: 12px;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
@@ -479,21 +473,6 @@ body:has(#wallpaper-wrapper) #navbar.firefly-navbar.navbar-sticky-shadow > .fire
     margin-left: 0;
 }
 
-#navbar.firefly-navbar .nav-link::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--nav-accent-primary) 18%, transparent), transparent);
-    transition: left 0.6s ease;
-}
-
-#navbar.firefly-navbar .nav-link:hover::before {
-    left: 100%;
-}
-
 #navbar.firefly-navbar .nav-link::after {
     content: "";
     position: absolute;
@@ -501,7 +480,7 @@ body:has(#wallpaper-wrapper) #navbar.firefly-navbar.navbar-sticky-shadow > .fire
     left: 50%;
     width: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--nav-accent-primary), var(--nav-accent-tertiary));
+    background: #f472b6;
     transition: all 0.35s ease;
     transform: translateX(-50%);
     border-radius: 2px;
@@ -533,9 +512,6 @@ body:has(#wallpaper-wrapper) #navbar.firefly-navbar.navbar-sticky-shadow > .fire
 #navbar.firefly-navbar .nav-link.active,
 #navbar.firefly-navbar .nav-link.nav-link-active {
     color: var(--nav-accent-primary);
-    background: color-mix(in oklab, var(--nav-accent-primary) 14%, transparent);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px color-mix(in oklab, var(--nav-accent-primary) 26%, transparent);
 }
 
 #navbar.firefly-navbar .nav-actions {
@@ -544,18 +520,18 @@ body:has(#wallpaper-wrapper) #navbar.firefly-navbar.navbar-sticky-shadow > .fire
 }
 
 #navbar.firefly-navbar #search-bar {
-    border-radius: 12px;
-    border-color: color-mix(in oklab, var(--nav-accent-primary) 20%, transparent);
-    background: color-mix(in oklab, var(--nav-accent-primary) 6%, transparent);
+    border-radius: 0;
+    border-color: transparent;
+    background: transparent;
 }
 
 #navbar.firefly-navbar .nav-actions > button,
 #navbar.firefly-navbar .nav-actions > a {
     width: 42px;
     height: 42px;
-    border-radius: 12px;
-    border: 1px solid color-mix(in oklab, var(--nav-accent-primary) 22%, transparent);
-    background: color-mix(in oklab, var(--nav-accent-primary) 7%, transparent);
+    border-radius: 0;
+    border: none;
+    background: transparent;
     color: var(--nav-fg-1);
     display: flex;
     align-items: center;
@@ -567,34 +543,12 @@ body:has(#wallpaper-wrapper) #navbar.firefly-navbar.navbar-sticky-shadow > .fire
     overflow: hidden;
 }
 
-#navbar.firefly-navbar .nav-actions > button::before,
-#navbar.firefly-navbar .nav-actions > a::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: var(--nav-accent-primary);
-    border-radius: 50%;
-    transition: all 0.5s ease;
-    transform: translate(-50%, -50%);
-}
-
-#navbar.firefly-navbar .nav-actions > button:hover::before,
-#navbar.firefly-navbar .nav-actions > a:hover::before {
-    width: 150%;
-    height: 150%;
-    opacity: 0.15;
-}
-
 #navbar.firefly-navbar .nav-actions > button:hover,
 #navbar.firefly-navbar .nav-actions > a:hover {
-    border-color: var(--nav-accent-primary);
     color: var(--nav-accent-primary);
-    background: color-mix(in oklab, var(--nav-accent-primary) 14%, transparent);
+    background: transparent;
+    box-shadow: none;
     transform: scale(1.15) rotate(15deg);
-    box-shadow: 0 0 30px color-mix(in oklab, var(--nav-accent-primary) 42%, transparent);
 }
 
 #navbar.firefly-navbar .nav-actions > .menu-btn {
@@ -1029,7 +983,6 @@ body:has(#wallpaper-wrapper) #navbar.firefly-navbar.navbar-sticky-shadow > .fire
     #navbar.firefly-navbar .nav-actions > a {
         width: 36px;
         height: 36px;
-        border-radius: 10px;
     }
 
     .mobile-content {
@@ -1099,4 +1052,20 @@ body:has(#wallpaper-wrapper) #navbar.firefly-navbar.navbar-sticky-shadow > .fire
         animation: none !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+/* ============================================
+ * 去盒子：导航栏整体容器完全透明
+ * 移除背景色、毛玻璃、边框、圆角、阴影，让整条导航栏裸露在背景上
+ * ============================================ */
+#navbar.firefly-navbar > div,
+#navbar.firefly-navbar > .firefly-nav-shell {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    border-bottom: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }

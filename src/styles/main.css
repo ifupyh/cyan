@@ -267,17 +267,16 @@ html {
  
     
     .wallpaper-transparent #navbar > div {
-        background-color: var(--card-bg-transparent) !important;
+        background-color: transparent !important;
     }
 
-    /* Overlay 模式下，滚动后提高导航栏背景模糊度，增强与正文区分 */
+    /* Overlay 模式下导航栏完全透明（滚动后也不加背景模糊） */
     .wallpaper-transparent #navbar.navbar-sticky-shadow > div {
-        backdrop-filter: blur(20px) !important;
-     
+        backdrop-filter: none !important;
     }
 
     :root.dark .wallpaper-transparent #navbar.navbar-sticky-shadow > div {
-        backdrop-filter: blur(20px) !important;
+        backdrop-filter: none !important;
     }
     
     .wallpaper-transparent .btn-card {
@@ -596,4 +595,18 @@ html {
 /* 分页信息样式 */
 .pagination-info {
   @apply text-sm text-(--text-secondary) text-center mb-2;
+}
+
+/* 直角模式：开启后所有元素 border-radius 归零，保留阴影/配色/布局 */
+html[data-sharp-corners="true"] *,
+html[data-sharp-corners="true"] *::before,
+html[data-sharp-corners="true"] *::after {
+  border-radius: 0 !important;
+}
+
+/* fullscreen/overlay 模式下隐藏壁纸底部的水波纹和渐变过渡，
+   避免滚动后壁纸滚走时残留遮挡背景图（cherry-border） */
+body.no-banner-layout #header-waves,
+body.no-banner-layout #wallpaper-gradient {
+  display: none !important;
 }

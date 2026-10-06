@@ -24,8 +24,8 @@ const className = Astro.props.class;
 // 获取导航栏透明模式配置
 const navbarTransparentMode =
 	backgroundWallpaper.mode === "banner"
-		? backgroundWallpaper.common?.navbar?.transparentMode || "semi"
-		: "semi";
+		? backgroundWallpaper.common?.navbar?.transparentMode || "full"
+		: "full";
 
 // 获取导航栏毛玻璃效果配置
 const navbarEnableBlur =

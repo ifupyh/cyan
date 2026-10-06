@@ -115,7 +115,7 @@ html.is-animating .transition-swup-fade {
     will-change: transform;
     border-radius: inherit;
     background: linear-gradient(90deg, #00b8ff 0%, #4e8dff 46%, #9a73ff 72%, #ff78b0 100%);
-    box-shadow: 0 1px 10px rgb(57 158 255 / 0.62);
+    box-shadow: none;
     transition: transform 80ms linear;
 }
 
