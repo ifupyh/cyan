@@ -16,14 +16,18 @@ const postsUrl = url("/posts/");
 const archiveUrl = url("/archive/");
 const categoriesUrl = url("/categories/");
 const tagsUrl = url("/tags/");
+const changelogUrl = url("/changelog/");
+const blogChangelogUrl = url("/blog-changelog/");
 
-// 分类栏在文章列表、归档、分类、标签页显示（服务端初始状态，Swup 切换后由脚本按 URL 更新）
+// 分类栏在文章列表、归档、分类、标签、项目更新日志、博客日志页显示
 const isCategoryBarPath =
 	/^\/posts\/?$/.test(Astro.url.pathname) ||
 	/^\/posts\/page\/\d+\/?$/.test(Astro.url.pathname) ||
 	/^\/archive\/?$/.test(Astro.url.pathname) ||
 	/^\/categories\/?$/.test(Astro.url.pathname) ||
-	/^\/tags\/?$/.test(Astro.url.pathname);
+	/^\/tags\/?$/.test(Astro.url.pathname) ||
+	/^\/changelog\/?$/.test(Astro.url.pathname) ||
+	/^\/blog-changelog\/?$/.test(Astro.url.pathname);
 ---
 
 <div
@@ -36,6 +40,8 @@ const isCategoryBarPath =
   data-archive-path={archiveUrl}
   data-categories-path={categoriesUrl}
   data-tags-path={tagsUrl}
+  data-changelog-path={changelogUrl}
+  data-blog-changelog-path={blogChangelogUrl}
   data-current-post-category={currentPostCategory || ""}
 >
   <div class="category-bar-inner flex gap-2">
@@ -71,6 +77,22 @@ const isCategoryBarPath =
       data-category-name="__tags__"
     >
       {i18n(I18nKey.tags)}
+    </a>
+    <a
+      href={changelogUrl}
+      class="category-pill text-sm px-4 py-1.5 whitespace-nowrap shrink-0
+             transition-colors duration-150 ease-out flex items-center justify-center"
+      data-category-name="__changelog__"
+    >
+      项目更新日志
+    </a>
+    <a
+      href={blogChangelogUrl}
+      class="category-pill text-sm px-4 py-1.5 whitespace-nowrap shrink-0
+             transition-colors duration-150 ease-out flex items-center justify-center"
+      data-category-name="__blog-changelog__"
+    >
+      博客日志
     </a>
     <div class="category-divider shrink-0"></div>
     <div class="scroll-area relative">
@@ -198,16 +220,22 @@ const isCategoryBarPath =
     const archivePath = (bar.getAttribute("data-archive-path") || "/archive").replace(/\/$/, "");
     const categoriesPath = (bar.getAttribute("data-categories-path") || "/categories").replace(/\/$/, "");
     const tagsPath = (bar.getAttribute("data-tags-path") || "/tags").replace(/\/$/, "");
+    const changelogPath = (bar.getAttribute("data-changelog-path") || "/changelog").replace(/\/$/, "");
+    const blogChangelogPath = (bar.getAttribute("data-blog-changelog-path") || "/blog-changelog").replace(/\/$/, "");
     const isPosts = pathname === postsPath;
     const isArchive = pathname === archivePath;
     const isCategories = pathname === categoriesPath;
     const isTags = pathname === tagsPath;
+    const isChangelog = pathname === changelogPath;
+    const isBlogChangelog = pathname === blogChangelogPath;
 
     return {
       isPosts,
       isArchive,
       isCategories,
       isTags,
+      isChangelog,
+      isBlogChangelog,
       activeCategory: currentUrl.searchParams.get("category") || "",
       hasTag: currentUrl.searchParams.has("tag"),
       hasUncategorized: currentUrl.searchParams.has("uncategorized"),
@@ -215,7 +243,7 @@ const isCategoryBarPath =
   }
 
   function setActiveCategory(bar: HTMLElement, currentUrl: URL) {
-    const { isPosts, isArchive, isCategories, isTags, activeCategory, hasTag, hasUncategorized } =
+    const { isPosts, isArchive, isCategories, isTags, isChangelog, isBlogChangelog, activeCategory, hasTag, hasUncategorized } =
       getCategoryBarState(bar, currentUrl);
     const postCategory = (bar.getAttribute("data-current-post-category") || "").trim();
 
@@ -239,6 +267,18 @@ const isCategoryBarPath =
 
     if (isTags) {
       bar.querySelector<HTMLAnchorElement>('.category-pill[data-category-name="__tags__"]')
+        ?.setAttribute("data-active", "");
+      return;
+    }
+
+    if (isChangelog) {
+      bar.querySelector<HTMLAnchorElement>('.category-pill[data-category-name="__changelog__"]')
+        ?.setAttribute("data-active", "");
+      return;
+    }
+
+    if (isBlogChangelog) {
+      bar.querySelector<HTMLAnchorElement>('.category-pill[data-category-name="__blog-changelog__"]')
         ?.setAttribute("data-active", "");
       return;
     }
@@ -297,7 +337,7 @@ const isCategoryBarPath =
     const postsPath = (bar.getAttribute("data-posts-path") || "/posts").replace(/\/$/, "");
     const pathname = currentUrl.pathname.replace(/\/$/, "");
     const isPostList = state.isPosts || pathname.startsWith(`${postsPath}/page/`);
-    const isBarPage = isPostList || state.isArchive || state.isCategories || state.isTags;
+    const isBarPage = isPostList || state.isArchive || state.isCategories || state.isTags || state.isChangelog || state.isBlogChangelog;
     bar.classList.toggle("hidden", !isBarPage);
     if (!isBarPage) return;
 

@@ -1069,3 +1069,30 @@ body:has(#wallpaper-wrapper) #navbar.firefly-navbar.navbar-sticky-shadow > .fire
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
 }
+
+/* ============================================
+   全屏音乐播放器：顶部导航栏覆盖层
+   ============================================ */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    /* 和其他页面 #top-row 保持一致的宽度约束，避免音乐页导航单元左右位置不一致 */
+    width: 100%;
+    max-width: var(--page-width, 80rem);
+    margin-inline: auto;
+    padding-inline: 1rem;
+}
+
+@media (min-width: 1280px) {
+    .nav-overlay {
+        width: 92vw;
+    }
+}
+
+/* 音乐全屏组件的返回按钮隐藏（由顶部导航栏替代） */
+.music-fs__back {
+    display: none !important;
+}

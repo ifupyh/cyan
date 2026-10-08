@@ -6,6 +6,7 @@ import ImageWrapper from "@/components/common/ImageWrapper.astro";
 import { getEnabledFriends, profileConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
+import AboutBar from "@/components/layout/AboutBar.astro";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
 const aboutPost = await getEntry("spec", "about");
@@ -113,6 +114,7 @@ const stack = ["React", "TypeScript", "Astro", "ExtendScript", "Shopee", "TikTok
 ---
 
 <MainGridLayout title={i18n(I18nKey.about)} description={i18n(I18nKey.about)}>
+	<AboutBar active="about" />
 	<!--
 		ABOUT DESIGN CONTRACT
 		THESIS: 用 GitHub profile / README 的信息秩序呈现朝朝听雨，而不是再造一个独立的壁纸英雄页。

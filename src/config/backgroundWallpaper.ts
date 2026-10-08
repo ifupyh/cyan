@@ -35,7 +35,7 @@ const mobileWallpaperImages = [
 
 export const backgroundWallpaper: BackgroundWallpaperConfig = {
 	// 壁纸模式："banner" 横幅壁纸，"fullscreen" 全屏壁纸，"overlay" 全屏透明，"none" 纯色背景无壁纸
-	mode: "fullscreen",
+	mode: "overlay",
 	// 是否允许用户通过导航栏切换壁纸模式
 	// 且同时维护多种壁纸模式过于复杂（已经屎山代码），在切换时有时候可能会出现一些奇怪的过渡效果或者bug
 	// 推荐只选择自己喜欢的模式并关闭切换功能
@@ -189,12 +189,12 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		},
 		// 层级，确保壁纸在背景层
 		zIndex: -1,
-		// 壁纸透明度
-		opacity: 0.8,
-		// 背景模糊度
-		blur: 10,
-		// 卡片透明度，0-1之间，值越小越透明
-		cardOpacity: 0.5,
+		// 壁纸透明度（1 = 完全不透明，壁纸清晰铺满）
+		opacity: 1,
+		// 背景模糊度（0 = 不模糊）
+		blur: 0,
+		// 卡片透明度，0-1之间，值越小越透明（1 = 卡片不透明，保留原有背景）
+		cardOpacity: 1,
 	},
 	// 全屏壁纸模式特有配置
 	fullscreen: {

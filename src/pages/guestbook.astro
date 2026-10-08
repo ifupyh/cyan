@@ -6,6 +6,7 @@ import { Icon } from "astro-icon/components";
 import { commentConfig, siteConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
+import CommunityBar from "@/components/layout/CommunityBar.astro";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
 // 检查页面是否启用
@@ -30,10 +31,9 @@ const description = i18n(I18nKey.guestbookDescription);
 ---
 
 <MainGridLayout title={title} description={description}>
-  <div
-    class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32"
-  >
-    <div class="card-base z-10 px-9 py-6 relative w-full">
+  <CommunityBar active="guestbook" />
+
+  <div class="card-base z-10 px-9 py-6 relative w-full rounded-(--radius-large)">
       <!-- 页面标题和描述 -->
       <div class="mb-8">
         <div class="flex items-center gap-3 mb-3">
@@ -55,7 +55,6 @@ const description = i18n(I18nKey.guestbookDescription);
         <Content />
       </Markdown>
     </div>
-  </div>
 
   <!-- 评论区 -->
   <div class="mt-4">

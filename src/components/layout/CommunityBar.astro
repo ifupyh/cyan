@@ -1,0 +1,89 @@
+---
+/**
+ * 社区二级导航栏：友链 / 朋友圈 / 留言
+ * 严格对齐文章页 CategoryBar 的扁平 pill 样式，pill 是链接跳转独立页面
+ */
+interface Props {
+	active?: "friends" | "moments" | "guestbook";
+}
+
+const { active } = Astro.props;
+
+const entries = [
+	{ key: "friends", name: "友链", url: "/friends/" },
+	{ key: "moments", name: "朋友圈", url: "/moments/" },
+	{ key: "guestbook", name: "留言", url: "/guestbook/" },
+];
+---
+
+<nav class="community-bar" aria-label="社区导航">
+	<div class="community-bar-inner">
+		{
+			entries.map((entry) => (
+				<a
+					href={entry.url}
+					class="community-pill"
+					data-active={entry.key === active ? "" : undefined}
+				>
+					{entry.name}
+				</a>
+			))
+		}
+	</div>
+</nav>
+
+<style>
+	.community-bar {
+		margin-bottom: 1rem;
+	}
+
+	.community-bar-inner {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem;
+	}
+
+	.community-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.4rem 1rem;
+		border: none;
+		border-radius: 999px;
+		background: transparent;
+		color: var(--btn-content);
+		font-size: 0.875rem;
+		font-weight: 500;
+		text-decoration: none;
+		position: relative;
+		transition: color 0.25s ease;
+	}
+
+	.community-pill::after {
+		content: "";
+		position: absolute;
+		left: 50%;
+		bottom: 2px;
+		width: 0;
+		height: 2px;
+		border-radius: 999px;
+		background: #f472b6;
+		transform: translateX(-50%);
+		transition: width 0.25s ease;
+		pointer-events: none;
+	}
+
+	.community-pill:hover {
+		color: var(--primary);
+	}
+
+	.community-pill:hover::after,
+	.community-pill[data-active]::after {
+		width: 55%;
+	}
+
+	.community-pill[data-active] {
+		color: #f472b6;
+		font-weight: 600;
+	}
+</style>

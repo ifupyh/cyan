@@ -1,0 +1,13 @@
+---
+// 全屏沉浸式音乐播放器：脱离常规博客布局，复用全局音频引擎 window.__fireflyMusic。
+import Layout from "@/layouts/Layout.astro";
+import Navbar from "@/components/layout/Navbar.astro";
+import MusicPlayerFullscreen from "@/components/features/MusicPlayerFullscreen.svelte";
+---
+
+<Layout title="音乐" description="褪色印记 · 赐福电台">
+	<div class="nav-overlay">
+		<Navbar />
+	</div>
+	<MusicPlayerFullscreen client:load />
+</Layout>

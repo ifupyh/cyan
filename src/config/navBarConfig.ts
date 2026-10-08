@@ -20,17 +20,12 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		icon: "material-symbols:article",
 	});
 
-	// 站点统计
-	links.push(LinkPresets.Analytics);
-
-	// 友链
-	links.push(LinkPresets.Friends);
-
-	// 朋友圈
-	links.push(LinkPresets.Moments);
-
-	// 留言板
-	links.push(LinkPresets.Guestbook);
+	// 社区（点击直接进入友链页，二级栏可切朋友圈/留言）
+	links.push({
+		name: "社区",
+		url: "/friends/",
+		icon: "material-symbols:groups",
+	});
 
 	// 我的（浮光集聚合页）
 	links.push({
@@ -39,30 +34,18 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		icon: "material-symbols:person",
 	});
 
-	// 关于及其子菜单
+	// 音乐（沉浸式音乐播放器）
+	links.push({
+		name: "音乐",
+		url: "/music/",
+		icon: "material-symbols:music-note",
+	});
+
+	// 关于（聚合页，二级栏可切关于我/打赏/动态表情/站点统计）
 	links.push({
 		name: "关于",
-		url: "#",
+		url: "/about/",
 		icon: "material-symbols:info",
-		children: [
-			// 打赏
-			LinkPresets.Sponsor,
-
-			// 关于页面
-			LinkPresets.About,
-
-			// 动态表情
-			LinkPresets.Lottie,
-
-			// 项目更新日志
-			LinkPresets.Changelog,
-
-			// 博客更新日志
-			LinkPresets.BlogChangelog,
-
-			// 开往：独立博客友链接力
-			LinkPresets.Travellings,
-		],
 	});
 
 	// 文档链接
@@ -90,12 +73,6 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		name: "主页",
 		url: "/",
 		icon: "material-symbols:home",
-	},
-	Travellings: {
-		name: "开往",
-		url: "https://www.travellings.cn/go.html",
-		external: true,
-		iconImage: "https://www.travellings.cn/assets/travelling.png",
 	},
 	Archive: {
 		name: "归档",

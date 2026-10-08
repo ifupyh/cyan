@@ -8,7 +8,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	// 2. 导航栏：在本配置文件把showInNavbar设为false禁用即可
 
 	// 是否在导航栏显示音乐播放器入口
-	showInNavbar: true,
+	showInNavbar: false,
 
 	// 使用方式："meting" 使用 Meting API，"local" 使用本地音乐列表
 	mode: "local",
@@ -53,8 +53,68 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				name: "小小奇迹",
 				artist: "鸣潮先约电台 / jixwang / 飞行雪绒",
 				url: "/assets/music/小小奇迹 - 鸣潮先约电台.mp3",
-				cover: "/assets/music/cover/小小奇迹.webp",
+				cover: "/assets/music/cover/elden-ring-lady.jpg",
 				lrc: "/assets/music/lrc/小小奇迹 - 鸣潮先约电台.lrc",
+			},
+			{
+				name: "Nightreign",
+				artist: "Elden Ring Nightreign",
+				url: "/assets/music/01-nightreign.mp3",
+				cover: "/assets/music/cover/elden-ring-lady.jpg",
+			},
+			{
+				name: "The Outset",
+				artist: "Elden Ring Nightreign",
+				url: "/assets/music/02-the-outset.mp3",
+				cover: "/assets/music/cover/elden-ring-lady.jpg",
+			},
+			{
+				name: "The Shrouded Roundtable Hold",
+				artist: "Elden Ring Nightreign",
+				url: "/assets/music/03-shrouded-roundtable.mp3",
+				cover: "/assets/music/cover/elden-ring-lady.jpg",
+			},
+			{
+				name: "The Nightfarers",
+				artist: "Elden Ring Nightreign",
+				url: "/assets/music/04-nightfarers.mp3",
+				cover: "/assets/music/cover/elden-ring-lady.jpg",
+			},
+			{
+				name: "Limveld",
+				artist: "Elden Ring Nightreign",
+				url: "/assets/music/05-limveld.mp3",
+				cover: "/assets/music/cover/elden-ring-lady.jpg",
+			},
+			{
+				name: "Limveld (Eventide)",
+				artist: "Elden Ring Nightreign",
+				url: "/assets/music/06-limveld-eventide.mp3",
+				cover: "/assets/music/cover/elden-ring-lady.jpg",
+			},
+			{
+				name: "Limveld (Night)",
+				artist: "Elden Ring Nightreign",
+				url: "/assets/music/07-limveld-night.mp3",
+				cover: "/assets/music/cover/elden-ring-lady.jpg",
+			},
+			{
+				name: "Spirit Shelter",
+				artist: "Elden Ring Nightreign",
+				url: "/assets/music/08-spirit-shelter.mp3",
+				cover: "/assets/music/cover/elden-ring-lady.jpg",
+			},
+			{
+				name: "Gladius, Beast of Night",
+				artist: "Elden Ring Nightreign",
+				url: "/assets/music/09-gladius.mp3",
+				cover: "/assets/music/cover/elden-ring-lady.jpg",
+			},
+			{
+				name: "Return",
+				artist: "Elden Ring Nightreign",
+				url: "/assets/music/10-return.mp3",
+				cover: "/assets/music/cover/elden-ring-lady.jpg",
 			},
 		],
 	},
