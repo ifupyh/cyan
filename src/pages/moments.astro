@@ -3,6 +3,7 @@ import { Icon } from "astro-icon/components";
 import { getEnabledFriends, siteConfig } from "@/config";
 import { formatDateToYYYYMMDD } from "@/utils/date-utils";
 import { loadFriendsFeed } from "@/utils/friends-feed";
+import CommunityBar from "@/components/layout/CommunityBar.astro";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
 const friends = getEnabledFriends();
@@ -48,6 +49,8 @@ const randomArticleItems = JSON.stringify(
 ---
 
 <MainGridLayout title={title} description={description}>
+	<CommunityBar active="moments" />
+
 	<section class="moments-shell card-base z-10 px-9 py-6 relative w-full onload-animation" aria-labelledby="moments-title">
 		<header class="moments-header">
 			<div class="moments-heading">

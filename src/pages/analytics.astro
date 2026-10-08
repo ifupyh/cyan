@@ -2,6 +2,7 @@
 import { Icon } from "astro-icon/components";
 import { analyticsConfig, commentConfig } from "@/config";
 import AnalyticsSnapshot from "@/components/widget/AnalyticsSnapshot.astro";
+import AboutBar from "@/components/layout/AboutBar.astro";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
 const umamiAnalytics = analyticsConfig.umamiAnalytics;
@@ -15,6 +16,7 @@ const walineServerUrl = commentConfig.type === "waline" ? commentConfig.waline?.
 ---
 
 <MainGridLayout title="站点统计" description="基于 Umami 的公开站点访问统计">
+	<AboutBar active="analytics" />
 	<section
 		class="analytics-page"
 		data-umami-dashboard

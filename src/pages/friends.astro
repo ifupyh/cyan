@@ -15,6 +15,7 @@ import {
 import friendsLatencySnapshot from "@/data/friends-latency-snapshot.json";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
+import CommunityBar from "@/components/layout/CommunityBar.astro";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import "@/styles/friends-magic-link.css";
 
@@ -121,10 +122,9 @@ const friendsAiRecommendation = friendsAiRecommendationSegments
 		segments: friendsAiRecommendationSegments,
 	}}
 >
-  <div
-    class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32"
-  >
-      <div class="card-base z-10 px-9 py-6 relative w-full">
+  <CommunityBar active="friends" />
+
+  <div class="card-base z-10 px-9 py-6 relative w-full rounded-(--radius-large)">
       <!-- 页面标题和描述 -->
       <div class="friends-heading-row mb-4">
         <div class="friends-heading-copy">
@@ -494,7 +494,6 @@ const friendsAiRecommendation = friendsAiRecommendationSegments
         </section>
       )}
     </div>
-  </div>
 
   {friendsPageConfig.showCustomContent !== false && (
     <div class="mt-4 card-base z-10 px-9 py-6 relative w-full">

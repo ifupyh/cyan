@@ -110,14 +110,19 @@ export default defineConfig({
 			cache: true,
 			preload: true,
 			accessibility: true,
-			// The portfolio is a deliberately full-bleed layout and does not use the
-			// standard MainGridLayout Swup containers. Crossing this layout boundary
-			// with a partial DOM swap leaves stale containers/styles behind, so both
-			// directions use a normal document navigation instead.
+			// The portfolio and music player are deliberately full-bleed layouts
+			// and do not use the standard MainGridLayout Swup containers. Crossing
+			// this layout boundary with a partial DOM swap leaves stale
+			// containers/styles behind, so both directions use a normal document
+			// navigation instead.
 			ignore: (targetUrl) => {
 				const targetPath = targetUrl.split(/[?#]/)[0] || "/";
 				const currentPath = window.location.pathname;
-				return targetPath === "/portfolio/" || currentPath === "/portfolio/";
+				const fullBleedPaths = ["/portfolio/", "/music/"];
+				return (
+					fullBleedPaths.includes(targetPath) ||
+					fullBleedPaths.includes(currentPath)
+				);
 			},
 			updateHead: true,
 			updateBodyClass: false,

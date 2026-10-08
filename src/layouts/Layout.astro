@@ -377,6 +377,8 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.site_url).toString()
         (baseUrl !== "/" &&
           window.location.pathname === baseUrl.replace(/\/$/, "")) ||
         window.location.pathname === "/";
+      // 主页强制 fullscreen（壁纸上半 + my-blog 首页下半）；
+      // 其他页面按用户选择的壁纸模式（localStorage）或默认模式
       const wallpaperMode = isHomePath
         ? WALLPAPER_FULLSCREEN
         : isWallpaperSwitchable
@@ -612,6 +614,57 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.site_url).toString()
       },
     ]}
   >
+    <script is:inline>
+      // 嵌入模式（iframe 内嵌页面，如社区聚合页）：客户端按 query 参数隐藏外壳
+      if (new URLSearchParams(window.location.search).get("embed") === "1") {
+        document.body.classList.add("embed-mode");
+        // 壁纸 wrapper 有内联 display:block!important，CSS 盖不掉，这里直接内联隐藏
+        const wallpaper = document.getElementById("wallpaper-wrapper");
+        if (wallpaper) {
+          wallpaper.style.setProperty("display", "none", "important");
+        }
+        // 向父页面报告内容高度，让父页面把 iframe 撑到内容高度，
+        // 从而内容跟着页面一起滚动，而不是 iframe 内部滚动
+        const reportHeight = () => {
+          try {
+            window.parent.postMessage(
+              {
+                type: "community-embed-height",
+                height: document.documentElement.scrollHeight,
+                path: window.location.pathname,
+              },
+              "*",
+            );
+          } catch {
+            /* cross-origin 时忽略 */
+          }
+        };
+        window.addEventListener("load", reportHeight);
+        if (typeof ResizeObserver !== "undefined") {
+          new ResizeObserver(reportHeight).observe(document.body);
+        }
+        setInterval(reportHeight, 600);
+        reportHeight();
+
+        // 从父页面同步主题：加载时读父页面 dark 状态，之后监听父页面切换
+        const applyTheme = (dark) => {
+          document.documentElement.classList.toggle("dark", dark);
+        };
+        try {
+          applyTheme(
+            window.parent.document.documentElement.classList.contains("dark"),
+          );
+        } catch {
+          /* cross-origin 时忽略 */
+        }
+        window.addEventListener("message", (event) => {
+          const data = event.data;
+          if (data && data.type === "community-embed-theme") {
+            applyTheme(!!data.dark);
+          }
+        });
+      }
+    </script>
 
     <!-- 页面顶部渐变高光效果 - 只在full和semifull模式下显示 -->
     {shouldShowTopHighlight && <div class="top-gradient-highlight" />}
@@ -646,6 +699,33 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.site_url).toString()
   @reference "../styles/main.css";
 
   @layer components {
+	/* 嵌入模式：iframe 内嵌页面（如社区聚合页）时隐藏导航栏、壁纸、
+	   背景装饰、看板娘等外壳，只保留内容本身 */
+	body.embed-mode #top-row,
+	body.embed-mode .nav-overlay,
+	body.embed-mode #navbar,
+	body.embed-mode #page-background-decoration,
+	body.embed-mode #bg-white-veil,
+	body.embed-mode #canvas_sakura,
+	body.embed-mode .floating-controls-container,
+	body.embed-mode #spine-model-container,
+	body.embed-mode #l2d-widget-container,
+	body.embed-mode welcome-toast {
+		display: none !important;
+	}
+
+	/* 壁纸 wrapper 有内联 display:block!important，display 盖不掉，
+	   改用 visibility + height + opacity 让它视觉消失 */
+	body.embed-mode #wallpaper-wrapper {
+		visibility: hidden !important;
+		height: 0 !important;
+		min-height: 0 !important;
+		max-height: 0 !important;
+		opacity: 0 !important;
+		pointer-events: none !important;
+		overflow: hidden !important;
+	}
+
 	/* Keep the page scrollable by wheel, touch and keyboard, but replace the browser's
 	   distracting root scrollbar with the slim reading-progress line above the navbar. */
 	html,

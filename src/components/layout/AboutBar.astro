@@ -1,0 +1,90 @@
+---
+/**
+ * 「关于」二级导航栏：关于我 / 打赏 / 动态表情 / 站点统计
+ * 样式对齐文章页 CategoryBar / 社区 CommunityBar
+ */
+interface Props {
+	active?: "about" | "sponsor" | "lottie" | "analytics";
+}
+
+const { active } = Astro.props;
+
+const entries = [
+	{ key: "about", name: "关于我", url: "/about/" },
+	{ key: "sponsor", name: "打赏", url: "/sponsor/" },
+	{ key: "lottie", name: "动态表情", url: "/lottie/" },
+	{ key: "analytics", name: "站点统计", url: "/analytics/" },
+];
+---
+
+<nav class="about-bar" aria-label="关于导航">
+	<div class="about-bar-inner">
+		{
+			entries.map((entry) => (
+				<a
+					href={entry.url}
+					class="about-pill"
+					data-active={entry.key === active ? "" : undefined}
+				>
+					{entry.name}
+				</a>
+			))
+		}
+	</div>
+</nav>
+
+<style>
+	.about-bar {
+		margin-bottom: 1rem;
+	}
+
+	.about-bar-inner {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem;
+	}
+
+	.about-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.4rem 1rem;
+		border: none;
+		border-radius: 999px;
+		background: transparent;
+		color: var(--btn-content);
+		font-size: 0.875rem;
+		font-weight: 500;
+		text-decoration: none;
+		position: relative;
+		transition: color 0.25s ease;
+	}
+
+	.about-pill::after {
+		content: "";
+		position: absolute;
+		left: 50%;
+		bottom: 2px;
+		width: 0;
+		height: 2px;
+		border-radius: 999px;
+		background: #f472b6;
+		transform: translateX(-50%);
+		transition: width 0.25s ease;
+		pointer-events: none;
+	}
+
+	.about-pill:hover {
+		color: var(--primary);
+	}
+
+	.about-pill:hover::after,
+	.about-pill[data-active]::after {
+		width: 55%;
+	}
+
+	.about-pill[data-active] {
+		color: #f472b6;
+		font-weight: 600;
+	}
+</style>
