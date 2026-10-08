@@ -64,3 +64,4 @@ export { sidebarLayoutConfig } from "./sidebarConfig"; // 侧边栏布局配置
 export { siteConfig } from "./siteConfig"; // 站点基础配置
 export { sponsorConfig } from "./sponsorConfig"; // 打赏配置
 export { homePortfolioIntroSettings } from "./homePortfolioIntro"; // 首页开屏动画访客偏好
+export { homeConfig } from "./homeConfig"; // 首页 Home 体系配置

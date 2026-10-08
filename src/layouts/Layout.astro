@@ -370,9 +370,18 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.site_url).toString()
       const WALLPAPER_FULLSCREEN = "fullscreen";
       const WALLPAPER_OVERLAY = "overlay";
       const WALLPAPER_NONE = "none";
-      const wallpaperMode = isWallpaperSwitchable
-        ? localStorage.getItem("wallpaperMode") || defaultWallpaperMode
-        : defaultWallpaperMode;
+      // 主页无论用户选择什么壁纸模式，都强制全屏模式，
+      // 保证「壁纸上半 + my-blog 首页下半」的分界结构在所有模式下一致
+      const isHomePath =
+        window.location.pathname === baseUrl ||
+        (baseUrl !== "/" &&
+          window.location.pathname === baseUrl.replace(/\/$/, "")) ||
+        window.location.pathname === "/";
+      const wallpaperMode = isHomePath
+        ? WALLPAPER_FULLSCREEN
+        : isWallpaperSwitchable
+          ? localStorage.getItem("wallpaperMode") || defaultWallpaperMode
+          : defaultWallpaperMode;
 
       // 设置data-wallpaper-mode属性
       document.documentElement.setAttribute(
@@ -506,7 +515,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.site_url).toString()
               mainContentWrapper.style.setProperty("margin-top", "0", "important");
             } else if (wallpaperMode === WALLPAPER_BANNER && !isHomePage) {
               // 桌面端横幅模式非首页：与首页相同定位（保留grid transform）
-              mainContentWrapper.style.setProperty("top", "calc(var(--banner-height) - 3.5rem)", "important");
+              mainContentWrapper.style.setProperty("top", "var(--banner-height)", "important");
               mainContentWrapper.style.position = "";
               mainContentWrapper.style.zIndex = "";
               mainContentWrapper.style.setProperty("margin-top", "0", "important");
@@ -607,6 +616,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.site_url).toString()
     <!-- 页面顶部渐变高光效果 - 只在full和semifull模式下显示 -->
     {shouldShowTopHighlight && <div class="top-gradient-highlight" />}
     <div id="page-background-decoration" aria-hidden="true"></div>
+    <div id="bg-white-veil" aria-hidden="true"></div>
     <ConfigCarrier />
     <MusicManager />
     <slot />
@@ -669,24 +679,48 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.site_url).toString()
       left: 0;
       z-index: 0;
       pointer-events: none;
-      /* 铺满整个视口：顶部与底部樱花分别对齐视口上下边缘 */
-      background: url('/assets/images/effects/cherry-border.webp') center top / 100% 100% no-repeat;
-      opacity: 0.14;
+      /* 铺满整个视口，稍放大留出极慢位移空间 */
+      background: url('/assets/images/effects/cherry-border.webp') center top / 105% 105% no-repeat;
+      opacity: 0.08;
+      animation: bg-drift 36s ease-in-out infinite alternate;
     }
 
     body.no-banner-layout #page-background-decoration {
       top: 0;
     }
 
+    /* 轻白色半透明遮罩：已移除，改为透明，避免压白壁纸背景。 */
+    #bg-white-veil {
+      position: fixed;
+      inset: 0;
+      z-index: 15;
+      pointer-events: none;
+      background: transparent;
+    }
+
+    :root.dark #bg-white-veil {
+      background: transparent;
+    }
+
+    /* 背景极慢位移：营造氛围，不做炫技 */
+    @keyframes bg-drift {
+      from {
+        background-position: center 0%;
+      }
+      to {
+        background-position: center 8%;
+      }
+    }
+
     :root.dark #page-background-decoration {
-      opacity: 0.09;
+      opacity: 0.05;
     }
 
     @media (max-width: 1023px) {
       #page-background-decoration {
         background-size: auto 116%;
         background-position: center top;
-        opacity: 0.11;
+        opacity: 0.06;
       }
     }
 
@@ -694,7 +728,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.site_url).toString()
       #page-background-decoration {
         background-size: auto 116%;
         background-position: center top;
-        opacity: 0.08;
+        opacity: 0.05;
       }
     }
 
@@ -1248,7 +1282,7 @@ function disableAnimation() {
 
       // 桌面端横幅模式：统一用banner高度定位，不改变grid transform
       if (!isMobileForBanner && currentMode === "banner" && mainEl) {
-        mainEl.style.setProperty("top", "calc(var(--banner-height) - 3.5rem)", "important");
+        mainEl.style.setProperty("top", "var(--banner-height)", "important");
         mainEl.style.position = "";
         mainEl.style.zIndex = "";
         mainEl.style.setProperty("margin-top", "0", "important");
@@ -1409,7 +1443,7 @@ function disableAnimation() {
               mainContentWrapper.style.zIndex = "";
               mainContentWrapper.style.setProperty("margin-top", "0", "important");
             } else {
-              mainContentWrapper.style.setProperty("top", "calc(var(--banner-height) - 3.5rem)", "important");
+              mainContentWrapper.style.setProperty("top", "var(--banner-height)", "important");
               mainContentWrapper.style.position = "";
               mainContentWrapper.style.zIndex = "";
               mainContentWrapper.style.setProperty("margin-top", "0", "important");
@@ -1441,7 +1475,7 @@ function disableAnimation() {
           }
           // 桌面端横幅模式：统一用banner高度定位，不改变grid transform
           if (visitDesktopMode === "banner") {
-            mainContentWrapper.style.setProperty("top", "calc(var(--banner-height) - 3.5rem)", "important");
+            mainContentWrapper.style.setProperty("top", "var(--banner-height)", "important");
             mainContentWrapper.style.position = "";
             mainContentWrapper.style.zIndex = "";
             mainContentWrapper.style.setProperty("margin-top", "0", "important");
@@ -1529,10 +1563,17 @@ function disableAnimation() {
 
       // 桌面端横幅模式：统一用banner高度定位，不改变grid transform
       if (!isMobileForBanner && currentMode === "banner" && mainEl) {
-        mainEl.style.setProperty("top", "calc(var(--banner-height) - 3.5rem)", "important");
+        mainEl.style.setProperty("top", "var(--banner-height)", "important");
         mainEl.style.position = "";
         mainEl.style.zIndex = "";
         mainEl.style.setProperty("margin-top", "0", "important");
+        // 从主页 fullscreen 导航过来时，wallpaper-wrapper 的 top 残留为空，
+        // 恢复 banner 的 top 偏移，否则 banner 壁纸少了上移、和正文重叠错位
+        if (wrapper) {
+          wrapper.style.top = `-${BANNER_HEIGHT_EXTEND}vh`;
+          wrapper.classList.remove("wallpaper-fullscreen");
+          wrapper.classList.remove("wallpaper-overlay");
+        }
       }
 
       syncWallpaperWrapperClasses(window.location.pathname);

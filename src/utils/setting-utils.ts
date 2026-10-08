@@ -337,6 +337,12 @@ export function applyWallpaperModeToDocument(
 	mode: WALLPAPER_MODE,
 	animate = true,
 ): void {
+	// 主页无论用户选择什么壁纸模式，都强制全屏模式，
+	// 保证「壁纸上半 + my-blog 首页下半」的分界结构在所有模式下一致
+	if (checkIsHomePage(window.location.pathname)) {
+		mode = WALLPAPER_FULLSCREEN;
+	}
+
 	// 获取当前的壁纸模式
 	const currentMode =
 		(document.documentElement.getAttribute(
@@ -746,7 +752,7 @@ function adjustMainContentPosition(
 		case "banner": {
 			// Banner模式：主内容在banner下方
 			const isHome = checkIsHomePage(window.location.pathname);
-			const bannerTargetTop = "calc(var(--banner-height) - 3.5rem)";
+			const bannerTargetTop = "var(--banner-height)";
 
 			// 禁用 CSS transition，防止整个定位过程中的值变化触发过渡动画
 			mainContent.style.setProperty("transition", "none", "important");

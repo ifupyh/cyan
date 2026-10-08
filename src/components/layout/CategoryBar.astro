@@ -17,16 +17,19 @@ const archiveUrl = url("/archive/");
 const categoriesUrl = url("/categories/");
 const tagsUrl = url("/tags/");
 
-// 分类栏只在文章列表页显示（服务端初始状态，Swup 切换后由脚本按 URL 更新）
-const isPostListPath =
+// 分类栏在文章列表、归档、分类、标签页显示（服务端初始状态，Swup 切换后由脚本按 URL 更新）
+const isCategoryBarPath =
 	/^\/posts\/?$/.test(Astro.url.pathname) ||
-	/^\/posts\/page\/\d+\/?$/.test(Astro.url.pathname);
+	/^\/posts\/page\/\d+\/?$/.test(Astro.url.pathname) ||
+	/^\/archive\/?$/.test(Astro.url.pathname) ||
+	/^\/categories\/?$/.test(Astro.url.pathname) ||
+	/^\/tags\/?$/.test(Astro.url.pathname);
 ---
 
 <div
   class:list={[
     "category-bar p-3 onload-animation",
-    !isPostListPath && "hidden",
+    !isCategoryBarPath && "hidden",
   ]}
   id="category-bar"
   data-posts-path={postsUrl}
@@ -289,12 +292,14 @@ const isPostListPath =
     const bar = document.getElementById("category-bar");
     if (!bar) return;
 
-    // 按当前 URL 控制分类栏显隐（只在文章列表页显示）
-    const pathname = currentUrl.pathname.replace(/\/$/, "");
+    // 按当前 URL 控制分类栏显隐（文章列表、归档、分类、标签页显示）
+    const state = getCategoryBarState(bar, currentUrl);
     const postsPath = (bar.getAttribute("data-posts-path") || "/posts").replace(/\/$/, "");
-    const isPostList = pathname === postsPath || pathname.startsWith(`${postsPath}/page/`);
-    bar.classList.toggle("hidden", !isPostList);
-    if (!isPostList) return;
+    const pathname = currentUrl.pathname.replace(/\/$/, "");
+    const isPostList = state.isPosts || pathname.startsWith(`${postsPath}/page/`);
+    const isBarPage = isPostList || state.isArchive || state.isCategories || state.isTags;
+    bar.classList.toggle("hidden", !isBarPage);
+    if (!isBarPage) return;
 
     const swupContainer = document.getElementById("swup-container");
     if (swupContainer) {
