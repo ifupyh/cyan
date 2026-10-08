@@ -46,6 +46,7 @@ import Layout from "./Layout.astro";
 import "@/styles/markdown.css";
 import "@/styles/expressive-code.css";
 import "@/styles/home-card-decor.css";
+import "@/styles/home-widget.css";
 import "@/styles/home-wallpaper-decor.css";
 
 interface Props {
@@ -642,19 +643,26 @@ const hasMultipleImages =
 
                 appState.isPlaying = true;
                 prepareNextSlide();
-                appState.autoPlayTimer = setTimeout(function advance() {
+                // 用 requestAnimationFrame 驱动，避免 Edge 效率模式节流 setTimeout
+                // 导致轮播停摆
+                var lastTick = performance.now();
+                var loop = function (now) {
                     if (!appState.isPlaying) return;
-                    var slides = getVisibleSlides();
-                    var currentIdx = getCurrentIndex(slides);
-                    changeToSlide(currentIdx + 1, false);
-                    appState.autoPlayTimer = setTimeout(advance, interval);
-                }, interval);
+                    if (now - lastTick >= interval) {
+                        lastTick = now;
+                        var slides = getVisibleSlides();
+                        var currentIdx = getCurrentIndex(slides);
+                        changeToSlide(currentIdx + 1, false);
+                    }
+                    appState.autoPlayTimer = requestAnimationFrame(loop);
+                };
+                appState.autoPlayTimer = requestAnimationFrame(loop);
             }
 
             function stopAutoPlay() {
                 appState.isPlaying = false;
                 if (appState.autoPlayTimer) {
-                    clearTimeout(appState.autoPlayTimer);
+                    cancelAnimationFrame(appState.autoPlayTimer);
                     appState.autoPlayTimer = null;
                 }
             }

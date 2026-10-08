@@ -43,17 +43,24 @@ const widgets: WidgetComponentConfig[] = [
 ].filter((comp) => comp.enable && comp.hideOnNonPostPage !== true);
 ---
 
-<div class="home-widget-grid grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="home-widget-grid grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 pb-8">
 	{
 		widgets.map((comp, index) => {
 			const Component = componentMap[comp.type];
 			if (!Component) return null;
-			const props = {
-				class: "onload-animation",
-				style: `animation-delay: ${index * ANIMATION_DELAY_UNIT}ms`,
-				widgetConfig: comp,
-			} as any;
-			return <Component {...props} />;
+			const props = { widgetConfig: comp } as any;
+			return (
+				<div
+					class:list={[
+						"home-widget-item",
+						`home-widget-${comp.type}`,
+						"onload-animation",
+					]}
+					style={`animation-delay: ${index * ANIMATION_DELAY_UNIT}ms`}
+				>
+					<Component {...props} />
+				</div>
+			);
 		})
 	}
 </div>

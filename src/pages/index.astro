@@ -1,8 +1,26 @@
 ---
-import HomeWidgetGrid from "@/components/layout/HomeWidgetGrid.astro";
+import HomeBlinds from "@components/layout/HomeBlinds.astro";
+import HomeDataLayer from "@components/layout/HomeDataLayer.astro";
+import HomeHero from "@components/layout/HomeHero.astro";
+import HomeMobile from "@components/layout/HomeMobile.astro";
+import HomeTicker from "@components/layout/HomeTicker.astro";
+import { siteConfig } from "@/config";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import "@/styles/home-data-layer.css";
+import "@/styles/home-hero-dialogue.css";
+import "@/styles/home-hero.css";
+import "@/styles/home-section.css";
+import "@/styles/home-ticker.css";
+import "@/styles/home-mobile.css";
+import "@/styles/home-blinds.css";
 ---
 
-<MainGridLayout>
-  <HomeWidgetGrid />
+<MainGridLayout title={siteConfig.title} description={siteConfig.description}>
+	<div class="home-page home-page--motion-pending">
+		<HomeHero />
+		<HomeTicker />
+		<HomeDataLayer />
+		<HomeBlinds />
+		<HomeMobile />
+	</div>
 </MainGridLayout>

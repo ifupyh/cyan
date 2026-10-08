@@ -51,3 +51,17 @@ export type ResponsiveImageLayout = "constrained" | "full-width" | "none";
 
 // 图像格式类型
 export type ImageFormat = "avif" | "webp" | "png" | "jpg" | "jpeg" | "gif";
+
+export type {
+	HeroContactConfig,
+	HeroDialogueConfig,
+	HeroDialogueLine,
+	HeroDialogueTopic,
+	HeroMosaicConfig,
+	HeroMosaicInitialTile,
+	HeroStickerConfig,
+	HomeBlindsConfig,
+	HomeBlindsHeadlineConfig,
+	HomeBlindsSceneItem,
+	HomeConfig,
+} from "./homeConfig";

@@ -17,4 +17,12 @@ export type AnnouncementConfig = {
 		url: string; // 链接地址
 		external?: boolean; // 是否外部链接
 	}>;
+	items?: Array<{
+		tag: string; // 公告标签
+		title?: string; // 公告标题
+		content: string; // 公告内容
+		time?: string; // 时间
+		sort: number; // 排序（越大越靠前）
+		link?: string; // 链接
+	}>;
 };

@@ -1,0 +1,59 @@
+/* ============================================
+   首页通用分层标题 — HomeStatus / HomePending
+   ============================================ */
+
+/* 主页下半部分是 my-blog 全宽页面：Hero/Blinds 用 width:100vw + 负 margin
+   突破内容盒，这里去掉内容列的 overflow-hidden，否则会被裁成 1248px */
+body.is-home #main-grid .col-span-1.min-w-0.overflow-hidden {
+	overflow: visible;
+}
+
+/* content-wrapper 的 onload fade-in-up 动画会残留 identity transform，
+   使 Hero 的 fixed pin 相对它定位（向右偏移 336px，左边露出壁纸）。
+   主页清除它，让 Hero 的 fixed 定位相对视口。 */
+body.is-home #content-wrapper {
+	transform: none !important;
+	animation: none !important;
+	opacity: 1 !important;
+}
+
+/* 主页壁纸那屏要清晰：去掉覆盖在壁纸/装饰上的白色 40% 遮罩，
+   否则鸣潮壁纸和社交图标/贴纸立绘都被压白变淡。 */
+body.is-home #bg-white-veil {
+	opacity: 0 !important;
+}
+
+.home-page {
+	padding-bottom: 0;
+}
+
+/* 仅首页：最底层底部贴合页脚，去掉全局页脚的顶部间距；
+   离开首页后 .home-page 随 Swup 替换，:has() 不再命中，其余页面不受影响 */
+#main-grid-wrapper:has(.home-page) .site-footer {
+	margin-top: 0;
+}
+
+.home-section-title-wrapper {
+	width: 100%;
+	max-width: 24rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.home-section-title-container {
+	text-align: center;
+	padding-top: 1.5rem;
+	padding-bottom: 0.25rem;
+}
+
+.home-section-title {
+	font-size: 1.75rem;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	color: #000;
+	text-transform: uppercase;
+}
+
+:root.dark .home-section-title {
+	color: #fff;
+}

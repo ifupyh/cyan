@@ -11,6 +11,22 @@ export const announcementConfig: AnnouncementConfig = {
 	// 是否允许用户关闭公告
 	closable: true,
 
+	// 公告列表（sort 越大越靠前）
+	items: [
+		{
+			tag: "欢迎",
+			content:
+				"👋🏻 Hi，我是Rain，也是朝朝听雨，欢迎来到我的博客！希望你能在这里找到有价值的内容！",
+			sort: 2,
+		},
+		{
+			tag: "开源",
+			content: "本站已开源，欢迎 Star 与交流。",
+			link: "https://github.com/Jarvis0227/Aemeath",
+			sort: 1,
+		},
+	],
+
 	links: [
 		{
 			// 启用链接

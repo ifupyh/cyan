@@ -313,6 +313,21 @@ const mobileStickerKeys = [
 			window.requestAnimationFrame(() => {
 				if (intro.classList.contains("is-complete")) finish();
 			});
+			// 兜底：用 rAF 循环而非 setTimeout，避免 Edge 效率模式节流定时器
+			// 导致开屏动画完成事件迟迟不来、贴纸/社交一直隐藏
+			const fallbackDeadline = performance.now() + 7000;
+			const checkFallback = () => {
+				if (completed) return;
+				if (
+					intro.classList.contains("is-complete") ||
+					performance.now() >= fallbackDeadline
+				) {
+					finish();
+					return;
+				}
+				window.requestAnimationFrame(checkFallback);
+			};
+			window.requestAnimationFrame(checkFallback);
 		};
 
 		const revealHomeWallpaperDecor = (decor, replay = false) => {
