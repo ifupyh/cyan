@@ -2,6 +2,13 @@ import type { SidebarLayoutConfig } from "../types/sidebarConfig";
 
 /**
  * 侧边栏布局配置
+ *
+ * ⚠️ 重要说明（勿误改）：
+ * - enable: false 已整体关闭侧边栏；首页也已不用 widget（改用 my-blog 的 Home 体系）。
+ * - 下方所有小组件已全部 enable: false，「个人卡片」只由 src/pages/about.astro 直接渲染
+ *   <Profile />，与本配置文件无关。
+ * - sidebarToc 保持 enable: true，仅用于驱动文章页的浮动目录按钮（FloatingTOC），
+ *   它不是侧边栏卡片，关闭它会导致文章页右下角目录按钮消失。
  */
 export const sidebarLayoutConfig: SidebarLayoutConfig = {
 	// 是否启用侧边栏功能
@@ -39,10 +46,10 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 	// specificConfig 组件专属配置
 	leftComponents: [
 		{
-			// 组件类型：用户资料组件
+			// 组件类型：用户资料组件（已关闭，个人卡片只在「关于我」页出现）
 			type: "profile",
 			// 是否启用该组件
-			enable: true,
+			enable: false,
 			// 组件位置
 			position: "top",
 			// 是否在文章详情页显示
@@ -52,7 +59,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// 组件类型：公告组件
 			type: "announcement",
 			// 是否启用该组件
-			enable: true,
+			enable: false,
 			// 组件位置
 			position: "top",
 			// 是否在文章详情页显示
@@ -62,7 +69,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// 组件类型：每日一言
 			type: "quoteOfTheDay",
 			// 是否启用该组件
-			enable: true,
+			enable: false,
 			// 组件位置
 			position: "top",
 			// 仅在非文章页显示
@@ -82,7 +89,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// 组件类型：分类组件
 			type: "categories",
 			// 是否启用该组件
-			enable: true,
+			enable: false,
 			// 组件位置
 			position: "sticky",
 			// 是否在文章详情页显示
@@ -97,7 +104,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// 组件类型：标签组件
 			type: "tags",
 			// 是否启用该组件
-			enable: true,
+			enable: false,
 			// 组件位置
 			position: "sticky",
 			// 是否在文章详情页显示
@@ -116,7 +123,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// 组件类型：时段问候实时时钟
 			type: "timeGreeting",
 			// 是否启用该组件
-			enable: true,
+			enable: false,
 			// 组件位置
 			position: "top",
 			// 仅在非文章页显示，避免干扰正文阅读
@@ -126,7 +133,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// 组件类型：站点统计组件
 			type: "stats",
 			// 是否启用该组件
-			enable: true,
+			enable: false,
 			// 组件位置
 			position: "top",
 			// 是否在文章详情页显示
@@ -136,7 +143,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// 组件类型：站点信息组件
 			type: "siteInfo",
 			// 是否启用该组件
-			enable: true,
+			enable: false,
 			// 组件位置
 			position: "top",
 			// 是否在文章详情页显示
@@ -154,7 +161,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// 组件类型：日历组件
 			type: "calendar",
 			// 是否启用该组件
-			enable: true,
+			enable: false,
 			// 是否显示组件标题
 			showTitle: false,
 			// 组件位置
@@ -171,6 +178,8 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 		},
 		{
 			// 组件类型：侧边栏目录组件（只在文章详情页显示）
+			// 注意：此组件保持 enable: true 仅用于驱动文章页浮动目录按钮（FloatingTOC），
+			// 它不会作为侧边栏卡片显示（侧边栏整体已 enable: false）。
 			type: "sidebarToc",
 			// 是否启用该组件
 			enable: true,
@@ -241,7 +250,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// 组件类型：年 / 月 / 周进度与日期倒计时
 			type: "scheduleProgress",
 			// 是否启用该组件
-			enable: true,
+			enable: false,
 			// 组件位置
 			position: "sticky",
 			// 仅在非文章页显示

@@ -1,0 +1,53 @@
+---
+import { Icon } from "astro-icon/components";
+import BangumiSection from "@/components/pages/bangumi/BangumiSection.svelte";
+import { siteConfig } from "@/config";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { getBangumiData } from "@/utils/bangumi-utils";
+
+// 分类名映射（用 i18n 保持多语言一致）
+const categoryNameMap: Record<string, string> = {
+	book: i18n(I18nKey.bangumiCategoryBook),
+	anime: i18n(I18nKey.bangumiCategoryAnime),
+	music: i18n(I18nKey.bangumiCategoryMusic),
+	game: i18n(I18nKey.bangumiCategoryGame),
+};
+
+// 生成书籍/音乐/游戏三个分类的独立页面（供「浮光集」各模块「查看全部」直达）
+export async function getStaticPaths() {
+	return ["book", "music", "game"].map((category) => ({
+		params: { category },
+	}));
+}
+
+const { category } = Astro.params;
+const { bangumiData } = await getBangumiData();
+const items = bangumiData[category] || [];
+const categoryName = categoryNameMap[category] || category;
+const subjectBaseUrl =
+	siteConfig.bangumi?.subjectBaseUrl || "https://bangumi.one/subject/";
+---
+
+<MainGridLayout title={categoryName}>
+	<div class="mb-6">
+		<a
+			href="/glimmer/"
+			class="inline-flex items-center gap-1 text-sm text-(--primary) hover:underline mb-3"
+		>
+			<Icon is:inline name="material-symbols:arrow-back" class="text-base" />
+			返回浮光集
+		</a>
+		<h1 class="text-3xl md:text-4xl font-medium tracking-tight text-black/85 dark:text-white/85 leading-tight">
+			{categoryName}
+		</h1>
+	</div>
+	<BangumiSection
+		client:load
+		sectionId={category}
+		items={items}
+		isActive={true}
+		subjectBaseUrl={subjectBaseUrl}
+	/>
+</MainGridLayout>

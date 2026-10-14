@@ -6,10 +6,10 @@ const SITE_LANG = "zh_CN";
 
 export const siteConfig: SiteConfig = {
 	// 站点标题
-	title: "朝朝听雨",
+	title: "遗忘王域",
 
 	// 站点副标题
-	subtitle: "物物而不物于物，念念而不念于念",
+	subtitle: "万物终将归于尘土，唯有故事穿越黑暗",
 
 	// Aemeath 主题版本
 	themeVersion: "V3.4.0",
@@ -19,10 +19,27 @@ export const siteConfig: SiteConfig = {
 
 	// 站点描述
 	description:
-		"Aemeath 是一款基于 Astro 深度定制的个人博客主题，融合了鸣潮视觉、技术记录、工具展示与私人写作，承载我的开发历程和日常思考。",
+		"「Cyan」是一个融合魂系美学与个人表达的数字空间，承载着我的开发历程、技术探索、工具收藏与日常思考。在余烬与深渊之间，记录每一次探索，铭刻每一段旅程。",
 
-	// 站点关键词
-	keywords: ["Rain", "Fuwari", "Astro", "ACGN", "博客", "技术博客", "静态博客"],
+// 站点关键词
+keywords: [
+"Cyan",
+"沧渊",
+"陈漾",
+"个人博客",
+"技术博客",
+"Astro",
+"Fuwari",
+"前端开发",
+"编程",
+"技术分享",
+"开发笔记",
+"工具收藏",
+"ACGN",
+"艾尔登法环",
+"黑暗之魂",
+"魂系美学"
+],
 
 	// 主题色
 	themeColor: {
@@ -52,19 +69,19 @@ export const siteConfig: SiteConfig = {
 	// Favicon 配置
 	favicon: [
 		{
-			src: "/favicon/chaoc-tingyu-avatar-512.png?v=20260823",
+			src: "/favicon/Cyan-512.png?v=20260823",
 			sizes: "512x512",
 		},
 		{
-			src: "/favicon/chaoc-tingyu-avatar-192.png?v=20260823",
+			src: "/favicon/Cyan-192.png?v=20260823",
 			sizes: "192x192",
 		},
 		{
-			src: "/favicon/chaoc-tingyu-avatar-180.png?v=20260823",
+			src: "/favicon/Cyan-180.png?v=20260823",
 			sizes: "180x180",
 		},
 		{
-			src: "/favicon/chaoc-tingyu-avatar-32.png?v=20260823",
+			src: "/favicon/Cyan-32.png?v=20260823",
 			sizes: "32x32",
 		},
 	],
@@ -79,13 +96,13 @@ export const siteConfig: SiteConfig = {
 		// 4. 网络图片: { type: "url", value: "https://example.com/logo.png", alt: "Logo" }
 		logo: {
 			type: "image",
-			value: "assets/images/chaoc-tingyu-avatar.webp",
-			alt: "朝朝听雨",
+			value: "assets/images/Cyan.webp",
+			alt: "Cyan",
 		},
 		// 导航栏标题
-		title: "朝朝听雨",
+		title: "Cyan",
 		// 全宽导航栏，导航栏是否占满屏幕宽度
-		widthFull: false,
+		widthFull: true,
 		// 导航菜单对齐方式，left：左对齐，center：居中
 		menuAlign: "center",
 		// 导航栏图标和标题是否跟随主题色
@@ -132,9 +149,9 @@ export const siteConfig: SiteConfig = {
 		// 是否在文章列表中显示标签
 		showTags: true,
 		// 文章列表中最多显示的标签数量
-		tagCount: 2,
+		tagCount: 1,
 		// 文章简介显示行数，设为 0 则不截断
-		descriptionLines: 2,
+		descriptionLines: 1,
 		// 文章卡片底部统计和发布日期是否显示图标
 		showStatsIcons: true,
 		// 是否允许用户切换布局

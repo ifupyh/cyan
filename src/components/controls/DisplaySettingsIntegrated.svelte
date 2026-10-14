@@ -4,6 +4,9 @@ import {
 	WALLPAPER_FULLSCREEN,
 	WALLPAPER_NONE,
 	WALLPAPER_OVERLAY,
+	DARK_MODE,
+	LIGHT_MODE,
+	SYSTEM_MODE,
 } from "@constants/constants";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
@@ -44,12 +47,14 @@ import {
 	setSelectedWallpaperIndex,
 	setWallpaperMode,
 	setWavesEnabled,
+	getStoredTheme,
+	setTheme,
 } from "@utils/setting-utils";
 import { onMount } from "svelte";
 import Icon from "@/components/common/Icon.svelte";
 import { backgroundWallpaper, sakuraConfig, siteConfig } from "@/config";
 import { homePortfolioIntroSettings } from "@/config/homePortfolioIntro";
-import type { WALLPAPER_MODE } from "@/types/config";
+import type { LIGHT_DARK_MODE, WALLPAPER_MODE } from "@/types/config";
 
 type OverlaySliderItem = {
 	key: "opacity" | "blur" | "cardOpacity";
@@ -131,6 +136,10 @@ let sakuraEnabled = $state(true);
 const defaultSakuraEnabled = getDefaultSakuraEnabled();
 let sharpCorners = $state(false);
 const defaultSharpCorners = getDefaultSharpCorners();
+// 导航栏字体模式：wenkai = 霞鹜文楷，original = 原字体
+let fontMode = $state<"wenkai" | "original">("wenkai");
+// 主题模式：亮色 / 暗色 / 跟随系统
+let themeMode = $state<LIGHT_DARK_MODE>(LIGHT_MODE);
 let selectedWallpaperIndex: number | null = $state(null);
 let overlayOpacity = $state(getDefaultOverlayOpacity());
 const defaultOverlayOpacity = getDefaultOverlayOpacity();
@@ -411,6 +420,26 @@ function toggleSakuraEnabled() {
 function toggleSharpCorners() {
 	sharpCorners = !sharpCorners;
 	setSharpCorners(sharpCorners);
+}
+
+function selectSharpCorners(sharp: boolean) {
+	sharpCorners = sharp;
+	setSharpCorners(sharp);
+}
+
+function applyFontMode(nextMode: "wenkai" | "original") {
+	fontMode = nextMode;
+	document.documentElement.dataset.fontMode = nextMode;
+	try {
+		localStorage.setItem("firefly-font-mode", nextMode);
+	} catch {
+		// 私有浏览模式下无法持久化时，仍让当前页面立即响应。
+	}
+}
+
+function selectThemeMode(nextMode: LIGHT_DARK_MODE) {
+	themeMode = nextMode;
+	setTheme(nextMode);
 }
 
 function getStoredIntroEnabled() {
@@ -701,6 +730,13 @@ onMount(() => {
 	// 从localStorage读取直角模式状态
 	sharpCorners = getStoredSharpCorners();
 
+	// 从localStorage读取导航栏字体模式
+	const savedFontMode = localStorage.getItem("firefly-font-mode");
+	fontMode = savedFontMode === "original" ? "original" : "wenkai";
+
+	// 读取主题模式
+	themeMode = getStoredTheme();
+
 	// 从localStorage读取全屏透明设置状态
 	overlayOpacity = getStoredOverlayOpacity();
 	overlayBlur = getStoredOverlayBlur();
@@ -860,78 +896,47 @@ $effect(() => {
             </button>
     </nav>
 
-    <!-- Theme Color Section -->
-    {#if showThemeColor}
+    <!-- Theme Mode Section -->
     <div
         class="mt-2 mb-2 mobile-settings-section"
         class:mobile-settings-section-hidden={mobileSettingsTab !== "appearance"}
     >
-        <div class="flex flex-row gap-2 mb-2 items-center justify-between">
-            <div class="flex gap-2 font-bold text-lg text-neutral-900 dark:text-neutral-100 transition relative ml-3
-                before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
-                before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
-            >
-                {i18n(I18nKey.themeColor)}
-                <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md  active:scale-90"
-                        class:opacity-0={hue === defaultHue} class:pointer-events-none={hue === defaultHue} onclick={resetHue}>
-                    <div class="text-(--btn-content)">
-                        <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
-                    </div>
-                </button>
-            </div>
-            <div class="flex gap-1">
-                <div id="hueValue" class="transition bg-(--btn-regular-bg) w-10 h-7 rounded-md flex justify-center
-                font-bold text-sm items-center text-(--btn-content)">
-                    {hue}
-                </div>
-            </div>
+        <div class="flex gap-2 font-bold text-lg text-neutral-900 dark:text-neutral-100 transition relative ml-3 mb-2
+            before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
+            before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
+        >
+            主题颜色
         </div>
-        <div class="w-full h-6 px-1 bg-[oklch(0.80_0.10_0)] dark:bg-[oklch(0.70_0.10_0)] rounded select-none">
-            <input aria-label={i18n(I18nKey.themeColor)} type="range" min="0" max="360" bind:value={hue}
-                   class="slider" id="colorSlider" step="5" style="width: 100%">
+        <div class="flex gap-2">
+            <button
+                class="flex-1 btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
+                class:opacity-60={themeMode !== LIGHT_MODE}
+                class:bg-(--btn-regular-bg-hover)={themeMode === LIGHT_MODE}
+                onclick={() => selectThemeMode(LIGHT_MODE)}
+            >
+                <Icon icon="material-symbols:wb-sunny-outline-rounded" class="text-[1.25rem] shrink-0"></Icon>
+                <span class="text-xs font-medium">亮色</span>
+            </button>
+            <button
+                class="flex-1 btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
+                class:opacity-60={themeMode !== DARK_MODE}
+                class:bg-(--btn-regular-bg-hover)={themeMode === DARK_MODE}
+                onclick={() => selectThemeMode(DARK_MODE)}
+            >
+                <Icon icon="material-symbols:dark-mode-outline-rounded" class="text-[1.25rem] shrink-0"></Icon>
+                <span class="text-xs font-medium">暗色</span>
+            </button>
+            <button
+                class="flex-1 btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
+                class:opacity-60={themeMode !== SYSTEM_MODE}
+                class:bg-(--btn-regular-bg-hover)={themeMode === SYSTEM_MODE}
+                onclick={() => selectThemeMode(SYSTEM_MODE)}
+            >
+                <Icon icon="material-symbols:brightness-auto-outline-rounded" class="text-[1.25rem] shrink-0"></Icon>
+                <span class="text-xs font-medium">跟随系统</span>
+            </button>
         </div>
     </div>
-    {/if}
-
-    <!-- Sharp Corners Section -->
-    {#if isSharpCornersSwitchable}
-        <div
-            class="mt-2 mb-2 mobile-settings-section"
-            class:mobile-settings-section-hidden={mobileSettingsTab !== "appearance"}
-        >
-            <div class="flex gap-2 font-bold text-lg text-neutral-900 dark:text-neutral-100 transition relative ml-3 mb-2
-                before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
-                before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
-            >
-                直角模式
-                <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md active:scale-90"
-                        class:opacity-0={sharpCorners === defaultSharpCorners} class:pointer-events-none={sharpCorners === defaultSharpCorners} onclick={() => { sharpCorners = defaultSharpCorners; setSharpCorners(defaultSharpCorners); }}>
-                    <div class="text-(--btn-content)">
-                        <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
-                    </div>
-                </button>
-            </div>
-            <div class="space-y-1">
-                <button
-                    type="button"
-                    aria-pressed={sharpCorners}
-                    class="w-full btn-regular rounded-md py-2 px-3 flex items-center gap-3 text-left active:scale-95 touch-manipulation transition-all relative overflow-hidden"
-                    class:bg-(--btn-regular-bg-hover)={sharpCorners}
-                    onclick={toggleSharpCorners}
-                >
-                    <Icon icon="material-symbols:crop-square-rounded" class="text-[1.25rem] shrink-0"></Icon>
-                    <span class="text-sm flex-1">所有卡片与按钮使用直角</span>
-                    <div class="w-10 h-5 rounded-full transition-all duration-200 relative"
-                         class:bg-(--primary)={sharpCorners}
-                         class:bg-(--btn-regular-bg-active)={!sharpCorners}>
-                        <div class="absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200"
-                             class:left-0.5={!sharpCorners}
-                             class:left-5={sharpCorners}></div>
-                    </div>
-                </button>
-            </div>
-        </div>
-    {/if}
 
     <!-- Wallpaper Mode Section -->
     {#if isWallpaperSwitchable}
@@ -1376,6 +1381,115 @@ $effect(() => {
                              class:left-0.5={!sakuraEnabled}
                              class:left-5={sakuraEnabled}></div>
                     </div>
+                </button>
+            </div>
+        </div>
+    {/if}
+
+    <!-- Theme Color Section -->
+    {#if showThemeColor}
+    <div
+        class="mt-2 mb-2 mobile-settings-section"
+        class:mobile-settings-section-hidden={mobileSettingsTab !== "preferences"}
+    >
+        <div class="flex gap-2 font-bold text-lg text-neutral-900 dark:text-neutral-100 transition relative ml-3 mb-2
+            before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
+            before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
+        >
+            {i18n(I18nKey.themeColor)}
+            <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md  active:scale-90"
+                    class:opacity-0={hue === defaultHue} class:pointer-events-none={hue === defaultHue} onclick={resetHue}>
+                <div class="text-(--btn-content)">
+                    <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
+                </div>
+            </button>
+        </div>
+        <div class="flex flex-row gap-2 mb-2 items-center justify-between">
+            <div class="flex gap-1">
+                <div id="hueValue" class="transition bg-(--btn-regular-bg) w-10 h-7 rounded-md flex justify-center
+                font-bold text-sm items-center text-(--btn-content)">
+                    {hue}
+                </div>
+            </div>
+        </div>
+        <div class="w-full h-6 px-1 bg-[oklch(0.80_0.10_0)] dark:bg-[oklch(0.70_0.10_0)] rounded select-none">
+            <input aria-label={i18n(I18nKey.themeColor)} type="range" min="0" max="360" bind:value={hue}
+                   class="slider" id="colorSlider" step="5" style="width: 100%">
+        </div>
+    </div>
+    {/if}
+
+    <!-- Font Selection Section -->
+    <div
+        class="mt-2 mb-2 mobile-settings-section"
+        class:mobile-settings-section-hidden={mobileSettingsTab !== "preferences"}
+    >
+        <div class="flex gap-2 font-bold text-lg text-neutral-900 dark:text-neutral-100 transition relative ml-3 mb-2
+            before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
+            before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
+        >
+            字体
+        </div>
+        <div class="flex gap-2">
+            <button
+                class="flex-1 btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
+                class:opacity-60={fontMode !== "original"}
+                class:bg-(--btn-regular-bg-hover)={fontMode === "original"}
+                onclick={() => applyFontMode("original")}
+            >
+                <span class="text-xs font-medium">原字体</span>
+            </button>
+            <button
+                class="flex-1 btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
+                class:opacity-60={fontMode !== "wenkai"}
+                class:bg-(--btn-regular-bg-hover)={fontMode === "wenkai"}
+                onclick={() => applyFontMode("wenkai")}
+            >
+                <span class="text-xs font-medium">霞鹜文楷</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Sharp Corners Section -->
+    {#if isSharpCornersSwitchable}
+        <div
+            class="mt-2 mb-2 mobile-settings-section"
+            class:mobile-settings-section-hidden={mobileSettingsTab !== "preferences"}
+        >
+            <div class="flex gap-2 font-bold text-lg text-neutral-900 dark:text-neutral-100 transition relative ml-3 mb-2
+                before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
+                before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
+            >
+                卡片形状
+                <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md active:scale-90"
+                        class:opacity-0={sharpCorners === defaultSharpCorners} class:pointer-events-none={sharpCorners === defaultSharpCorners} onclick={() => { sharpCorners = defaultSharpCorners; setSharpCorners(defaultSharpCorners); }}>
+                    <div class="text-(--btn-content)">
+                        <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
+                    </div>
+                </button>
+            </div>
+            <div class="flex gap-2">
+                <button
+                    type="button"
+                    aria-pressed={!sharpCorners}
+                    class="flex-1 btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
+                    class:opacity-60={sharpCorners}
+                    class:bg-(--btn-regular-bg-hover)={!sharpCorners}
+                    onclick={() => selectSharpCorners(false)}
+                >
+                    <Icon icon="material-symbols:rounded-corner" class="text-[1.25rem] shrink-0"></Icon>
+                    <span class="text-xs font-medium">圆角</span>
+                </button>
+                <button
+                    type="button"
+                    aria-pressed={sharpCorners}
+                    class="flex-1 btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
+                    class:opacity-60={!sharpCorners}
+                    class:bg-(--btn-regular-bg-hover)={sharpCorners}
+                    onclick={() => selectSharpCorners(true)}
+                >
+                    <Icon icon="material-symbols:crop-square" class="text-[1.25rem] shrink-0"></Icon>
+                    <span class="text-xs font-medium">直角</span>
                 </button>
             </div>
         </div>
