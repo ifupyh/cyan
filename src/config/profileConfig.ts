@@ -6,13 +6,13 @@ export const profileConfig: ProfileConfig = {
 	// 1. public 目录（以 "/" 开头，不优化）："/assets/images/avatar.webp"
 	// 2. src 目录（不以 "/" 开头，自动优化但会增加构建时间，推荐）："assets/images/avatar.webp"
 	// 3. 远程 URL："https://example.com/avatar.jpg"
-	avatar: "assets/images/rain-avatar.webp",
+	avatar: "assets/images/Cyan-avatar.webp",
 
 	// 名字
-	name: "Rain",
+	name: "Cyan",
 
 	// 个人签名
-	bio: "Hello, I'm Rain.",
+	bio: "Hello, I'm Cyan.",
 
 	// 链接配置
 	// 已经预装的图标集：fa7-brands，fa7-regular，fa7-solid，material-symbols，simple-icons
@@ -24,7 +24,7 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "GitHub",
 			icon: "fa7-brands:github",
-			url: "https://github.com/Jarvis0227",
+			url: "https://github.com/ifupyh",
 			showName: false,
 		},
 		{
@@ -36,13 +36,13 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "微信",
 			icon: "fa7-brands:weixin",
-			url: "copy:19065346944",
+			url: "copy:17369174973",
 			showName: false,
 		},
 		{
 			name: "Email",
 			icon: "fa7-solid:envelope",
-			url: "copy:1953549196@qq.com",
+			url: "copy:3385271579@qq.com",
 			showName: false,
 		},
 	],

@@ -4,9 +4,6 @@ import * as path from "node:path";
 import type { ImageMetadata } from "astro";
 import { Icon } from "astro-icon/components";
 import DisplaySettings from "@/components/controls/DisplaySettingsIntegrated.svelte";
-import FontSwitch from "@/components/controls/FontSwitch.svelte";
-import LightDarkSwitch from "@/components/controls/LightDarkSwitch.svelte";
-import Search from "@/components/controls/Search.svelte";
 import { backgroundWallpaper, navBarConfig, siteConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
@@ -148,11 +145,6 @@ if (isLocalSrcLogo) {
                 })}
             </div>
             <div class="nav-actions flex items-center gap-1 col-start-3 justify-self-end min-w-0">
-                <!--<SearchPanel client:load>-->
-                <Search
-                    client:load
-                />
-                <FontSwitch client:load />
                 {backgroundWallpaper.playerEnable && backgroundWallpaper.mode !== "none" && (
                     <button
                         aria-label={i18n(I18nKey.videoPlay)}
@@ -169,8 +161,6 @@ if (isLocalSrcLogo) {
                             <Icon is:inline name="material-symbols:palette-outline" class="text-[1.25rem]"></Icon>
                         </button>
                 )}
-                {/* @ts-ignore */}
-                <LightDarkSwitch client:load></LightDarkSwitch>
                 <button aria-label="Menu" aria-controls="nav-menu-panel" aria-expanded="false" name="Nav Menu" class="menu-btn btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90" id="nav-menu-switch">
                     <span></span>
                     <span></span>

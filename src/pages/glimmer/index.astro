@@ -23,11 +23,11 @@ const previewAlbums = albums.slice(0, 8);
 const animeList = await getAnimeList();
 const previewAnime = animeList.slice(0, 4);
 
-// 番组计划摘要
-const { bangumiData, tabs } = await getBangumiData();
-const previewBangumi = tabs
-	.flatMap((tab) => bangumiData[tab.id] || [])
-	.slice(0, 4);
+// 番组计划：书籍、音乐、游戏三个独立模块
+const { bangumiData } = await getBangumiData();
+const previewBook = (bangumiData.book || []).slice(0, 4);
+const previewMusic = (bangumiData.music || []).slice(0, 4);
+const previewGame = (bangumiData.game || []).slice(0, 4);
 
 // 工具摘要
 const previewTools = [...myTools, ...thirdPartyTools].slice(0, 4);
@@ -126,17 +126,17 @@ const previewTools = [...myTools, ...thirdPartyTools].slice(0, 4);
     }
   </section>
 
-  <!-- 番组计划 -->
+  <!-- 书籍 -->
   <section class="card-base-transparent px-5 py-5 md:px-7 md:py-6 mb-8 onload-animation">
     <div class="flex items-end justify-between gap-4 mb-5">
       <div class="flex items-baseline gap-3">
-        <h2 class="text-xl font-semibold text-black/85 dark:text-white/85">番组计划</h2>
+        <h2 class="text-xl font-semibold text-black/85 dark:text-white/85">书籍</h2>
         <span class="text-[0.7rem] text-black/40 dark:text-white/40 uppercase tracking-[0.18em]">
-          Bangumi
+          Book
         </span>
       </div>
       <a
-        href={url("/bangumi/")}
+        href={url("/bangumi/book/")}
         class="inline-flex items-center gap-1 text-xs font-medium text-(--primary) hover:underline whitespace-nowrap"
       >
         查看全部
@@ -144,9 +144,9 @@ const previewTools = [...myTools, ...thirdPartyTools].slice(0, 4);
       </a>
     </div>
     {
-      previewBangumi.length > 0 ? (
+      previewBook.length > 0 ? (
         <div class="glimmer-tilt-grid">
-          {previewBangumi.map((item) => (
+          {previewBook.map((item) => (
             <a
               href={`https://bangumi.one/subject/${item.subject.id}`}
               target="_blank"
@@ -168,7 +168,101 @@ const previewTools = [...myTools, ...thirdPartyTools].slice(0, 4);
           ))}
         </div>
       ) : (
-        <p class="text-sm text-black/50 dark:text-white/50 py-6 text-center">暂无番组计划数据</p>
+        <p class="text-sm text-black/50 dark:text-white/50 py-6 text-center">暂无书籍数据</p>
+      )
+    }
+  </section>
+
+  <!-- 音乐 -->
+  <section class="card-base-transparent px-5 py-5 md:px-7 md:py-6 mb-8 onload-animation">
+    <div class="flex items-end justify-between gap-4 mb-5">
+      <div class="flex items-baseline gap-3">
+        <h2 class="text-xl font-semibold text-black/85 dark:text-white/85">音乐</h2>
+        <span class="text-[0.7rem] text-black/40 dark:text-white/40 uppercase tracking-[0.18em]">
+          Music
+        </span>
+      </div>
+      <a
+        href={url("/bangumi/music/")}
+        class="inline-flex items-center gap-1 text-xs font-medium text-(--primary) hover:underline whitespace-nowrap"
+      >
+        查看全部
+        <Icon is:inline name="fa7-solid:arrow-right" class="text-[0.7rem]" />
+      </a>
+    </div>
+    {
+      previewMusic.length > 0 ? (
+        <div class="glimmer-tilt-grid">
+          {previewMusic.map((item) => (
+            <a
+              href={`https://bangumi.one/subject/${item.subject.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="glimmer-tilt-card group"
+            >
+              <div class="glimmer-tilt-card__media">
+                <img
+                  src={item.subject.images.common}
+                  alt={item.subject.name_cn || item.subject.name}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="glimmer-tilt-card__title">
+                {item.subject.name_cn || item.subject.name}
+              </span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="text-sm text-black/50 dark:text-white/50 py-6 text-center">暂无音乐数据</p>
+      )
+    }
+  </section>
+
+  <!-- 游戏 -->
+  <section class="card-base-transparent px-5 py-5 md:px-7 md:py-6 mb-8 onload-animation">
+    <div class="flex items-end justify-between gap-4 mb-5">
+      <div class="flex items-baseline gap-3">
+        <h2 class="text-xl font-semibold text-black/85 dark:text-white/85">游戏</h2>
+        <span class="text-[0.7rem] text-black/40 dark:text-white/40 uppercase tracking-[0.18em]">
+          Game
+        </span>
+      </div>
+      <a
+        href={url("/bangumi/game/")}
+        class="inline-flex items-center gap-1 text-xs font-medium text-(--primary) hover:underline whitespace-nowrap"
+      >
+        查看全部
+        <Icon is:inline name="fa7-solid:arrow-right" class="text-[0.7rem]" />
+      </a>
+    </div>
+    {
+      previewGame.length > 0 ? (
+        <div class="glimmer-tilt-grid">
+          {previewGame.map((item) => (
+            <a
+              href={`https://bangumi.one/subject/${item.subject.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="glimmer-tilt-card group"
+            >
+              <div class="glimmer-tilt-card__media">
+                <img
+                  src={item.subject.images.common}
+                  alt={item.subject.name_cn || item.subject.name}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="glimmer-tilt-card__title">
+                {item.subject.name_cn || item.subject.name}
+              </span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="text-sm text-black/50 dark:text-white/50 py-6 text-center">暂无游戏数据</p>
       )
     }
   </section>

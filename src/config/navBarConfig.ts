@@ -142,12 +142,6 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		url: "/blog-changelog/",
 		icon: "material-symbols:auto-stories-rounded",
 	},
-	Bangumi: {
-		name: "番组计划",
-		url: "/bangumi/",
-		icon: "material-symbols:movie",
-		pageKey: "bangumi",
-	},
 	Gallery: {
 		name: "相册",
 		url: "/gallery/",
