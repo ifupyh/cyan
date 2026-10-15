@@ -675,6 +675,7 @@ html.is-page-transitioning #wallpaper-wrapper.homepage-fullscreen-decor {
 
 .home-wallpaper-sticker {
 	--home-wallpaper-sticker-rotation: 0deg;
+	--sticker-width: min(160px, 9vw, 17vh);
 	position: absolute;
 	display: grid;
 	place-items: center;
@@ -716,117 +717,52 @@ html.is-page-transitioning #wallpaper-wrapper.homepage-fullscreen-decor {
 	filter: drop-shadow(0 7px 10px rgba(28, 22, 28, 0.27));
 }
 
-.home-wallpaper-sticker--coder {
+.home-wallpaper-sticker--sticker-01 {
 	--home-wallpaper-sticker-delay: 570ms;
 	--home-wallpaper-sticker-rotation: 3deg;
-	top: 43%;
-	right: 5%;
-	width: min(150px, 7.8125vw, 16.447368vh);
+	width: var(--sticker-width);
 	transform: rotate(var(--home-wallpaper-sticker-rotation));
 }
 
-.home-wallpaper-sticker--coder img {
-	max-height: none;
-	object-fit: contain;
-}
-
-.no-banner-layout #wallpaper-wrapper.wallpaper-fullscreen
-	.home-wallpaper-decor__stickers
-	.home-wallpaper-sticker--coder
-	img {
-	width: 100% !important;
-	height: auto !important;
-	max-height: none !important;
-	object-fit: contain !important;
-}
-
-.home-wallpaper-sticker--blonde {
+.home-wallpaper-sticker--sticker-02 {
 	--home-wallpaper-sticker-delay: 625ms;
-	--home-wallpaper-sticker-rotation: 4deg;
-	top: 12%;
-	right: 19%;
-	width: min(112px, 5.833333vw, 12.280702vh);
-	transform: rotate(var(--home-wallpaper-sticker-rotation));
-}
-
-.home-wallpaper-sticker--dark {
-	--home-wallpaper-sticker-delay: 680ms;
-	--home-wallpaper-sticker-rotation: -6deg;
-	top: 28%;
-	left: 2%;
-	width: min(105px, 5.46875vw, 11.513158vh);
-	transform: rotate(var(--home-wallpaper-sticker-rotation));
-}
-
-.home-wallpaper-sticker--pink-bows {
-	--home-wallpaper-sticker-delay: 735ms;
 	--home-wallpaper-sticker-rotation: -4deg;
-	top: 14%;
-	left: 20%;
-	width: min(92px, 4.791667vw, 10.087719vh);
+	width: var(--sticker-width);
 	transform: rotate(var(--home-wallpaper-sticker-rotation));
 }
 
-.home-wallpaper-sticker--aqua-singer {
-	--home-wallpaper-sticker-delay: 790ms;
+.home-wallpaper-sticker--sticker-03 {
+	--home-wallpaper-sticker-delay: 680ms;
 	--home-wallpaper-sticker-rotation: 5deg;
-	top: 14%;
-	right: 2%;
-	width: min(96px, 5vw, 10.526316vh);
+	width: var(--sticker-width);
 	transform: rotate(var(--home-wallpaper-sticker-rotation));
 }
 
-.home-wallpaper-sticker--blue-witch {
+.home-wallpaper-sticker--sticker-04 {
+	--home-wallpaper-sticker-delay: 735ms;
+	--home-wallpaper-sticker-rotation: -3deg;
+	width: var(--sticker-width);
+	transform: rotate(var(--home-wallpaper-sticker-rotation));
+}
+
+.home-wallpaper-sticker--sticker-05 {
+	--home-wallpaper-sticker-delay: 790ms;
+	--home-wallpaper-sticker-rotation: 4deg;
+	width: var(--sticker-width);
+	transform: rotate(var(--home-wallpaper-sticker-rotation));
+}
+
+.home-wallpaper-sticker--sticker-06 {
 	--home-wallpaper-sticker-delay: 845ms;
 	--home-wallpaper-sticker-rotation: -5deg;
-	top: 58%;
-	left: 2%;
-	width: min(98px, 5.104167vw, 10.745614vh);
+	width: var(--sticker-width);
 	transform: rotate(var(--home-wallpaper-sticker-rotation));
 }
 
-.home-wallpaper-sticker--white-haired-reader {
+.home-wallpaper-sticker--sticker-07 {
 	--home-wallpaper-sticker-delay: 900ms;
-	--home-wallpaper-sticker-rotation: 4deg;
-	top: 72%;
-	left: 21%;
-	width: min(96px, 5vw, 10.526316vh);
-	transform: rotate(var(--home-wallpaper-sticker-rotation));
-}
-
-.home-wallpaper-sticker--brown-lightning {
-	--home-wallpaper-sticker-delay: 955ms;
-	--home-wallpaper-sticker-rotation: -4deg;
-	top: 71%;
-	right: 3%;
-	width: min(100px, 5.208333vw, 10.964912vh);
-	transform: rotate(var(--home-wallpaper-sticker-rotation));
-}
-
-.home-wallpaper-sticker--pink-cat {
-	--home-wallpaper-sticker-delay: 1010ms;
-	--home-wallpaper-sticker-rotation: -4deg;
-	top: 36%;
-	left: 20%;
-	width: min(88px, 4.583333vw, 9.649123vh);
-	transform: rotate(var(--home-wallpaper-sticker-rotation));
-}
-
-.home-wallpaper-sticker--bamboo-girl {
-	--home-wallpaper-sticker-delay: 1065ms;
-	--home-wallpaper-sticker-rotation: 4deg;
-	top: 36%;
-	right: 20%;
-	width: min(88px, 4.583333vw, 9.649123vh);
-	transform: rotate(var(--home-wallpaper-sticker-rotation));
-}
-
-.home-wallpaper-sticker--pink-uniform {
-	--home-wallpaper-sticker-delay: 1120ms;
-	--home-wallpaper-sticker-rotation: -3deg;
-	top: 73%;
-	left: 40%;
-	width: min(90px, 4.6875vw, 9.868421vh);
+	--home-wallpaper-sticker-rotation: 3deg;
+	width: var(--sticker-width);
 	transform: rotate(var(--home-wallpaper-sticker-rotation));
 }
 

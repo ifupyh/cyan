@@ -5,6 +5,16 @@ import type { StandardizedAnime } from "@/types/anime";
 
 const TMDB_IMG = "https://image.tmdb.org/t/p/w500";
 
+const BILIBILI_HEADERS = {
+	"User-Agent":
+		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+	Referer: "https://www.bilibili.com/",
+};
+
+const TMDB_HEADERS = {
+	"User-Agent": "AemeathBlog/1.0",
+};
+
 interface TmdbItem {
 	id: number;
 	title?: string;
@@ -62,6 +72,7 @@ export async function getAnimeList(): Promise<StandardizedAnime[]> {
 		try {
 			const firstResponse = await fetch(
 				`https://api.themoviedb.org/3/list/${TMDB_LIST_ID}?api_key=${TMDB_API_KEY}&language=zh-CN&page=1`,
+				{ headers: TMDB_HEADERS },
 			);
 
 			if (firstResponse.ok) {
@@ -75,6 +86,7 @@ export async function getAnimeList(): Promise<StandardizedAnime[]> {
 						promises.push(
 							fetch(
 								`https://api.themoviedb.org/3/list/${TMDB_LIST_ID}?api_key=${TMDB_API_KEY}&language=zh-CN&page=${page}`,
+								{ headers: TMDB_HEADERS },
 							)
 								.then((res) => res.json())
 								.then((data) => data.items || []),
@@ -105,6 +117,7 @@ export async function getAnimeList(): Promise<StandardizedAnime[]> {
 				const items: BilibiliItem[] = [];
 				const firstRes = await fetch(
 					`https://api.bilibili.com/x/space/bangumi/follow/list?type=${type}&vmid=${BILIBILI_UID}&pn=1&ps=${ps}`,
+					{ headers: BILIBILI_HEADERS },
 				);
 				const firstJson = await firstRes.json();
 				if (firstJson.code !== 0 || !firstJson.data?.list?.length) return items;
@@ -119,6 +132,7 @@ export async function getAnimeList(): Promise<StandardizedAnime[]> {
 						promises.push(
 							fetch(
 								`https://api.bilibili.com/x/space/bangumi/follow/list?type=${type}&vmid=${BILIBILI_UID}&pn=${pn}&ps=${ps}`,
+								{ headers: BILIBILI_HEADERS },
 							)
 								.then((r) => r.json())
 								.then((j) => j.data?.list || []),

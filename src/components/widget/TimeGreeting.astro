@@ -189,7 +189,7 @@ const { class: className, style } = Astro.props;
 		flex: none;
 		background-image: var(
 			--time-greeting-image,
-			url("/assets/images/wallpaper/thumbs/wallpaper-18.webp")
+			url("/assets/images/wallpaper/Compression/wallpaper-01.webp")
 		);
 		background-position: center;
 		background-size: cover;
@@ -260,19 +260,13 @@ const { class: className, style } = Astro.props;
 		"SATURDAY",
 	];
 
-	const wutheringWavesImages = [
-		"01",
-		...Array.from({ length: 23 }, (_, index) =>
-			String(index + 25).padStart(2, "0"),
-		),
-	].map(
-		(index) =>
-			`/assets/images/wallpaper/wallpaper-${index}.webp`,
+	const wallpaperImages = Array.from({ length: 10 }, (_, index) =>
+		`/assets/images/wallpaper/original-quality/wallpaper-${String(index + 1).padStart(2, "0")}.webp`,
 	);
 
-	function getRandomWutheringWavesImage(): string {
-		return wutheringWavesImages[
-			Math.floor(Math.random() * wutheringWavesImages.length)
+	function getRandomWallpaperImage(): string {
+		return wallpaperImages[
+			Math.floor(Math.random() * wallpaperImages.length)
 		];
 	}
 
@@ -316,12 +310,12 @@ const { class: className, style } = Astro.props;
 			if (this.imageInitialized) return;
 			this.imageInitialized = true;
 
-			const imageUrl = getRandomWutheringWavesImage();
+			const imageUrl = getRandomWallpaperImage();
 			const image = new Image();
 			image.onload = () => this.setLandscapeImage(imageUrl);
 			image.onerror = () =>
 				this.setLandscapeImage(
-					"/assets/images/wallpaper/wallpaper-01.webp",
+					"/assets/images/wallpaper/original-quality/wallpaper-01.webp",
 				);
 			image.src = imageUrl;
 		}

@@ -26,8 +26,9 @@ const standImages = config.scenes.standImages.slice(
  * 背景跑马灯：单格宽度固定为 CYCLE_CELL_VW，先把列表重复到「一轮 ≥ 一屏宽」，
  * 再整轮复制一份首尾相接，控制器把 xPercent 从 0 走到 -50 即为无缝左移。
  */
-const CYCLE_CELL_VW = 38;
 const cycleImages = config.scenes.cycleImages.filter(Boolean);
+// 单图时整图铺满一屏循环、不切成小块；多图时每格 38vw 首尾相接无缝循环
+const CYCLE_CELL_VW = cycleImages.length === 1 ? 100 : 38;
 const cyclePass = Math.max(
 	1,
 	Math.ceil(100 / (Math.max(1, cycleImages.length) * CYCLE_CELL_VW)),

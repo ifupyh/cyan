@@ -2108,7 +2108,7 @@ function disableAnimation() {
   }
 
   // Initialize wallpaper mode
-  import { applyStoredSelectedWallpaper, initWallpaperMode, initThemeListener } from "@/utils/setting-utils";
+  import { applyStoredSelectedWallpaper, applyWallpaperModeToDocument, getStoredWallpaperMode, initWallpaperMode, initThemeListener } from "@/utils/setting-utils";
   import { initIconLoader } from "@/utils/icon-loader";
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
@@ -2154,11 +2154,15 @@ function disableAnimation() {
   applyStoredSelectedWallpaper();
   document.addEventListener('astro:page-load', () => {
     initImageLoadFadeIn();
+    // 重新应用壁纸模式定位（首页强制 fullscreen，其他页按存储模式），
+    // 修复纯色背景下「首页 → 其他页」时 fullscreen 定位残留导致的内容上移重叠
+    applyWallpaperModeToDocument(getStoredWallpaperMode(), false);
     applyStoredSelectedWallpaper();
   });
   document.addEventListener('swup:contentReplaced', () => {
     requestAnimationFrame(() => {
       initImageLoadFadeIn();
+      applyWallpaperModeToDocument(getStoredWallpaperMode(), false);
       applyStoredSelectedWallpaper();
     });
   });

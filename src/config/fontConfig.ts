@@ -39,19 +39,28 @@ export const fontsList: FontDefinition[] = [
 	{
 		name: "Inter",
 		cssVariable: "--font-inter",
-		provider: "fontsource",
-		weights: ["300", "400", "500", "600", "700"],
-		styles: ["normal"],
-		subsets: ["latin", "cyrillic"],
+		provider: "local",
+		options: {
+			variants: [
+				{ src: ["./public/assets/fonts/inter-latin-300-normal.woff2"], weight: "300" },
+				{ src: ["./public/assets/fonts/inter-latin-400-normal.woff2"], weight: "400" },
+				{ src: ["./public/assets/fonts/inter-latin-500-normal.woff2"], weight: "500" },
+				{ src: ["./public/assets/fonts/inter-latin-600-normal.woff2"], weight: "600" },
+				{ src: ["./public/assets/fonts/inter-latin-700-normal.woff2"], weight: "700" },
+			],
+		},
 		fallbacks: ["sans-serif"],
 	},
 	{
 		name: "JetBrains Mono",
 		cssVariable: "--font-jetbrains-mono",
-		provider: "fontsource",
-		weights: ["400", "700"],
-		styles: ["normal"],
-		subsets: ["latin", "cyrillic"],
+		provider: "local",
+		options: {
+			variants: [
+				{ src: ["./public/assets/fonts/jetbrains-mono-latin-400-normal.woff2"], weight: "400" },
+				{ src: ["./public/assets/fonts/jetbrains-mono-latin-700-normal.woff2"], weight: "700" },
+			],
+		},
 		fallbacks: [
 			"ui-monospace",
 			"SFMono-Regular",

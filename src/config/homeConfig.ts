@@ -6,22 +6,22 @@ export const homeConfig: HomeConfig = {
 	// 1. public 目录（以 "/" 开头，不优化）："/assets/images/rain-avatar.webp"
 	// 2. src 目录（不以 "/" 开头，自动优化但会增加构建时间，推荐）："assets/images/rain-avatar.webp"
 	// 3. 远程 URL："https://example.com/avatar.jpg"
-	avatar: "assets/images/rain-avatar.webp",
+	avatar: "assets/images/Cyan.webp",
 
 	// 名字
-	name: "MmzMing",
+	name: "Cyan",
 
 	// 首页展示名字（留空则使用 name）
-	displayName: "MmzMing",
+	displayName: "Cyan",
 
 	// 职业/身份标签
-	occupation: "[全干工程师 / 技术博主]",
+	occupation: "[嵌入式程师 / 技术博主]",
 
 	// 个人签名（支持多条，会循环打字+删除效果）
 	bio: ["且视他人之疑目如盏盏鬼火，大胆地去走你的夜路"],
 
 	hero: {
-		backgroundImage: "/assets/images/wallpaper/wallpaper-01.webp",
+		backgroundImage: "/assets/images/wallpaper/home-page/home-page-01.webp",
 		mosaic: {
 			rows: 4,
 			columns: 6,
@@ -48,12 +48,12 @@ export const homeConfig: HomeConfig = {
 			interactionHold: 0.06,
 		},
 		contact: {
-			platform: "B站",
-			handle: "Mmz明崽",
+			platform: "",
+			handle: "nayC漾陈",
 		},
 		sticker: {
-			image: "/assets/images/wallpaper/wallpaper-02.webp",
-			alt: "黑猫角色贴纸",
+			image: "/assets/images/wallpaper/home-page/ranni-sticker.webp",
+			alt: "小小拉妮",
 			eye: {
 				xPercent: 41.1,
 				yPercent: 48.2,
@@ -74,59 +74,60 @@ export const homeConfig: HomeConfig = {
 			},
 		},
 		// galgame 对话框（写死暗黑主题）。内容全部由此驱动，可自由增删
-		dialogue: {
+		dialogue: 
+		{
 			enabled: true,
 			speakers: {
-				host: "哈基墩",
-				visitor: "访客",
+				host: "菈妮",
+				visitor: "褪色者",
 			},
 			menuTitle: "想聊点什么？",
 			typingSpeed: 45,
 			autoDelay: 1600,
 			// 默认逐句播放的简介，末句后弹出话题菜单
 			intro: [
-				{ speaker: "host", text: "欸——来客人了喵～随便坐，别客气。" },
-				{ speaker: "host", text: "我是喵墩，老爸在摸鱼，这儿归我管了喵～" },
+				{ speaker: "host", text: "……又一位褪色者，踏进了这片遗迹。" },
+				{ speaker: "host", text: "我是菈妮，此地的引路人。那位薪王正埋头捣鼓他的嵌入式板子，无暇亲自迎客。" },
 				{
 					speaker: "host",
-					text: "对了喵，得搬上简介了~喵找找：且视他人之疑目如盏盏鬼火，大胆地去走你的夜路。",
+					text: "他托我转告一句：且视他人之疑目如盏盏鬼火，大胆地去走你的夜路。",
 				},
-				{ speaker: "host", text: "想打听啥喵？戳戳下面的话题，喵跟你慢慢唠～" },
+				{ speaker: "host", text: "想打听什么？触碰下方的话题，篝火会引你前行。" },
 			],
 			// 话题菜单：点击进入逐句对话，末句后返回菜单
 			topics: [
 				{
 					title: "关于我",
 					lines: [
-						{ speaker: "visitor", text: "你爸是哪方面选手呀？" },
+						{ speaker: "visitor", text: "那位薪王，是什么来路？" },
 						{
 							speaker: "host",
-							text: "嘛……算个半桶水全栈喵，外加一个不务正业的博客写手。",
+							text: "一名嵌入式工程师，成日与寄存器、中断和示波器为伍。",
 						},
 						{
 							speaker: "host",
-							text: "前端后端都摸一点，俗称「全干工程师」喵～",
+							text: "在硬件底层与代码之间穿梭，俗称「在裸机上点灯的人」。",
 						},
-						{ speaker: "visitor", text: "听起来很忙的样子。" },
+						{ speaker: "visitor", text: "听起来，不太轻松。" },
 						{
 							speaker: "host",
-							text: "忙归忙，但好玩呀——折腾本身就是浪漫喵～如果你感兴趣也可以加QQ群喵，放心，傻爸爸不咬人的",
+							text: "确不轻松。但唤醒一颗芯片、看它按你的意志运转，那种快意，不亚于在病村点亮一簇篝火。若感兴趣，不妨在篝火旁坐下聊聊。",
 						},
 					],
 				},
 				{
 					title: "博客特色",
 					lines: [
-						{ speaker: "visitor", text: "有什么好玩的功能吗？" },
+						{ speaker: "visitor", text: "这片遗迹里，有什么可看的？" },
 						{
 							speaker: "host",
-							text: "有个音乐3D可视化播放，但博客重点不是文章吗喵~老爸整站基本是AI搓出来的，喵爪都没动几下。",
+							text: "有音乐的可视化演奏、有嵌入式的踩坑手记，但此处的重点终究还是文章。",
 						},
 						{
 							speaker: "host",
-							text: "傻爸爸最近在捣鼓Agent，不知道又要整啥活喵～",
+							text: "那位薪王近来在捣鼓 Agent 与自动化，不知又要在火堆里烤些什么。",
 						},
-						{ speaker: "host", text: "慢慢逛，角落里藏着不少彩蛋呢喵！" },
+						{ speaker: "host", text: "慢慢逛，角落里藏着不少彩蛋。愿你的探索有所收获。" },
 					],
 				},
 			],
@@ -141,25 +142,25 @@ export const homeConfig: HomeConfig = {
 	},
 
 	dataLayer: {
-		visitImage: "/assets/images/wallpaper/wallpaper-03.webp",
-		archiveImage: "/assets/images/wallpaper/wallpaper-04.webp",
-		contactImage: "/assets/images/wallpaper/wallpaper-05.webp",
+		visitImage: "/assets/images/wallpaper/home-page/home-page-03.webp",
+		archiveImage: "/assets/images/wallpaper/home-page/home-page-04.webp",
+		contactImage: "/assets/images/wallpaper/home-page/home-page-05.webp",
 	},
 
 	// 桌面端双层影像交互：固定背景揭示 → 五幕画面横向叙事
 	homeBlinds: {
 		enabled: true,
 		reveal: {
-			backgroundImage: "/assets/images/wallpaper/wallpaper-06.webp",
-			foregroundImage: "/assets/images/wallpaper/wallpaper-07.webp",
+			backgroundImage: "/assets/images/wallpaper/home-page/home-page-06.webp",
+			foregroundImage: "/assets/images/wallpaper/home-page/home-page-07.png",
 			foregroundAlt: "奔跑人物剪影",
 			foregroundOpacity: 0.5,
 			pointerTravel: 28,
 			// 长条横移揭示的入场标题：标题单行显示（版式按 4 字排），
 			// 祝福语单行显示（版式按 5 字排），可自由增减条数
 			headline: {
-				title: "祝愿各位",
-				messages: ["夜路有星光", "岁岁皆欢愉", "所念皆星河", "版本无回滚"],
+				title: "愿火焰指引你",
+				messages: ["余烬中仍有微光", "长夜尽头是黎明", "愿前路无恶意", "勿坠入深渊"],
 				enterDuration: 0.6,
 				messageHold: 2.6,
 				messageFlipDuration: 0.75,
@@ -168,51 +169,51 @@ export const homeConfig: HomeConfig = {
 		scenes: {
 			scrollDistance: 3400,
 			// 背景跑马灯：列表从右往左无缝循环，只有一张也会自动复制到铺满
-			cycleImages: ["/assets/images/wallpaper/wallpaper-08.webp"],
+			cycleImages: ["/assets/images/wallpaper/home-page/home-page-08.webp"],
 			cycleDuration: 26,
 			composite: {
-				eyebrow: "PROLOGUE / RUN",
-				title: "筑一间小屋",
-				description: "以代码为梁、热爱为瓦，荒原上筑起一间自己的小屋。",
+				eyebrow: "PROLOGUE / KINDLING",
+				title: "点燃篝火",
+				description: "以代码为薪、热爱为焰，于荒芜之地升起第一簇篝火。",
 				alt: "第一幕插画",
 				// 明信片右下角的落款日期，按每张图的实际日期改；删掉即不显示
 				date: "2026 / 05 / 07",
 			},
 			items: [
 				{
-					eyebrow: "SCENE 02 / LIGHT",
-					title: "小屋落户",
-					description: "一纸备案落定，小屋自此有门有牌，堂堂正正晒着太阳。",
-					image: "/assets/images/wallpaper/wallpaper-09.webp",
+					eyebrow: "SCENE 02 / REST",
+					title: "篝火长明",
+					description: "一簇篝火落定，旅人自此有火可依，无惧漫漫长夜。",
+					image: "/assets/images/wallpaper/home-page/home-page-09.webp",
 					alt: "第二幕插画",
 					date: "2026 / 06 / 10",
 				},
 				{
-					eyebrow: "SCENE 03 / WIND",
-					title: "尘满窗台",
-					description: "人往学海拾新，倦意悄悄落了窗，小屋静候，蒙上薄尘。",
-					image: "/assets/images/wallpaper/wallpaper-10.webp",
+					eyebrow: "SCENE 03 / ASH",
+					title: "余烬微冷",
+					description: "人往学海拾薪，余烬暂冷，篝火静候旅人归。",
+					image: "/assets/images/wallpaper/home-page/home-page-10.webp",
 					alt: "第三幕插画",
 					date: "2026 / 06 / 21",
 				},
 				{
-					eyebrow: "SCENE 04 / PAGE",
-					title: "重燃灯火",
-					description: "拂去薄尘，重燃灯火，一砖一瓦再把小屋细细打磨。",
-					image: "/assets/images/wallpaper/wallpaper-11.webp",
+					eyebrow: "SCENE 04 / EMBER",
+					title: "复燃余烬",
+					description: "拨亮余烬，添薪续焰，一砖一瓦再把营地修葺。",
+					image: "/assets/images/wallpaper/home-page/home-page-11.webp",
 					alt: "第四幕插画",
 					date: "2026 / 08 / 18",
 				},
 				{
-					eyebrow: "FINALE / ARRIVE",
-					title: "抵达之前",
-					description: "笔墨暂歇，来日方长；下一程山水，且歌且行。",
-					image: "/assets/images/wallpaper/wallpaper-12.webp",
+					eyebrow: "FINALE / FIRE",
+					title: "火焰不熄",
+					description: "笔墨暂歇，来日方长；愿这簇火，长久照亮来路。",
+					image: "/assets/images/wallpaper/home-page/home-page-12.webp",
 					alt: "第五幕插画",
 					date: "2026 / 09 / 01",
 				},
 			],
-			standImages: ["/assets/images/wallpaper/wallpaper-13.webp"],
+			standImages: ["/assets/images/wallpaper/home-page/home-page-13.png"],
 		},
 	},
 
@@ -224,21 +225,21 @@ export const homeConfig: HomeConfig = {
 	// showName: true 时显示图标和名称，false 时只显示图标
 	links: [
 		{
-			name: "qq",
-			icon: "fa7-brands:qq",
-			url: "https://qm.qq.com/q/2R07cjGTZ0",
+			name: "微信",
+			icon: "fa7-brands:weixin",
+			url: "copy:17369174973",
 			showName: false,
 		},
 		{
 			name: "B站",
 			icon: "fa7-brands:bilibili",
-			url: "https://space.bilibili.com/15446538",
+			url: "https://space.bilibili.com/412734622",
 			showName: false,
 		},
 		{
 			name: "GitHub",
 			icon: "fa7-brands:github",
-			url: "https://github.com/MmzMing",
+			url: "https://github.com/ifupyh",
 			showName: false,
 		},
 		{

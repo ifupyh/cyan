@@ -98,10 +98,10 @@
 
 .home-blinds__foreground {
 	position: absolute;
-	bottom: 1.5vh;
-	left: 50%;
+	bottom: 9vh;
+	left: 70%;
 	display: block;
-	width: min(88vw, 105rem);
+	width: calc(min(88vw, 105rem) / 9);
 	max-width: none;
 	height: auto;
 	max-height: 88%;
