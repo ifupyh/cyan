@@ -3,7 +3,7 @@ title: 从零搭建 Rainzt.cn：我的个人博客上线流程
 published: 2026-07-08
 description: 记录这个个人博客从本地运行、内容配置、生产构建到宝塔 Nginx 部署和 HTTPS 上线的完整流程。
 aiSummary: 文章按真实上线顺序记录 Aemeath 与 Rainzt.cn：准备 Astro 和 pnpm、配置内容、写 Markdown、构建 dist，再交给宝塔 Nginx 和 HTTPS 发布。适合想把 Firefly 二创博客从本地推到服务器的读者。
-image: /assets/images/wallpaper/wallpaper-20.webp
+image: /assets/images/wallpaper/original-quality/wallpaper-01.webp
 tags: [博客搭建, Astro, Aemeath, 宝塔, Nginx, HTTPS]
 category: 博客指南
 draft: false
@@ -90,7 +90,7 @@ return import.meta.env.PROD ? data.draft !== true : true;
 title: 文章标题
 published: 2026-07-08
 description: 文章简介
-image: /assets/images/wallpaper/wallpaper-20.webp
+image: /assets/images/wallpaper/original-quality/wallpaper-01.webp
 tags: [博客搭建, Astro]
 category: 博客指南
 draft: false

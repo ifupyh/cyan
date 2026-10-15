@@ -84,13 +84,15 @@ const wallpaperPreviewModules = import.meta.glob<string>(
 );
 
 function getWallpaperPreview(src: string): string {
+	// 横向壁纸用 Compression 缩略图；移动端竖屏壁纸无缩略图，直接用原图
 	if (
-		src.startsWith("/assets/images/wallpaper/wallpaper-") &&
+		src.startsWith("/assets/images/wallpaper/original-quality/wallpaper-") &&
+		!src.includes("wallpaper-mobile-") &&
 		src.endsWith(".webp")
 	) {
 		return src.replace(
-			"/assets/images/wallpaper/",
-			"/assets/images/wallpaper/thumbs/",
+			"/assets/images/wallpaper/original-quality/",
+			"/assets/images/wallpaper/Compression/",
 		);
 	}
 	if (src.startsWith("/") || src.startsWith("http")) return src;

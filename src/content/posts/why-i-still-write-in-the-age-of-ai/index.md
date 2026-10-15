@@ -23,7 +23,7 @@ draft: false
 
 效率拉满，但总觉得哪里不太对。
 
-![隔着窗看向远处，也像是在重新看自己的表达](/assets/images/wallpaper/wallpaper-42.webp)
+![隔着窗看向远处，也像是在重新看自己的表达](/assets/images/wallpaper/original-quality/wallpaper-06.webp)
 
 ## 十分钟生成一篇“正确”的文章
 
@@ -45,7 +45,7 @@ draft: false
 
 AI 能读取项目，却没有经历项目。
 
-![AI 可以迅速铺开一整张信息画布，但经历仍然来自画布之外](/assets/images/wallpaper/wallpaper-27.webp)
+![AI 可以迅速铺开一整张信息画布，但经历仍然来自画布之外](/assets/images/wallpaper/original-quality/wallpaper-08.webp)
 
 ## 真正不对劲的，不是 AI 替我写了
 
@@ -79,7 +79,7 @@ AI 让产出变得便宜，也让判断变得昂贵。
 
 这些问题暂时还不能交给一个“生成”按钮。
 
-![人与技术真正有意思的地方，不是彼此替代，而是如何碰到一起](/assets/images/wallpaper/wallpaper-35.webp)
+![人与技术真正有意思的地方，不是彼此替代，而是如何碰到一起](/assets/images/wallpaper/original-quality/wallpaper-10.webp)
 
 ## 未来的 AI，可能不会再像一个聊天框
 
@@ -111,7 +111,7 @@ AI 可以帮我描述今天，却不能替我活过今天。
 
 但我也想给自己留下一小块不追求效率的地方。写一点踩坑时的吐槽，记下功能跑通那一刻的心情，承认某些选择其实没有宏大的理由，只是我当时觉得这样更顺手。哪怕句子没那么漂亮、结构没那么标准，也至少能让我几年后再打开博客时，认得出那是自己留下的声音。
 
-![技术会继续向前，而我也想在路上保留一点自己的声音](/assets/images/wallpaper/wallpaper-39.webp)
+![技术会继续向前，而我也想在路上保留一点自己的声音](/assets/images/wallpaper/original-quality/wallpaper-01.webp)
 
 ## 给那剩下的 10%
 

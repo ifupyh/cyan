@@ -46,9 +46,9 @@ draft: false
 ```ts
 const images = [
   "wallpaper-01.webp",
-  "wallpaper-25.webp",
+  "wallpaper-06.webp",
   // ...
-  "wallpaper-47.webp",
+  "wallpaper-10.webp",
 ]
 ```
 
@@ -133,12 +133,9 @@ function getGreetingPeriod(hour: number) {
 鸣潮图片池不必手写二十多个完整路径，可以用编号生成：
 
 ```ts
-const images = [
-  "01",
-  ...Array.from({ length: 23 }, (_, index) =>
-    String(index + 25).padStart(2, "0"),
-  ),
-].map(index => `/assets/images/wallpaper/wallpaper-${index}.webp`)
+const images = Array.from({ length: 10 }, (_, index) =>
+  `/assets/images/wallpaper/original-quality/wallpaper-${String(index + 1).padStart(2, "0")}.webp`,
+)
 
 const imageUrl = images[Math.floor(Math.random() * images.length)]
 ```

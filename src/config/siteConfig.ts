@@ -12,10 +12,10 @@ export const siteConfig: SiteConfig = {
 	subtitle: "万物终将归于尘土，唯有故事穿越黑暗",
 
 	// Aemeath 主题版本
-	themeVersion: "V3.4.0",
+	themeVersion: "V0.1.0",
 
 	// 站点 URL
-	site_url: "https://rainzt.cn",
+	site_url: "http://localhost:4321",
 
 	// 站点描述
 	description:
@@ -44,7 +44,7 @@ keywords: [
 	// 主题色
 	themeColor: {
 		// 主题色的默认色相，范围从 0 到 360。例如：红色：0，青色：200，蓝绿色：250，粉色：345
-		hue: 250,
+		hue: 280,
 		// 是否对访问者隐藏主题色选择器
 		fixed: false,
 		// 默认模式："light" 亮色，"dark" 暗色，"system" 跟随系统
@@ -54,12 +54,12 @@ keywords: [
 	// 页面整体宽度（单位：rem）
 	// 数值越大可以让页面内容区域更宽
 	// 在使用单侧栏边栏时，建议调低一些宽度以获得更好的视觉效果。
-	pageWidth: 80,
+	pageWidth: 100,
 
 	// 网站Card样式配置
 	card: {
 		// 是否开启卡片边框和阴影，开启后让网站更有立体感
-		border: true,
+		border: false,
 		// 是否让卡片风格跟随主题色相
 		followTheme: false,
 		// 是否默认启用直角模式（所有卡片/容器/按钮 border-radius 归零）
@@ -112,7 +112,7 @@ keywords: [
 	},
 
 	// 站点开始日期，用于统计运行天数
-	siteStartDate: "2026-07-08",
+	siteStartDate: "2026-10-15",
 
 	// 站点时区（IANA 时区字符串），用于格式化bangumi、rss里的构建日期时间等等..
 	// 示例："Asia/Shanghai", "UTC", 如果为空，则按照构建服务器的时区进行时区转换
@@ -134,7 +134,7 @@ keywords: [
 		anime: true,
 	},
 
-	// 分类导航栏开关，在首页和归档页顶部显示分类快捷导航
+	// 分类导航栏开关，文章页顶部显示分类快捷导航
 	categoryBar: true,
 
 	// 归档页是否折叠非最新年份文章，禁用后默认展开全部年份
@@ -208,7 +208,7 @@ keywords: [
 		// Bilibili 配置
 		bilibili: {
 			// 你的 Bilibili 用户 UID
-			uid: "38932988",
+			uid: "412734622",
 		},
 		// TMDB 配置（可选，需要翻墙）
 		// tmdb: {

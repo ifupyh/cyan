@@ -469,13 +469,13 @@ function setupScenes(context: SetupContext) {
 				// 上升
 				.to(standJumpTargets, {
 					y: jumpHeights[jump],
-					duration: 0.29,
+					duration: 0.5,
 					ease: "power2.out",
 				})
 				// 下落
 				.to(standJumpTargets, {
 					y: 0,
-					duration: 0.29,
+					duration: 0.5,
 					ease: "power2.in",
 				});
 		}

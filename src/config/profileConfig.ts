@@ -30,7 +30,7 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "Bilibili",
 			icon: "simple-icons:bilibili",
-			url: "https://space.bilibili.com/473321504?spm_id_from=333.1007.0.0",
+			url: "https://space.bilibili.com/412734622",
 			showName: false,
 		},
 		{
@@ -45,5 +45,12 @@ export const profileConfig: ProfileConfig = {
 			url: "copy:3385271579@qq.com",
 			showName: false,
 		},
+		{
+		name: "Steam",
+		icon: "simple-icons:steam",
+		url: "https://steamcommunity.com/profiles/76561199566412183",
+		showName: false,
+		},
+
 	],
 };

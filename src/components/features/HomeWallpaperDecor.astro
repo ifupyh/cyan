@@ -24,81 +24,53 @@ const socialLinks = [
 
 const stickerImages = [
 	{
-		key: "quote",
-		src: url("/images/home-stickers/claudecode.webp"),
+		key: "sticker-01",
+		src: url("/images/home-stickers/Sticker-illustration-01.webp"),
+		initialStyle: "inset: 83% auto auto 4%;",
 	},
 	{
-		key: "coder",
-		src: url("/monthly-2026-08/loading-girl.webp"),
-		initialStyle: "inset: 83.320066% auto auto 18.718750%;",
+		key: "sticker-02",
+		src: url("/images/home-stickers/Sticker-illustration-02.webp"),
+		initialStyle: "inset: 85% auto auto 18%;",
 	},
 	{
-		key: "blonde",
-		src: url("/images/home-stickers/blonde-idol.webp"),
-		initialStyle: "inset: 42.073794% auto auto 56.985938%;",
+		key: "sticker-03",
+		src: url("/images/home-stickers/Sticker-illustration-03.webp"),
+		initialStyle: "inset: 84% auto auto 32%;",
 	},
 	{
-		key: "dark",
-		src: url("/images/home-stickers/dark-haired-girl.webp"),
-		initialStyle: "inset: 36.321820% auto auto 36.997969%;",
+		key: "sticker-04",
+		src: url("/images/home-stickers/Sticker-illustration-04.webp"),
+		initialStyle: "inset: 86% auto auto 46%;",
 	},
 	{
-		key: "pink-bows",
-		src: url("/images/home-stickers/pink-bows.webp"),
-		initialStyle: "inset: 85.879934% auto auto 67.690625%;",
+		key: "sticker-05",
+		src: url("/images/home-stickers/Sticker-illustration-05.webp"),
+		initialStyle: "inset: 84% auto auto 60%;",
 	},
 	{
-		key: "aqua-singer",
-		src: url("/images/home-stickers/aqua-singer.webp"),
-		initialStyle: "inset: 85.100877% auto auto 60.510937%;",
+		key: "sticker-06",
+		src: url("/images/home-stickers/Sticker-illustration-06.webp"),
+		initialStyle: "inset: 85% auto auto 74%;",
 	},
 	{
-		key: "blue-witch",
-		src: url("/images/home-stickers/blue-witch.webp"),
-		initialStyle: "inset: 84.791667% auto auto 28.275156%;",
-	},
-	{
-		key: "white-haired-reader",
-		src: url("/images/home-stickers/white-haired-reader.webp"),
-		initialStyle: "inset: 85.243092% auto auto 34.902135%;",
-	},
-	{
-		key: "brown-lightning",
-		src: url("/images/home-stickers/brown-lightning.webp"),
-		initialStyle: "inset: 84.653289% auto auto 74.681250%;",
-	},
-	{
-		key: "pink-cat",
-		src: url("/images/home-stickers/pink-cat.webp"),
-		initialStyle: "inset: 86.495175% auto auto 81.020312%;",
-	},
-	{
-		key: "bamboo-girl",
-		src: url("/images/home-stickers/bamboo-girl.webp"),
-		initialStyle: "inset: 86.281360% auto auto 53.490625%;",
-	},
-	{
-		key: "pink-uniform",
-		src: url("/images/home-stickers/pink-uniform.webp"),
-		initialStyle: "inset: 86.343640% auto auto 41.756979%;",
+		key: "sticker-07",
+		src: url("/images/home-stickers/Sticker-illustration-07.webp"),
+		initialStyle: "inset: 83% auto auto 88%;",
 	},
 ];
 
-const quoteSticker = stickerImages.find((sticker) => sticker.key === "quote");
-const floatingStickerImages = stickerImages.filter(
-	(sticker) => sticker.key !== "quote",
-);
 const mobileStickerKeys = [
-	"coder",
-	"blonde",
-	"brown-lightning",
-	"blue-witch",
+	"sticker-03",
+	"sticker-04",
+	"sticker-06",
+	"sticker-07",
 ];
 ---
 
 <div class="home-wallpaper-decor" data-home-wallpaper-decor>
 	<div class="home-wallpaper-decor__stickers" aria-hidden="true">
-		{floatingStickerImages.map((sticker) => (
+		{stickerImages.map((sticker) => (
 			<div
 				class:list={[
 					"home-wallpaper-sticker",
@@ -138,19 +110,6 @@ const mobileStickerKeys = [
 					loading="eager"
 					fetchpriority="high"
 				/>
-				{quoteSticker && (
-					<img
-						class="home-wallpaper-card__avatar-sticker"
-						src={quoteSticker.src}
-						alt=""
-						aria-hidden="true"
-						draggable="false"
-						style="width: min(78px, 18vw) !important; height: auto !important; max-width: none !important; max-height: none !important; object-fit: contain !important; object-position: center !important; transform: translate(-7.030914px, -3.092804px);"
-						loading="eager"
-						decoding="async"
-						referrerpolicy="no-referrer"
-					/>
-				)}
 			</div>
 
     <p class="home-wallpaper-card__identity">

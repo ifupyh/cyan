@@ -194,8 +194,6 @@ const toolSections = [
 	},
 ];
 
-const tools = [...myTools, ...thirdPartyTools];
-
 const getPlatformIcon = (platform: string) => {
 	const lower = platform.toLowerCase();
 	if (lower.includes("windows")) return "fa7-brands:windows";
@@ -210,46 +208,35 @@ const getPlatformIcon = (platform: string) => {
 ---
 
 <MainGridLayout title="工具" description="小众神器库">
-	<section class="tools-page card-base">
-		<header class="tools-hero">
-			<div>
-				<div class="tools-kicker">
-					<Icon is:inline name="material-symbols:construction-rounded" />
-					<span>which awesome</span>
-				</div>
-				<h1>小众神器库</h1>
-				<p>
-					免费、极简、无广告、高效率，只保留真正值得放进日常工作流的工具。
-				</p>
-			</div>
-			<div class="tools-stats" aria-label="工具统计">
-				<div>
-					<strong>{tools.length}</strong>
-					<span>工具</span>
-				</div>
-				<div>
-					<strong>{myTools.length}</strong>
-					<span>本人项目</span>
-				</div>
-				<div>
-					<strong>{thirdPartyTools.length}</strong>
-					<span>非本人</span>
-				</div>
-			</div>
-		</header>
+	<!-- Hero：返回 + 标题 -->
+	<div class="mb-8 md:mb-10">
+		<a
+			href="/glimmer/"
+			class="inline-flex items-center gap-1 text-sm text-(--primary) hover:underline mb-4"
+		>
+			<Icon is:inline name="material-symbols:arrow-back" class="text-base" />
+			返回浮光集
+		</a>
+		<h1 class="text-4xl md:text-5xl font-medium tracking-tight text-black/85 dark:text-white/85 leading-tight">
+			小众神器库
+		</h1>
+		<p class="mt-3 text-base text-black/55 dark:text-white/55 leading-relaxed max-w-xl">
+			免费、极简、无广告、高效率，只保留真正值得放进日常工作流的工具。
+		</p>
+	</div>
 
-		<div class="tools-sections">
-			{
-				toolSections.map((section) => (
-					<section class="tools-section" aria-labelledby={`${section.title}-heading`}>
-						<div class="tools-section-heading">
-							<div>
-								<h2 id={`${section.title}-heading`}>{section.title}</h2>
-								<p>{section.description}</p>
-							</div>
-							<span>{section.tools.length} 个</span>
-						</div>
-						<div class="tools-grid">
+	<!-- 每个分组一个容器 -->
+	{
+		toolSections.map((section) => (
+			<section class="card-base-transparent px-5 py-5 md:px-7 md:py-6 mb-8" aria-labelledby={`${section.title}-heading`}>
+				<div class="tools-section-heading">
+					<div>
+						<h2 id={`${section.title}-heading`}>{section.title}</h2>
+						<p>{section.description}</p>
+					</div>
+					<span>{section.tools.length} 个</span>
+				</div>
+				<div class="tools-grid">
 							{section.tools.map((tool) => (
 								<a
 									class:list={[
@@ -313,8 +300,6 @@ const getPlatformIcon = (platform: string) => {
 					</section>
 				))
 			}
-		</div>
-	</section>
 </MainGridLayout>
 
 <script is:inline>
@@ -650,6 +635,18 @@ const getPlatformIcon = (platform: string) => {
 </script>
 
 <style>
+	:global(:root) {
+		--tools-text-90: rgb(0 0 0 / 0.9);
+		--tools-text-50: rgb(0 0 0 / 0.5);
+		--tools-text-30: rgb(0 0 0 / 0.3);
+	}
+
+	:global(:root.dark) {
+		--tools-text-90: rgb(255 255 255 / 0.9);
+		--tools-text-50: rgb(255 255 255 / 0.5);
+		--tools-text-30: rgb(255 255 255 / 0.3);
+	}
+
 	.tools-page {
 		width: 100%;
 		position: relative;

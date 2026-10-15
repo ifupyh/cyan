@@ -17,13 +17,13 @@ export const galleryConfig: GalleryConfig = {
 		// 每添加一个数组项就相当于添加了一个相册，记得在 public/gallery/ 目录下创建对应的子目录并放入图片
 		{
 			id: "wuthering-waves",
-			name: "Wuthering Waves",
+			name: "交界地掠影",
 			description:
-				"潮声掠过索拉里斯的旷野，也把旅途中遇见的角色、城市与片刻光影留在这里。",
-			location: "Solaris-3",
+				"褪色者行走于交界地，把途中的篝火、废墟与片刻光影留在这里。",
+			location: "The Lands Between",
 			date: "2026-07-24",
-			tags: ["Wuthering Waves", "鸣潮", "游戏摄影"],
-			cover: "/assets/images/wallpaper/wallpaper-25.webp",
+			tags: ["艾尔登法环", "魂系", "游戏摄影"],
+			cover: "/assets/images/wallpaper/original-quality/wallpaper-01.webp",
 		},
 		{
 			id: "firefly-2026",

@@ -1,36 +1,20 @@
 import type { BackgroundWallpaperConfig } from "@/types/backgroundWallpaper";
 
-const originalWallpaperImages = Array.from(
-	{ length: 24 },
+// 魂系主题壁纸库：横向壁纸（original-quality/wallpaper-01~10）+ 竖屏移动端壁纸（wallpaper-mobile-01~03）
+const desktopWallpaperImages = Array.from(
+	{ length: 10 },
 	(_, index) =>
-		`/assets/images/wallpaper/wallpaper-${String(index + 1).padStart(2, "0")}.webp`,
+		`/assets/images/wallpaper/original-quality/wallpaper-${String(index + 1).padStart(2, "0")}.webp`,
 );
 
-const importedWutheringWavesImages = Array.from(
-	{ length: 23 },
-	(_, index) =>
-		`/assets/images/wallpaper/wallpaper-${String(index + 25).padStart(2, "0")}.webp`,
-);
-
-const wutheringWavesWallpaperImages = [
-	originalWallpaperImages[0],
-	...importedWutheringWavesImages,
-];
-const otherWallpaperImages = originalWallpaperImages.slice(1);
-const desktopWallpaperImages = [
-	...wutheringWavesWallpaperImages,
-	...otherWallpaperImages,
-];
-
-const mobileOnlyWutheringWavesImages = Array.from(
+const mobileOnlyWallpaperImages = Array.from(
 	{ length: 3 },
 	(_, index) =>
-		`/assets/images/wallpaper/wallpaper-mobile-${String(index + 1).padStart(2, "0")}.webp`,
+		`/assets/images/wallpaper/original-quality/wallpaper-mobile-${String(index + 1).padStart(2, "0")}.webp`,
 );
 const mobileWallpaperImages = [
-	...mobileOnlyWutheringWavesImages,
-	...wutheringWavesWallpaperImages,
-	...otherWallpaperImages,
+	...mobileOnlyWallpaperImages,
+	...desktopWallpaperImages,
 ];
 
 export const backgroundWallpaper: BackgroundWallpaperConfig = {
