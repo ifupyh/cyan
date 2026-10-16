@@ -19,7 +19,7 @@ declare global {
 				}>;
 			}>;
 		};
-		__fireflyMusic?: {
+		__cyanMusic?: {
 			init: () => Promise<void>;
 			getState: () => {
 				playlist: Array<{

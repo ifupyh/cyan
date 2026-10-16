@@ -5,8 +5,8 @@ const DEFAULT_MAX_WAIT = 8000;
 /** waitForPageLoaderHidden 的兜底上限，比 DEFAULT_MAX_WAIT 更宽，正常路径不会走到 */
 const DEFAULT_HIDDEN_WAIT = 10000;
 
-export const LOADER_READY_EVENT = "firefly:page-loader-ready";
-export const LOADER_HIDDEN_EVENT = "firefly:page-loader-hidden";
+export const LOADER_READY_EVENT = "cyan:page-loader-ready";
+export const LOADER_HIDDEN_EVENT = "cyan:page-loader-hidden";
 
 /* ========== 通用工具 ========== */
 
@@ -264,7 +264,7 @@ export function initPageLoader({
 	document: documentRef = document,
 	window: windowRef = window,
 } = {}) {
-	if (windowRef.__fireflyPageLoader) return windowRef.__fireflyPageLoader;
+	if (windowRef.__cyanPageLoader) return windowRef.__cyanPageLoader;
 
 	const loader = documentRef.getElementById("page-loader");
 	if (!loader) return null;
@@ -281,7 +281,7 @@ export function initPageLoader({
 		onStateChange: (state) => applyDomState(domContext, state),
 		waitForPageReady: () => waitForBrowserPageReady({ document: documentRef }),
 	});
-	windowRef.__fireflyPageLoader = controller;
+	windowRef.__cyanPageLoader = controller;
 
 	// 非首页：不显示初始加载页
 	if (!isHomePath(windowRef.location.pathname)) {

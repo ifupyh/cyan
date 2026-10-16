@@ -281,7 +281,7 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
   document.addEventListener("swup:content:replace", runInitWithDelay);
   document.addEventListener("swup:page:view", handlePageView);
   document.addEventListener("swup:visit:end", scheduleArticleSummaryStart);
-  document.addEventListener("firefly:page-ready", scheduleArticleSummaryStart);
+  document.addEventListener("cyan:page-ready", scheduleArticleSummaryStart);
   document.addEventListener("astro:page-load", handlePageView);
 
   // swup hooks（若可用）

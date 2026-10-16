@@ -100,7 +100,7 @@ function mountAll(runtime: SwupRuntimeState): void {
  * 存在 window 上才能保证同一文档里始终只有一份代数与孤岛登记表。
  */
 function getRuntime(): SwupRuntimeState {
-	const existing = window.__fireflySwupRuntime;
+	const existing = window.__cyanSwupRuntime;
 	if (existing) return existing;
 
 	const runtime: SwupRuntimeState = {
@@ -110,7 +110,7 @@ function getRuntime(): SwupRuntimeState {
 		pendingReady: [],
 		resolving: false,
 	};
-	window.__fireflySwupRuntime = runtime;
+	window.__cyanSwupRuntime = runtime;
 
 	// 卸载必须发生在代数自增之前：此刻旧容器、被 pin 的节点和 ScrollTrigger 自插的
 	// .pin-spacer 都还在文档里，kill() 才不会落在游离节点上做 revert

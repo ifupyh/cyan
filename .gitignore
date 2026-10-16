@@ -22,7 +22,6 @@ __pycache__/
 # local package-manager caches and deployment archives
 .npm-cache/
 .pnpm-store/
-firefly-dist-*.tgz
 
 # environment variables
 .env
@@ -44,19 +43,16 @@ yarn.lock
 .claude
 
 # docs
-Firefly-docs/
 
 cache/
 package/
 .obsidian/
 
 # accidental nested copy
-Firefly-master/
 
 # public snapshot excludes deployment and local-runtime internals
 /DEPLOY.md
 /*部署指南*.md
-/start-firefly-dev.bat
 /.github/workflows/deploy.yml
 /.github/workflows/refresh-and-deploy.yml
 /ops/

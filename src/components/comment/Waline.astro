@@ -276,7 +276,7 @@ const aiWalineUserIds: number[] = [];
 		border-radius: 0.75rem;
 	}
 
-	#waline .firefly-comment-filter {
+	#waline .cyan-comment-filter {
 		position: relative;
 		display: inline-flex;
 		align-items: center;
@@ -287,7 +287,7 @@ const aiWalineUserIds: number[] = [];
 		font-size: 0.75rem;
 	}
 
-	#waline .firefly-comment-filter-toggle {
+	#waline .cyan-comment-filter-toggle {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.38rem;
@@ -309,29 +309,29 @@ const aiWalineUserIds: number[] = [];
 			transform 0.2s ease;
 	}
 
-	#waline .firefly-comment-filter-toggle:hover {
+	#waline .cyan-comment-filter-toggle:hover {
 		border-color: color-mix(in oklab, var(--primary) 48%, var(--line-divider));
 		color: var(--primary);
 		box-shadow: 0 0.25rem 0.8rem color-mix(in oklab, var(--primary) 11%, transparent);
 		transform: translateY(-1px);
 	}
 
-	#waline .firefly-comment-filter-toggle:focus-visible,
-	#waline .firefly-comment-filter-confirm:focus-visible,
-	#waline .firefly-comment-filter-cancel:focus-visible,
-	#waline .firefly-comment-filter-input:focus-visible {
+	#waline .cyan-comment-filter-toggle:focus-visible,
+	#waline .cyan-comment-filter-confirm:focus-visible,
+	#waline .cyan-comment-filter-cancel:focus-visible,
+	#waline .cyan-comment-filter-input:focus-visible {
 		outline: 2px solid color-mix(in oklab, var(--primary) 58%, transparent);
 		outline-offset: 2px;
 	}
 
-	#waline .firefly-comment-filter-toggle[data-active="true"] {
+	#waline .cyan-comment-filter-toggle[data-active="true"] {
 		border-color: color-mix(in oklab, var(--primary) 58%, transparent);
 		background: color-mix(in oklab, var(--primary) 12%, var(--card-bg));
 		color: var(--primary);
 		box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--primary) 10%, transparent);
 	}
 
-	#waline .firefly-comment-filter-icon {
+	#waline .cyan-comment-filter-icon {
 		width: 0.82rem;
 		height: 0.82rem;
 		flex: 0 0 auto;
@@ -346,7 +346,7 @@ const aiWalineUserIds: number[] = [];
 		mask-size: contain;
 	}
 
-	#waline .firefly-comment-filter-status {
+	#waline .cyan-comment-filter-status {
 		max-width: 13rem;
 		overflow: hidden;
 		color: var(--content-meta);
@@ -356,7 +356,7 @@ const aiWalineUserIds: number[] = [];
 		white-space: nowrap;
 	}
 
-	#waline .firefly-comment-filter-panel {
+	#waline .cyan-comment-filter-panel {
 		position: absolute;
 		top: calc(100% + 0.6rem);
 		right: 0;
@@ -370,24 +370,24 @@ const aiWalineUserIds: number[] = [];
 		backdrop-filter: blur(14px);
 	}
 
-	#waline .firefly-comment-filter-panel[hidden] {
+	#waline .cyan-comment-filter-panel[hidden] {
 		display: none;
 	}
 
-	#waline .firefly-comment-filter-panel p {
+	#waline .cyan-comment-filter-panel p {
 		margin: 0 0 0.62rem;
 		color: var(--content-meta);
 		font-size: 0.72rem;
 		line-height: 1.55;
 	}
 
-	#waline .firefly-comment-filter-form {
+	#waline .cyan-comment-filter-form {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr) auto auto;
 		gap: 0.4rem;
 	}
 
-	#waline .firefly-comment-filter-input {
+	#waline .cyan-comment-filter-input {
 		min-width: 0;
 		padding: 0.46rem 0.58rem;
 		border: 1px solid var(--line-divider);
@@ -397,8 +397,8 @@ const aiWalineUserIds: number[] = [];
 		font-size: 0.75rem;
 	}
 
-	#waline .firefly-comment-filter-confirm,
-	#waline .firefly-comment-filter-cancel {
+	#waline .cyan-comment-filter-confirm,
+	#waline .cyan-comment-filter-cancel {
 		padding: 0.46rem 0.62rem;
 		border: 1px solid transparent;
 		border-radius: 0.56rem;
@@ -408,20 +408,20 @@ const aiWalineUserIds: number[] = [];
 		white-space: nowrap;
 	}
 
-	#waline .firefly-comment-filter-confirm {
+	#waline .cyan-comment-filter-confirm {
 		border-color: color-mix(in oklab, var(--primary) 40%, transparent);
 		background: color-mix(in oklab, var(--primary) 15%, var(--card-bg));
 		color: var(--primary);
 	}
 
-	#waline .firefly-comment-filter-cancel {
+	#waline .cyan-comment-filter-cancel {
 		border-color: var(--line-divider);
 		background: transparent;
 		color: var(--content-meta);
 	}
 
-	#waline .firefly-comment-filter-confirm:hover,
-	#waline .firefly-comment-filter-cancel:hover {
+	#waline .cyan-comment-filter-confirm:hover,
+	#waline .cyan-comment-filter-cancel:hover {
 		border-color: color-mix(in oklab, var(--primary) 48%, var(--line-divider));
 		color: var(--primary);
 	}
@@ -431,17 +431,17 @@ const aiWalineUserIds: number[] = [];
 	}
 
 	@media (max-width: 580px) {
-		#waline .firefly-comment-filter {
+		#waline .cyan-comment-filter {
 			width: 100%;
 			margin-inline-start: 0;
 			justify-content: space-between;
 		}
 
-		#waline .firefly-comment-filter-status {
+		#waline .cyan-comment-filter-status {
 			max-width: min(12rem, 46vw);
 		}
 
-		#waline .firefly-comment-filter-panel {
+		#waline .cyan-comment-filter-panel {
 			right: auto;
 			left: 0;
 			width: min(21rem, calc(100vw - 2.5rem));
@@ -449,9 +449,9 @@ const aiWalineUserIds: number[] = [];
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		#waline .firefly-comment-filter-toggle,
-		#waline .firefly-comment-filter-confirm,
-		#waline .firefly-comment-filter-cancel {
+		#waline .cyan-comment-filter-toggle,
+		#waline .cyan-comment-filter-confirm,
+		#waline .cyan-comment-filter-cancel {
 			transition: none;
 		}
 	}

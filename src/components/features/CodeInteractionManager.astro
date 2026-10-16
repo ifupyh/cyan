@@ -1,7 +1,7 @@
 <script is:inline data-swup-ignore-script>
 	(() => {
-		if (window.__fireflyCodeInteractionManager) return;
-		window.__fireflyCodeInteractionManager = true;
+		if (window.__cyanCodeInteractionManager) return;
+		window.__cyanCodeInteractionManager = true;
 
 		function activateTab(tab, focusTab) {
 			const group = tab.closest("[data-code-group]");
@@ -61,8 +61,8 @@
 			if (!frame) return;
 
 			frame.classList.add("ff-code-touch-active");
-			window.clearTimeout(frame.__fireflyCodeTouchTimer);
-			frame.__fireflyCodeTouchTimer = window.setTimeout(() => {
+			window.clearTimeout(frame.__cyanCodeTouchTimer);
+			frame.__cyanCodeTouchTimer = window.setTimeout(() => {
 				frame.classList.remove("ff-code-touch-active");
 			}, 1800);
 		});

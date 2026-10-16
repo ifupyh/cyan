@@ -433,7 +433,7 @@ function applyFontMode(nextMode: "wenkai" | "original") {
 	fontMode = nextMode;
 	document.documentElement.dataset.fontMode = nextMode;
 	try {
-		localStorage.setItem("firefly-font-mode", nextMode);
+		localStorage.setItem("cyan-font-mode", nextMode);
 	} catch {
 		// 私有浏览模式下无法持久化时，仍让当前页面立即响应。
 	}
@@ -733,7 +733,7 @@ onMount(() => {
 	sharpCorners = getStoredSharpCorners();
 
 	// 从localStorage读取导航栏字体模式
-	const savedFontMode = localStorage.getItem("firefly-font-mode");
+	const savedFontMode = localStorage.getItem("cyan-font-mode");
 	fontMode = savedFontMode === "original" ? "original" : "wenkai";
 
 	// 读取主题模式
