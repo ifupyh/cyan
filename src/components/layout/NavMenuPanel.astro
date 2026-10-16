@@ -147,8 +147,8 @@ const getLinkIcon = (item: NavBarLink, fallback: string) =>
 <script>
 	function closeMobileMenu() {
 		const setMenuOpen = (window as Window & {
-			__fireflySetMobileMenuOpen?: (open: boolean) => void;
-		}).__fireflySetMobileMenuOpen;
+			__cyanSetMobileMenuOpen?: (open: boolean) => void;
+		}).__cyanSetMobileMenuOpen;
 		if (setMenuOpen) {
 			setMenuOpen(false);
 			return;

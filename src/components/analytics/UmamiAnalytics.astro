@@ -55,15 +55,15 @@ const replaysBlockSelector = replays?.blockSelector?.trim();
 
 		const loadAnalyticsScript = (src, attributes = {}) => {
 			if (!src) return;
-			const exists = [...document.querySelectorAll("script[data-firefly-analytics-src]")].some(
-				(script) => script.getAttribute("data-firefly-analytics-src") === src,
+			const exists = [...document.querySelectorAll("script[data-cyan-analytics-src]")].some(
+				(script) => script.getAttribute("data-cyan-analytics-src") === src,
 			);
 			if (exists) return;
 
 			const script = document.createElement("script");
 			script.defer = true;
 			script.src = src;
-			script.dataset.fireflyAnalyticsSrc = src;
+			script.dataset.cyanAnalyticsSrc = src;
 			script.setAttribute("data-swup-ignore-script", "");
 			Object.entries(attributes).forEach(([name, value]) => {
 				if (value !== undefined && value !== null && value !== "") {

@@ -45,7 +45,7 @@
 	let showPlaylist = $state(false);
 	let dragging = $state(false);
 
-	const mgr = (): MusicManager | null => (window as any).__fireflyMusic ?? null;
+	const mgr = (): MusicManager | null => (window as any).__cyanMusic ?? null;
 
 	function syncState() {
 		const m = mgr();

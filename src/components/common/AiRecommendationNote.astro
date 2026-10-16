@@ -228,22 +228,22 @@ const serializedSegments = JSON.stringify(segments);
 	}
 
 	type AiRecommendationRuntimeWindow = Window & {
-		__fireflyAiRecommendationInit?: () => void;
-		__fireflyAiRecommendationEventsBound?: boolean;
+		__cyanAiRecommendationInit?: () => void;
+		__cyanAiRecommendationEventsBound?: boolean;
 	};
 
 	const runtimeWindow = window as AiRecommendationRuntimeWindow;
-	runtimeWindow.__fireflyAiRecommendationInit = runAiRecommendationTypewriters;
+	runtimeWindow.__cyanAiRecommendationInit = runAiRecommendationTypewriters;
 
-	if (!runtimeWindow.__fireflyAiRecommendationEventsBound) {
-		const runLatestInitializer = () => runtimeWindow.__fireflyAiRecommendationInit?.();
+	if (!runtimeWindow.__cyanAiRecommendationEventsBound) {
+		const runLatestInitializer = () => runtimeWindow.__cyanAiRecommendationInit?.();
 		if (document.readyState === "loading") {
 			document.addEventListener("DOMContentLoaded", runLatestInitializer, { once: true });
 		}
 		document.addEventListener("swup:contentReplaced", runLatestInitializer);
 		document.addEventListener("swup:content:replace", runLatestInitializer);
 		document.addEventListener("swup:page:view", runLatestInitializer);
-		runtimeWindow.__fireflyAiRecommendationEventsBound = true;
+		runtimeWindow.__cyanAiRecommendationEventsBound = true;
 	}
 
 	if (document.readyState !== "loading") runAiRecommendationTypewriters();

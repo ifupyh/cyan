@@ -5,8 +5,8 @@ type DetectBuildPlatformOptions = {
 	isDev?: boolean;
 	unknownBuildPlatform?: string;
 };
-//“FIREFLY_BUILD_PLATFORM”环境变量自定义命名构建平台
-const BUILD_PLATFORM_OVERRIDE_KEY = "FIREFLY_BUILD_PLATFORM";
+//“CYAN_BUILD_PLATFORM”环境变量自定义命名构建平台
+const BUILD_PLATFORM_OVERRIDE_KEY = "CYAN_BUILD_PLATFORM";
 const DEFAULT_BUILD_PLATFORM = "Astro 静态构建";
 
 function hasNonEmptyEnv(
@@ -44,7 +44,7 @@ export function detectBuildPlatform({
 }: DetectBuildPlatformOptions): string {
 	const overrideValue = env[BUILD_PLATFORM_OVERRIDE_KEY];
 	if (typeof overrideValue === "string" && overrideValue.trim() !== "") {
-		// 环境变量显式覆盖最优先，可以用“FIREFLY_BUILD_PLATFORM”环境变量自定义不同部署平台的名字（默认值为空，无定义，继续后续自动识别）
+		// 环境变量显式覆盖最优先，可以用“CYAN_BUILD_PLATFORM”环境变量自定义不同部署平台的名字（默认值为空，无定义，继续后续自动识别）
 		return overrideValue.trim();
 	}
 	// ciName 自动识别

@@ -147,6 +147,6 @@ export interface SwupIslandRecord extends PageIslandOptions {
 
 declare global {
 	interface Window {
-		__fireflySwupRuntime?: SwupRuntimeState;
+		__cyanSwupRuntime?: SwupRuntimeState;
 	}
 }

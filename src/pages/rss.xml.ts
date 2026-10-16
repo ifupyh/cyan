@@ -53,7 +53,7 @@ export async function GET(context: APIContext): Promise<Response> {
 		title: siteConfig.title,
 		description: siteConfig.subtitle || "No description",
 		site: context.site ?? siteConfig.site_url,
-		customData: `<templateTheme>Aemeath</templateTheme>
+		customData: `<templateTheme>Cyan</templateTheme>
 		<templateThemeVersion>${pkg.version}</templateThemeVersion>
 		<templateThemeUrl>${siteConfig.site_url}</templateThemeUrl>
 		<lastBuildDate>${new Date().toUTCString()}</lastBuildDate>`,

@@ -305,7 +305,7 @@ export default defineConfig({
 		plugins: [tailwindcss()],
 		server: {
 			watch: {
-				ignored: ["**/package/**", "**/Firefly-docs/**"],
+				ignored: ["**/package/**", "**/Cyan-docs/**"],
 			},
 		},
 		resolve: {

@@ -12,7 +12,7 @@ const BILIBILI_HEADERS = {
 };
 
 const TMDB_HEADERS = {
-	"User-Agent": "AemeathBlog/1.0",
+	"User-Agent": "CyanBlog/1.0",
 };
 
 interface TmdbItem {

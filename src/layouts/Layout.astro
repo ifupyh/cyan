@@ -1028,8 +1028,8 @@ function disableAnimation() {
           }
           if (panel === "nav-menu-panel") {
               const setMenuOpen = (window as Window & {
-                  __fireflySetMobileMenuOpen?: (open: boolean) => void;
-              }).__fireflySetMobileMenuOpen;
+                  __cyanSetMobileMenuOpen?: (open: boolean) => void;
+              }).__cyanSetMobileMenuOpen;
               if (setMenuOpen) {
                   setMenuOpen(false);
               } else {
@@ -1700,7 +1700,7 @@ function disableAnimation() {
       setTimeout(() => {
         if (document.getElementById("tcomment")) {
           // 触发自定义事件，通知评论系统页面已完全加载
-          const pageLoadedEvent = new CustomEvent("firefly:page:loaded", {
+          const pageLoadedEvent = new CustomEvent("cyan:page:loaded", {
             detail: {
               path: window.location.pathname,
               timestamp: Date.now(),
@@ -1708,7 +1708,7 @@ function disableAnimation() {
           });
           document.dispatchEvent(pageLoadedEvent);
           console.log(
-            "Layout: 触发 firefly:page:loaded 事件，路径:",
+            "Layout: 触发 cyan:page:loaded 事件，路径:",
             window.location.pathname
           );
         }
@@ -1717,7 +1717,7 @@ function disableAnimation() {
       // 页面布局完成并绘制首帧后，再通知需要视觉启动的组件。
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          document.dispatchEvent(new CustomEvent("firefly:page-ready", {
+          document.dispatchEvent(new CustomEvent("cyan:page-ready", {
             detail: {
               path: window.location.pathname,
               timestamp: Date.now(),

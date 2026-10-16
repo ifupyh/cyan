@@ -758,11 +758,11 @@ const hasMultipleImages =
                 if (Array.isArray(subtitles) && subtitles.length > 0 && !subtitleElement.querySelector('.typewriter')) {
                     // Use a global variable to persist the subtitle across Swup navigations
                     // This variable will be reset on full page reload (F5), meeting the requirement
-                    if (!window.fireflyCachedSubtitle) {
+                    if (!window.cyanCachedSubtitle) {
                         const randomIndex = Math.floor(Math.random() * subtitles.length);
-                        window.fireflyCachedSubtitle = subtitles[randomIndex];
+                        window.cyanCachedSubtitle = subtitles[randomIndex];
                     }
-                    subtitleElement.textContent = window.fireflyCachedSubtitle;
+                    subtitleElement.textContent = window.cyanCachedSubtitle;
                 }
             } catch (e) {
                 console.error("Failed to parse subtitles", e);

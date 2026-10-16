@@ -354,29 +354,29 @@ top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2">
 		background: var(--btn-plain-bg-hover);
 	}
 
-	:global(#navbar.firefly-navbar #search-panel a.search-more-link::before),
-	:global(#navbar.firefly-navbar #search-panel a.search-more-link::after) {
+	:global(#navbar.cyan-navbar #search-panel a.search-more-link::before),
+	:global(#navbar.cyan-navbar #search-panel a.search-more-link::after) {
 		content: none !important;
 		display: none !important;
 	}
 
-	:global(#navbar.firefly-navbar #search-panel a.search-more-link),
-	:global(#navbar.firefly-navbar #search-panel a.search-more-link:hover),
-	:global(#navbar.firefly-navbar #search-panel a.search-more-link:active) {
+	:global(#navbar.cyan-navbar #search-panel a.search-more-link),
+	:global(#navbar.cyan-navbar #search-panel a.search-more-link:hover),
+	:global(#navbar.cyan-navbar #search-panel a.search-more-link:active) {
 		position: static !important;
 		transform: none !important;
 		box-shadow: none !important;
 	}
 
-	:global(#navbar.firefly-navbar #search-panel a.search-result-item::before),
-	:global(#navbar.firefly-navbar #search-panel a.search-result-item::after) {
+	:global(#navbar.cyan-navbar #search-panel a.search-result-item::before),
+	:global(#navbar.cyan-navbar #search-panel a.search-result-item::after) {
 		content: none !important;
 		display: none !important;
 	}
 
-	:global(#navbar.firefly-navbar #search-panel a.search-result-item),
-	:global(#navbar.firefly-navbar #search-panel a.search-result-item:hover),
-	:global(#navbar.firefly-navbar #search-panel a.search-result-item:active) {
+	:global(#navbar.cyan-navbar #search-panel a.search-result-item),
+	:global(#navbar.cyan-navbar #search-panel a.search-result-item:hover),
+	:global(#navbar.cyan-navbar #search-panel a.search-result-item:active) {
 		position: static !important;
 		transform: none !important;
 		box-shadow: none !important;

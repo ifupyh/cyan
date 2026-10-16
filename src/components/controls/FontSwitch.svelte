@@ -1,7 +1,7 @@
 <script lang="ts">
 import { onMount } from "svelte";
 
-const STORAGE_KEY = "firefly-font-mode";
+const STORAGE_KEY = "cyan-font-mode";
 type FontMode = "wenkai" | "original";
 
 let mode: FontMode = "wenkai";

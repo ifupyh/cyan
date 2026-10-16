@@ -11,11 +11,11 @@ export const siteConfig: SiteConfig = {
 	// 站点副标题
 	subtitle: "万物终将归于尘土，唯有故事穿越黑暗",
 
-	// Aemeath 主题版本
+	// Cyan 主题版本
 	themeVersion: "V0.1.0",
 
 	// 站点 URL
-	site_url: "http://localhost:4321",
+	site_url: "https://cyan.pages.dev",
 
 	// 站点描述
 	description:
