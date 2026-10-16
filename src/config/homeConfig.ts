@@ -3,8 +3,8 @@ import type { HomeConfig } from "../types/config";
 export const homeConfig: HomeConfig = {
 	// 头像
 	// 图片路径支持三种格式：
-	// 1. public 目录（以 "/" 开头，不优化）："/assets/images/rain-avatar.webp"
-	// 2. src 目录（不以 "/" 开头，自动优化但会增加构建时间，推荐）："assets/images/rain-avatar.webp"
+	// 1. public 目录（以 "/" 开头，不优化）："/assets/images/Cyan.webp"
+	// 2. src 目录（不以 "/" 开头，自动优化但会增加构建时间，推荐）："assets/images/Cyan.webp"
 	// 3. 远程 URL："https://example.com/avatar.jpg"
 	avatar: "assets/images/Cyan.webp",
 

@@ -48,7 +48,7 @@ keywords: [
 		// 是否对访问者隐藏主题色选择器
 		fixed: false,
 		// 默认模式："light" 亮色，"dark" 暗色，"system" 跟随系统
-		defaultMode: "system",
+		defaultMode: "dark",
 	},
 
 	// 页面整体宽度（单位：rem）
@@ -63,7 +63,7 @@ keywords: [
 		// 是否让卡片风格跟随主题色相
 		followTheme: false,
 		// 是否默认启用直角模式（所有卡片/容器/按钮 border-radius 归零）
-		sharpCorners: false,
+		sharpCorners: true,
 	},
 
 	// Favicon 配置

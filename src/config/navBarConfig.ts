@@ -13,37 +13,37 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 	// 基础导航栏链接
 	const links: NavBarLink[] = [];
 
-	// 文章（普通链接，无下拉）
+	// 旅记（普通链接，无下拉）
 	links.push({
-		name: "文章",
+		name: "旅记",
 		url: "/posts/",
 		icon: "material-symbols:article",
 	});
 
-	// 社区（点击直接进入友链页，二级栏可切朋友圈/留言）
+	// 旅人（点击直接进入友链页，二级栏可切朋友圈/留言）
 	links.push({
-		name: "社区",
+		name: "旅人",
 		url: "/friends/",
 		icon: "material-symbols:groups",
 	});
 
-	// 我的（浮光集聚合页）
+	// 浮光（浮光集聚合页）
 	links.push({
-		name: "我的",
+		name: "浮光",
 		url: "/glimmer/",
 		icon: "material-symbols:person",
 	});
 
-	// 音乐（沉浸式音乐播放器）
+	// 余音（沉浸式音乐播放器）
 	links.push({
-		name: "音乐",
+		name: "余音",
 		url: "/music/",
 		icon: "material-symbols:music-note",
 	});
 
-	// 关于（聚合页，二级栏可切关于我/打赏/动态表情/站点统计）
+	// 起源（聚合页，二级栏可切关于我/打赏/动态表情/站点统计）
 	links.push({
-		name: "关于",
+		name: "起源",
 		url: "/about/",
 		icon: "material-symbols:info",
 	});

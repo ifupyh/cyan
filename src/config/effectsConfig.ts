@@ -9,6 +9,18 @@ export const sakuraConfig: SakuraConfig = {
 	// 是否允许用户在设置中切换
 	switchable: true,
 
+	// 可选特效图案列表
+	particles: [
+		{ id: "particle-01", label: "粒子 1", src: "/assets/images/effects/particle-01.webp" },
+		{ id: "particle-02", label: "粒子 2", src: "/assets/images/effects/particle-02.webp" },
+		{ id: "particle-03", label: "粒子 3", src: "/assets/images/effects/particle-03.webp" },
+		{ id: "particle-04", label: "粒子 4", src: "/assets/images/effects/particle-04.webp" },
+		{ id: "particle-05", label: "粒子 5", src: "/assets/images/effects/particle-05.webp" },
+		{ id: "particle-06", label: "粒子 6", src: "/assets/images/effects/particle-06.webp" },
+	],
+	// 默认特效图案
+	defaultParticleId: "particle-01",
+
 	// 樱花数量
 	sakuraNum: 21,
 

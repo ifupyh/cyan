@@ -475,9 +475,9 @@ const initialStyle = initialHome
 		--intro-band-height: clamp(2.75rem, 5.2vh, 3.7rem);
 		--intro-edge-gap: clamp(1.25rem, 3.5vh, 2.4rem);
 		/* Soft cream-yellow: bright enough to keep the illustrations and typography readable. */
-		--intro-surface: #fffdf7;
-		--intro-surface-deep: #fff4d5;
-		--intro-surface-ink: #f8e4ad;
+		--intro-surface: #ffffff;
+		--intro-surface-deep: #ffffff;
+		--intro-surface-ink: #ffffff;
 		--intro-strip-delay: 1.35s;
 		--intro-strip-duration: 2.7s;
 		position: fixed;
@@ -580,40 +580,36 @@ const initialStyle = initialHome
 
 	.home-portfolio-intro__band {
 		z-index: 4;
-		top: 50%;
-		bottom: auto;
-		height: var(--intro-band-height);
 		/* This is only a positioning layer for the two words, not a visible banner. */
 		background: transparent;
 		border: 0;
 		box-shadow: none;
-		transform: translateY(-50%);
 		opacity: 1;
 	}
 
 	.home-portfolio-intro__title {
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 		justify-content: space-between;
 		height: 100%;
-		padding: 0 clamp(1.5rem, 6vw, 5.5rem);
+		padding: clamp(1.5rem, 5vh, 3rem) clamp(1.5rem, 6vw, 5.5rem);
 		white-space: nowrap;
 	}
 
 	.home-portfolio-intro__word {
 		display: inline-block;
-		color: #fff;
+		color: #b9a16c;
 		font-family: "ZCOOL KuaiLe", "Noto Sans SC", "Microsoft YaHei", sans-serif;
-		font-size: clamp(4rem, 13vw, 11.5rem);
-		font-weight: 900;
+		font-size: clamp(3.5rem, 10vw, 9rem);
+		font-weight: 600;
 		line-height: 0.82;
 		letter-spacing: 0.045em;
 		text-shadow:
-			0.055em 0.055em 0 #15131a,
-			-0.055em 0.055em 0 #15131a,
-			0.055em -0.055em 0 #15131a,
-			-0.055em -0.055em 0 #15131a,
-			0 0.08em 0.18em rgba(0, 0, 0, 0.68);
+			-1px 0 0 rgba(21, 19, 26, 0.42),
+			1px 0 0 rgba(21, 19, 26, 0.42),
+			0 -1px 0 rgba(21, 19, 26, 0.42),
+			0 1px 0 rgba(21, 19, 26, 0.42),
+			0 3px 8px rgba(0, 0, 0, 0.22);
 		will-change: transform, opacity;
 		opacity: 0;
 	}
@@ -623,6 +619,7 @@ const initialStyle = initialHome
 	}
 
 	.home-portfolio-intro__word--right {
+		align-self: flex-end;
 		transform: translate3d(24vw, 0, 0) rotate(2deg);
 	}
 
@@ -783,7 +780,7 @@ const initialStyle = initialHome
 		}
 
 		.home-portfolio-intro__word {
-			font-size: clamp(3.25rem, 16.5vw, 5.8rem);
+			font-size: clamp(2.75rem, 13vw, 5rem);
 			letter-spacing: 0;
 		}
 

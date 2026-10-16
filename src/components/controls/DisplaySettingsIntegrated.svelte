@@ -20,6 +20,7 @@ import {
 	getDefaultOverlayBlur,
 	getDefaultOverlayCardOpacity,
 	getDefaultOverlayOpacity,
+	getDefaultParticleId,
 	getDefaultSakuraEnabled,
 	getDefaultSharpCorners,
 	getDefaultWavesEnabled,
@@ -30,6 +31,7 @@ import {
 	getStoredOverlayBlur,
 	getStoredOverlayCardOpacity,
 	getStoredOverlayOpacity,
+	getStoredParticleId,
 	getStoredSakuraEnabled,
 	getStoredSharpCorners,
 	getStoredSelectedWallpaperIndex,
@@ -42,6 +44,7 @@ import {
 	setOverlayBlur,
 	setOverlayCardOpacity,
 	setOverlayOpacity,
+	setParticleId,
 	setSakuraEnabled,
 	setSharpCorners,
 	setSelectedWallpaperIndex,
@@ -110,9 +113,7 @@ const builtInWallpapers: WallpaperOption[] = configuredWallpapers.desktop.map(
 );
 
 let hue = $state(getHue());
-const defaultHue = getDefaultHue();
 let wallpaperMode: WALLPAPER_MODE = $state(backgroundWallpaper.mode);
-const defaultWallpaperMode = backgroundWallpaper.mode;
 let currentLayout: "list" | "grid" = $state("list");
 const defaultLayout = siteConfig.postListLayout.defaultMode;
 const mobileDefaultLayout =
@@ -127,33 +128,23 @@ let isMobileWidth = $state(
 let mobileSettingsTab = $state<MobileSettingsTab>("appearance");
 let isSwitching = $state(false);
 let wavesEnabled = $state(true);
-const defaultWavesEnabled = getDefaultWavesEnabled();
 let gradientEnabled = $state(true);
-const defaultGradientEnabled = getDefaultGradientEnabled();
 let bannerTitleEnabled = $state(true);
-const defaultBannerTitleEnabled = getDefaultBannerTitleEnabled();
 let bannerCarouselEnabled = $state(true);
-const defaultBannerCarouselEnabled = getDefaultBannerCarouselEnabled();
 let sakuraEnabled = $state(true);
-const defaultSakuraEnabled = getDefaultSakuraEnabled();
+let selectedParticleId = $state(getDefaultParticleId());
 let sharpCorners = $state(false);
-const defaultSharpCorners = getDefaultSharpCorners();
 // 导航栏字体模式：wenkai = 霞鹜文楷，original = 原字体
 let fontMode = $state<"wenkai" | "original">("wenkai");
 // 主题模式：亮色 / 暗色 / 跟随系统
 let themeMode = $state<LIGHT_DARK_MODE>(LIGHT_MODE);
 let selectedWallpaperIndex: number | null = $state(null);
 let overlayOpacity = $state(getDefaultOverlayOpacity());
-const defaultOverlayOpacity = getDefaultOverlayOpacity();
 let overlayBlur = $state(getDefaultOverlayBlur());
-const defaultOverlayBlur = getDefaultOverlayBlur();
 let overlayCardOpacity = $state(getDefaultOverlayCardOpacity());
-const defaultOverlayCardOpacity = getDefaultOverlayCardOpacity();
-let introEnabled = $state(homePortfolioIntroSettings.defaultEnabled);
 let selectedIntroCharacterId = $state(homePortfolioIntroSettings.defaultCharacterId);
 let selectedIntroTopBannerId = $state(homePortfolioIntroSettings.defaultTopBannerId);
 let selectedIntroBottomBannerId = $state(homePortfolioIntroSettings.defaultBottomBannerId);
-const defaultIntroEnabled = homePortfolioIntroSettings.defaultEnabled;
 const defaultIntroCharacterId = homePortfolioIntroSettings.defaultCharacterId;
 const defaultIntroTopBannerId = homePortfolioIntroSettings.defaultTopBannerId;
 const defaultIntroBottomBannerId = homePortfolioIntroSettings.defaultBottomBannerId;
@@ -214,23 +205,6 @@ const hasOverlaySettings =
 		isOverlayOpacitySwitchable ||
 		isOverlayBlurSwitchable ||
 		isOverlayCardOpacitySwitchable);
-let overlaySettingsIsDefault = $derived(
-	selectedWallpaperIndex === null &&
-		(!isOverlayOpacitySwitchable || overlayOpacity === defaultOverlayOpacity) &&
-		(!isOverlayBlurSwitchable || overlayBlur === defaultOverlayBlur) &&
-		(!isOverlayCardOpacitySwitchable ||
-			overlayCardOpacity === defaultOverlayCardOpacity),
-);
-// 横幅设置是否全部为默认值（用于控制恢复默认按钮的显隐）
-let bannerSettingsIsDefault = $derived(
-	(!isBannerTitleSwitchable ||
-		bannerTitleEnabled === defaultBannerTitleEnabled) &&
-		(!isWavesSwitchable || wavesEnabled === defaultWavesEnabled) &&
-		(!isGradientSwitchable || gradientEnabled === defaultGradientEnabled) &&
-		(!isBannerCarouselSwitchable ||
-			bannerCarouselEnabled === defaultBannerCarouselEnabled) &&
-		selectedWallpaperIndex === null,
-);
 const hasAnyContent =
 	showThemeColor ||
 	isWallpaperSwitchable ||
@@ -241,12 +215,6 @@ const hasAnyContent =
 	isSharpCornersSwitchable ||
 	homePortfolioIntroSettings.characters.length > 0;
 
-const introSettingsIsDefault = $derived(
-	introEnabled === defaultIntroEnabled &&
-	selectedIntroCharacterId === defaultIntroCharacterId &&
-	selectedIntroTopBannerId === defaultIntroTopBannerId &&
-	selectedIntroBottomBannerId === defaultIntroBottomBannerId,
-);
 
 let overlaySliderItems = $derived<OverlaySliderItem[]>([
 	{
@@ -293,65 +261,11 @@ let overlaySliderItems = $derived<OverlaySliderItem[]>([
 	},
 ]);
 
-function resetHue() {
-	hue = getDefaultHue();
-	requestAnimationFrame(refreshAllRangeProgress);
-}
 
-function resetWallpaperMode() {
-	wallpaperMode = defaultWallpaperMode;
-	setWallpaperMode(defaultWallpaperMode);
-}
 
-function resetLayout() {
-	currentLayout = effectiveDefaultLayout;
-	localStorage.removeItem("postListLayout");
 
-	// 触发自定义事件，通知页面布局已改变
-	const event = new CustomEvent("layoutChange", {
-		detail: { layout: effectiveDefaultLayout },
-	});
-	window.dispatchEvent(event);
-}
 
-function resetWavesEnabled() {
-	wavesEnabled = defaultWavesEnabled;
-	setWavesEnabled(defaultWavesEnabled);
-}
 
-function resetGradientEnabled() {
-	gradientEnabled = defaultGradientEnabled;
-	setGradientEnabled(defaultGradientEnabled);
-}
-
-function resetBannerSettings() {
-	if (selectedWallpaperIndex !== null) {
-		selectedWallpaperIndex = null;
-		clearSelectedWallpaper();
-	}
-	if (
-		isBannerTitleSwitchable &&
-		bannerTitleEnabled !== defaultBannerTitleEnabled
-	) {
-		bannerTitleEnabled = defaultBannerTitleEnabled;
-		setBannerTitleEnabled(defaultBannerTitleEnabled);
-	}
-	if (isWavesSwitchable && wavesEnabled !== defaultWavesEnabled) {
-		wavesEnabled = defaultWavesEnabled;
-		setWavesEnabled(defaultWavesEnabled);
-	}
-	if (isGradientSwitchable && gradientEnabled !== defaultGradientEnabled) {
-		gradientEnabled = defaultGradientEnabled;
-		setGradientEnabled(defaultGradientEnabled);
-	}
-	if (
-		isBannerCarouselSwitchable &&
-		bannerCarouselEnabled !== defaultBannerCarouselEnabled
-	) {
-		bannerCarouselEnabled = defaultBannerCarouselEnabled;
-		setBannerCarouselEnabled(defaultBannerCarouselEnabled);
-	}
-}
 
 function selectBuiltInWallpaper(index: number) {
 	selectedWallpaperIndex = index;
@@ -365,29 +279,6 @@ function selectBuiltInWallpaper(index: number) {
 	}
 }
 
-function resetOverlaySettings() {
-	if (selectedWallpaperIndex !== null) {
-		selectedWallpaperIndex = null;
-		clearSelectedWallpaper();
-	}
-	if (isOverlayOpacitySwitchable && overlayOpacity !== defaultOverlayOpacity) {
-		overlayOpacity = defaultOverlayOpacity;
-		setOverlayOpacity(defaultOverlayOpacity);
-	}
-	if (isOverlayBlurSwitchable && overlayBlur !== defaultOverlayBlur) {
-		overlayBlur = defaultOverlayBlur;
-		setOverlayBlur(defaultOverlayBlur);
-	}
-	if (
-		isOverlayCardOpacitySwitchable &&
-		overlayCardOpacity !== defaultOverlayCardOpacity
-	) {
-		overlayCardOpacity = defaultOverlayCardOpacity;
-		setOverlayCardOpacity(defaultOverlayCardOpacity);
-	}
-
-	requestAnimationFrame(refreshAllRangeProgress);
-}
 
 function toggleWavesEnabled() {
 	wavesEnabled = !wavesEnabled;
@@ -444,13 +335,6 @@ function selectThemeMode(nextMode: LIGHT_DARK_MODE) {
 	setTheme(nextMode);
 }
 
-function getStoredIntroEnabled() {
-	try {
-		return localStorage.getItem(homePortfolioIntroSettings.enabledStorageKey) !== "0";
-	} catch {
-		return defaultIntroEnabled;
-	}
-}
 
 function getStoredIntroCharacterId() {
 	try {
@@ -485,7 +369,7 @@ function dispatchIntroSettingsChange(preview = false) {
 	window.dispatchEvent(
 		new CustomEvent("home-portfolio-intro-settings-change", {
 			detail: {
-				enabled: introEnabled,
+				enabled: true,
 				characterId: selectedIntroCharacterId,
 				topBannerId: selectedIntroTopBannerId,
 				bottomBannerId: selectedIntroBottomBannerId,
@@ -496,19 +380,6 @@ function dispatchIntroSettingsChange(preview = false) {
 }
 
 
-function toggleIntroEnabled() {
-	introEnabled = !introEnabled;
-	try {
-		localStorage.setItem(
-			homePortfolioIntroSettings.enabledStorageKey,
-			introEnabled ? "1" : "0",
-		);
-		if (introEnabled) sessionStorage.removeItem("cyan.home-portfolio-intro-seen.v1");
-	} catch {
-		// 私有浏览模式下无法持久化时，仍让当前页面立即响应切换。
-	}
-	dispatchIntroSettingsChange();
-}
 
 function selectIntroCharacter(characterId: string) {
 	if (!homePortfolioIntroSettings.characters.some((character) => character.id === characterId)) return;
@@ -540,22 +411,6 @@ function selectIntroBanner(position: "top" | "bottom", bannerId: string) {
 	dispatchIntroSettingsChange(true);
 }
 
-function resetIntroSettings() {
-	introEnabled = defaultIntroEnabled;
-	selectedIntroCharacterId = defaultIntroCharacterId;
-	selectedIntroTopBannerId = defaultIntroTopBannerId;
-	selectedIntroBottomBannerId = defaultIntroBottomBannerId;
-	try {
-		localStorage.removeItem(homePortfolioIntroSettings.enabledStorageKey);
-		localStorage.removeItem(homePortfolioIntroSettings.characterStorageKey);
-		localStorage.removeItem(homePortfolioIntroSettings.topBannerStorageKey);
-		localStorage.removeItem(homePortfolioIntroSettings.bottomBannerStorageKey);
-		sessionStorage.removeItem("cyan.home-portfolio-intro-seen.v1");
-	} catch {
-		// 私有浏览模式下无法持久化时，仍恢复当前页面的默认值。
-	}
-	dispatchIntroSettingsChange();
-}
 
 function switchWallpaperMode(newMode: WALLPAPER_MODE) {
 	wallpaperMode = newMode;
@@ -700,8 +555,7 @@ onMount(() => {
 	checkScreenSize();
 
 	// 从localStorage读取首页开屏动画偏好
-	introEnabled = getStoredIntroEnabled();
-	selectedIntroCharacterId = getStoredIntroCharacterId();
+		selectedIntroCharacterId = getStoredIntroCharacterId();
 	selectedIntroTopBannerId = getStoredIntroBannerId("top", defaultIntroTopBannerId);
 	selectedIntroBottomBannerId = getStoredIntroBannerId("bottom", defaultIntroBottomBannerId);
 
@@ -728,6 +582,9 @@ onMount(() => {
 
 	// 从localStorage读取樱花特效状态
 	sakuraEnabled = getStoredSakuraEnabled();
+
+	// 从localStorage读取特效图案选择
+	selectedParticleId = getStoredParticleId();
 
 	// 从localStorage读取直角模式状态
 	sharpCorners = getStoredSharpCorners();
@@ -907,7 +764,7 @@ $effect(() => {
             before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
             before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
         >
-            主题颜色
+            明暗模式
         </div>
         <div class="flex gap-2">
             <button
@@ -940,6 +797,33 @@ $effect(() => {
         </div>
     </div>
 
+    <!-- Theme Color Section -->
+    {#if showThemeColor}
+    <div
+        class="mt-2 mb-2 mobile-settings-section"
+        class:mobile-settings-section-hidden={mobileSettingsTab !== "appearance"}
+    >
+        <div class="flex gap-2 font-bold text-lg text-neutral-900 dark:text-neutral-100 transition relative ml-3 mb-2
+            before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
+            before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
+        >
+            {i18n(I18nKey.themeColor)}
+        </div>
+        <div class="flex flex-row gap-2 mb-2 items-center justify-between">
+            <div class="flex gap-1">
+                <div id="hueValue" class="transition bg-(--btn-regular-bg) w-10 h-7 rounded-md flex justify-center
+                font-bold text-sm items-center text-(--btn-content)">
+                    {hue}
+                </div>
+            </div>
+        </div>
+        <div class="w-full h-6 px-1 bg-[oklch(0.80_0.10_0)] dark:bg-[oklch(0.70_0.10_0)] rounded select-none">
+            <input aria-label={i18n(I18nKey.themeColor)} type="range" min="0" max="360" bind:value={hue}
+                   class="slider" id="colorSlider" step="5" style="width: 100%">
+        </div>
+    </div>
+    {/if}
+
     <!-- Wallpaper Mode Section -->
     {#if isWallpaperSwitchable}
         <div
@@ -951,12 +835,6 @@ $effect(() => {
                 before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
             >
                 {i18n(I18nKey.wallpaperMode)}
-                <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md  active:scale-90"
-                        class:opacity-0={wallpaperMode === defaultWallpaperMode} class:pointer-events-none={wallpaperMode === defaultWallpaperMode} onclick={resetWallpaperMode}>
-                    <div class="text-(--btn-content)">
-                        <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
-                    </div>
-                </button>
             </div>
             <div class="flex gap-2">
                 <button
@@ -1012,12 +890,6 @@ $effect(() => {
                 before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
             >
                 {i18n(I18nKey.overlaySettings)}
-                <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md active:scale-90"
-                        class:opacity-0={overlaySettingsIsDefault} class:pointer-events-none={overlaySettingsIsDefault} onclick={resetOverlaySettings}>
-                    <div class="text-(--btn-content)">
-                        <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
-                    </div>
-                </button>
             </div>
             <div class="space-y-2">
                 {#if isBuiltInWallpaperSwitchable}
@@ -1088,12 +960,6 @@ $effect(() => {
                 before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
             >
                 {i18n(I18nKey.wallpaperSettings)}
-                <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md  active:scale-90"
-                        class:opacity-0={bannerSettingsIsDefault} class:pointer-events-none={bannerSettingsIsDefault} onclick={resetBannerSettings}>
-                    <div class="text-(--btn-content)">
-                        <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
-                    </div>
-                </button>
             </div>
             <div class="space-y-1">
                 {#if isBuiltInWallpaperSwitchable}
@@ -1215,47 +1081,8 @@ $effect(() => {
             before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
         >
             开屏动画
-            <span class="rounded-full bg-(--btn-regular-bg) px-2 py-0.5 text-[0.65rem] font-semibold leading-none text-(--primary)">
-                主页切换可预览
-            </span>
-            <button
-                type="button"
-                aria-label="恢复开屏动画默认设置"
-                class="btn-regular w-7 h-7 rounded-md active:scale-90"
-                class:opacity-0={introSettingsIsDefault}
-                class:pointer-events-none={introSettingsIsDefault}
-                onclick={resetIntroSettings}
-            >
-                <div class="text-(--btn-content)">
-                    <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
-                </div>
-            </button>
         </div>
         <div class="space-y-2">
-            <button
-                type="button"
-                aria-pressed={introEnabled}
-                class="w-full btn-regular rounded-md py-2 px-3 flex items-center gap-3 text-left active:scale-95 touch-manipulation transition-all relative overflow-hidden"
-                class:bg-(--btn-regular-bg-hover)={introEnabled}
-                onclick={toggleIntroEnabled}
-            >
-                <Icon icon="material-symbols:play-arrow-rounded" class="text-[1.25rem] shrink-0"></Icon>
-                <span class="text-sm flex-1">进入首页时播放</span>
-                <div
-                    class="w-10 h-5 rounded-full transition-all duration-200 relative"
-                    class:bg-(--primary)={introEnabled}
-                    class:bg-(--btn-regular-bg-active)={!introEnabled}
-                >
-                    <div
-                        class="absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200"
-                        class:left-0.5={!introEnabled}
-                        class:left-5={introEnabled}
-                    ></div>
-                </div>
-            </button>
-            <p class="-mt-1 mb-2 px-1 text-xs font-normal text-neutral-500 dark:text-neutral-400">
-                在主页切换角色或横幅，会立即播放一次动画预览
-            </p>
             <div class="flex items-center gap-2 px-1 text-xs font-semibold text-neutral-700 dark:text-neutral-300">
                 <Icon icon="material-symbols:person-outline-rounded" class="text-[1rem] shrink-0"></Icon>
                 <span>选择开屏角色</span>
@@ -1359,12 +1186,6 @@ $effect(() => {
                 before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
             >
                 {i18n(I18nKey.effectsSettings)}
-                <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md  active:scale-90"
-                        class:opacity-0={sakuraEnabled === defaultSakuraEnabled} class:pointer-events-none={sakuraEnabled === defaultSakuraEnabled} onclick={() => { sakuraEnabled = defaultSakuraEnabled; setSakuraEnabled(defaultSakuraEnabled); }}>
-                    <div class="text-(--btn-content)">
-                        <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
-                    </div>
-                </button>
             </div>
             <div class="space-y-1">
                 <button
@@ -1385,40 +1206,33 @@ $effect(() => {
                     </div>
                 </button>
             </div>
-        </div>
-    {/if}
 
-    <!-- Theme Color Section -->
-    {#if showThemeColor}
-    <div
-        class="mt-2 mb-2 mobile-settings-section"
-        class:mobile-settings-section-hidden={mobileSettingsTab !== "preferences"}
-    >
-        <div class="flex gap-2 font-bold text-lg text-neutral-900 dark:text-neutral-100 transition relative ml-3 mb-2
-            before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
-            before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
-        >
-            {i18n(I18nKey.themeColor)}
-            <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md  active:scale-90"
-                    class:opacity-0={hue === defaultHue} class:pointer-events-none={hue === defaultHue} onclick={resetHue}>
-                <div class="text-(--btn-content)">
-                    <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
+            {#if sakuraEnabled}
+                <div class="intro-character-picker grid grid-cols-3 gap-1.5" role="radiogroup" aria-label={i18n(I18nKey.selectParticle)}>
+                    {#each sakuraConfig.particles as particle}
+                        <button
+                            type="button"
+                            title={particle.label}
+                            aria-label={particle.label}
+                            aria-pressed={selectedParticleId === particle.id}
+                            class="intro-character-picker-item relative flex aspect-[4/5] flex-col overflow-hidden rounded-lg border-2 transition-all active:scale-95"
+                            class:border-(--primary)={selectedParticleId === particle.id}
+                            class:border-transparent={selectedParticleId !== particle.id}
+                            class:ring-2={selectedParticleId === particle.id}
+                            class:ring-(--primary)={selectedParticleId === particle.id}
+                            class:ring-offset-1={selectedParticleId === particle.id}
+                            class:ring-offset-transparent={selectedParticleId === particle.id}
+                            onclick={() => { selectedParticleId = particle.id; setParticleId(particle.id); }}
+                        >
+                            <img src={particle.src} alt={particle.label} class="min-h-0 w-full flex-1 object-contain" loading="lazy" decoding="async" />
+                            <span class="relative shrink-0 bg-black/55 px-1 py-1 text-center text-[0.65rem] font-semibold text-white">
+                                {particle.label}
+                            </span>
+                        </button>
+                    {/each}
                 </div>
-            </button>
+            {/if}
         </div>
-        <div class="flex flex-row gap-2 mb-2 items-center justify-between">
-            <div class="flex gap-1">
-                <div id="hueValue" class="transition bg-(--btn-regular-bg) w-10 h-7 rounded-md flex justify-center
-                font-bold text-sm items-center text-(--btn-content)">
-                    {hue}
-                </div>
-            </div>
-        </div>
-        <div class="w-full h-6 px-1 bg-[oklch(0.80_0.10_0)] dark:bg-[oklch(0.70_0.10_0)] rounded select-none">
-            <input aria-label={i18n(I18nKey.themeColor)} type="range" min="0" max="360" bind:value={hue}
-                   class="slider" id="colorSlider" step="5" style="width: 100%">
-        </div>
-    </div>
     {/if}
 
     <!-- Font Selection Section -->
@@ -1463,12 +1277,6 @@ $effect(() => {
                 before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
             >
                 卡片形状
-                <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md active:scale-90"
-                        class:opacity-0={sharpCorners === defaultSharpCorners} class:pointer-events-none={sharpCorners === defaultSharpCorners} onclick={() => { sharpCorners = defaultSharpCorners; setSharpCorners(defaultSharpCorners); }}>
-                    <div class="text-(--btn-content)">
-                        <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
-                    </div>
-                </button>
             </div>
             <div class="flex gap-2">
                 <button
@@ -1508,12 +1316,6 @@ $effect(() => {
                 before:absolute before:-left-3 before:top-1/2 before:-translate-y-1/2"
             >
                 {i18n(I18nKey.postListLayout)}
-                <button aria-label="Reset to Default" class="btn-regular w-7 h-7 rounded-md  active:scale-90"
-                        class:opacity-0={currentLayout === effectiveDefaultLayout} class:pointer-events-none={currentLayout === effectiveDefaultLayout} onclick={resetLayout}>
-                    <div class="text-(--btn-content)">
-                        <Icon icon="fa7-solid:arrow-rotate-left" class="text-[0.875rem]"></Icon>
-                    </div>
-                </button>
             </div>
             <div class="flex gap-2">
                 <button

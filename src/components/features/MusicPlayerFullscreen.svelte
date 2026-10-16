@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { onMount } from "svelte";
+	import { slide } from "svelte/transition";
+	import "@fontsource-variable/cinzel";
 
 	interface Track {
 		name: string;
 		artist: string;
 		pic?: string;
+		vinyl?: string;
 	}
 	interface Lyric {
 		time: number;
@@ -125,6 +128,10 @@
 		return lyrics.slice(start, end).map((l, i) => ({ text: l.text, index: start + i }));
 	});
 
+	const isVideoCover = $derived(
+		!!track?.pic && /\.(mp4|webm|mov)(\?|#|$)/i.test(track.pic),
+	);
+
 	function toggle() {
 		mgr()?.togglePlay();
 	}
@@ -163,16 +170,20 @@
 </script>
 
 <div class="music-fs">
-	<!-- 背景：封面图铺满全屏，右侧清晰呈现人物 -->
-	<div
-		class="music-fs__bg"
-		style:background-image={track?.pic ? `url("${track.pic}")` : undefined}
-	></div>
+	<!-- 背景：封面图/视频铺满全屏，右侧清晰呈现人物 -->
+	{#if track?.pic}
+		{#if isVideoCover}
+			<video class="music-fs__bg music-fs__bg--video" src={track.pic} autoplay muted loop playsinline></video>
+		{:else}
+			<div class="music-fs__bg" style:background-image={`url("${track.pic}")`}></div>
+		{/if}
+	{/if}
 	<!-- 遮罩：左侧加深保证内容可读，右侧保持清晰 -->
 	<div class="music-fs__mask"></div>
 
 	<!-- 左半屏内容 -->
 	<div class="music-fs__left">
+		<p class="music-fs__kicker">MUSIC</p>
 		<div class="music-fs__hero">
 			<div class="music-fs__lyrics">
 				{#if visibleLyrics.length === 0}
@@ -190,8 +201,8 @@
 				<div class="music-fs__vinyl-wrap">
 					<div class="music-fs__vinyl" class:spinning={isPlaying}>
 						<div class="music-fs__vinyl-cover">
-							{#if track?.pic}
-								<img src={track.pic} alt="" draggable="false" />
+							{#if track?.vinyl || track?.pic}
+								<img src={track.vinyl || track.pic || ""} alt="" draggable="false" />
 							{/if}
 						</div>
 					</div>
@@ -261,7 +272,7 @@
 
 	<!-- 播放列表面板 -->
 	{#if showPlaylist}
-		<div class="music-fs__playlist">
+		<div class="music-fs__playlist" transition:slide={{ axis: "x", duration: 220 }} onmouseleave={() => (showPlaylist = false)}>
 			<div class="music-fs__playlist-head">播放列表</div>
 			{#each playlist as t, i (i)}
 				<button class="music-fs__playlist-item" class:active={i === currentIndex} onclick={() => selectTrack(i)}>
@@ -287,6 +298,12 @@
 		inset: 0;
 		background-size: cover;
 		background-position: center right;
+	}
+	.music-fs__bg--video {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center right;
 	}
 
 	/* 左深右浅：左侧内容区深色可读，右侧人物图清晰 */
@@ -331,8 +348,23 @@
 	.music-fs__lyrics {
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
+		align-items: center;
 		gap: 0.55rem;
+		padding-left: 7vw;
+	}
+	.music-fs__kicker {
+		position: absolute;
+		top: 10vh;
+		left: 10vw;
+		margin: 0;
+		color: #a98b4e;
+		font-family: "Cinzel Variable", serif;
+		font-size: 3rem;
+		font-weight: 700;
+		letter-spacing: 0.77em;
+		text-indent: 0.77em;
+		opacity: 0.85;
+		pointer-events: none;
 	}
 	.music-fs__lyric {
 		margin: 0;
@@ -426,6 +458,7 @@
 	}
 
 	.music-fs__controls {
+		margin-left: 33.333%;
 		padding: 0.9rem 0 1rem;
 	}
 
@@ -514,9 +547,21 @@
 		width: min(28rem, calc(50% - 2rem));
 		max-height: 20rem;
 		overflow-y: auto;
-		padding: 1rem;
-		background: rgb(20 17 13 / 0.96);
-		border: 1px solid rgb(169 139 78 / 0.2);
+		padding: 0.9rem;
+		background: rgb(20 17 13 / 0.94);
+		border: 1px solid rgb(169 139 78 / 0.16);
+		border-radius: 0.75rem;
+		box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 0.35);
+	}
+	.music-fs__playlist::-webkit-scrollbar {
+		width: 4px;
+	}
+	.music-fs__playlist::-webkit-scrollbar-thumb {
+		background: rgb(169 139 78 / 0.28);
+		border-radius: 999px;
+	}
+	.music-fs__playlist::-webkit-scrollbar-track {
+		background: transparent;
 	}
 	.music-fs__playlist-head {
 		margin-bottom: 0.6rem;
@@ -567,6 +612,9 @@
 		.music-fs__vinyl-wrap {
 			width: clamp(13rem, 60vw, 18rem);
 		}
+		.music-fs__controls {
+			margin-left: 0;
+		}
 		.music-fs__mask {
 			background:
 				linear-gradient(to bottom, rgb(13 11 9 / 0.7) 0%, rgb(13 11 9 / 0.4) 45%, rgb(13 11 9 / 0.75) 100%);
@@ -577,5 +625,12 @@
 		.music-fs__vinyl {
 			animation: none;
 		}
+	}
+
+	/* 黑胶唱片在直角模式下仍保持圆形 */
+	:global(html[data-sharp-corners="true"] .music-fs__vinyl),
+	:global(html[data-sharp-corners="true"] .music-fs__vinyl-cover),
+	:global(html[data-sharp-corners="true"] .music-fs__vinyl-cover::after) {
+		border-radius: 50% !important;
 	}
 </style>

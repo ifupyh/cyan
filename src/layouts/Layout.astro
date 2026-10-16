@@ -10,7 +10,6 @@ import FontSetup from "@components/features/FontSetup.astro";
 import MusicManager from "@components/features/MusicManager.astro";
 import SakuraEffect from "@components/features/SakuraEffect.astro";
 import WalineManager from "@components/features/WalineManager.astro";
-import WelcomeToast from "@components/features/WelcomeToast.astro";
 import ConfigCarrier from "@components/layout/ConfigCarrier.astro";
 
 import {
@@ -679,9 +678,6 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.site_url).toString()
     <!-- Sakura Effect -->
     <SakuraEffect />
 
-    <!-- Welcome Toast -->
-    <WelcomeToast />
-
     <!-- Fancybox Manager -->
     <FancyboxManager />
     <ChangelogManager />
@@ -709,8 +705,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.site_url).toString()
 	body.embed-mode #canvas_sakura,
 	body.embed-mode .floating-controls-container,
 	body.embed-mode #spine-model-container,
-	body.embed-mode #l2d-widget-container,
-	body.embed-mode welcome-toast {
+	body.embed-mode #l2d-widget-container {
 		display: none !important;
 	}
 
@@ -760,7 +755,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.site_url).toString()
       z-index: 0;
       pointer-events: none;
       /* 铺满整个视口，稍放大留出极慢位移空间 */
-      background: url('/assets/images/effects/cherry-border.webp') center top / 105% 105% no-repeat;
+      background: url('/assets/images/effects/border-ornament.webp') center top / 105% 105% no-repeat;
       opacity: 0.08;
       animation: bg-drift 36s ease-in-out infinite alternate;
     }
@@ -1776,13 +1771,9 @@ function disableAnimation() {
   document.addEventListener("password:decrypted", () => {
     setTimeout(scheduleContentOverflowEnhancements, 200);
   });
-  let backToTopBtn = document.getElementById("back-to-top-btn");
   let toc = document.getElementById("toc-wrapper");
   let navbar = document.getElementById("navbar-wrapper");
   let scrollProgressBar = document.getElementById("progress-bar");
-  let scrollProgressCircle = document.getElementById("scroll-progress-circle");
-  let scrollProgressCircleValue = document.getElementById("scroll-progress-circle-value");
-  let scrollProgressCircleLabel = document.getElementById("scroll-progress-circle-label");
   let lastScrollProgress = -1;
   const sidebarStickyState: Record<
     "left" | "right",
@@ -1794,10 +1785,7 @@ function disableAnimation() {
 
   function syncScrollProgress() {
     scrollProgressBar ??= document.getElementById("progress-bar");
-    scrollProgressCircle ??= document.getElementById("scroll-progress-circle");
-    scrollProgressCircleValue ??= document.getElementById("scroll-progress-circle-value");
-    scrollProgressCircleLabel ??= document.getElementById("scroll-progress-circle-label");
-    if (!scrollProgressBar && !scrollProgressCircle) return;
+    if (!scrollProgressBar) return;
 
     const scrollingElement = document.scrollingElement || document.documentElement;
     const maxScroll = Math.max(0, scrollingElement.scrollHeight - window.innerHeight);
@@ -1809,16 +1797,6 @@ function disableAnimation() {
     lastScrollProgress = nextProgress;
     if (scrollProgressBar) {
       scrollProgressBar.style.setProperty("--scroll-progress", nextProgress.toFixed(4));
-    }
-
-    if (scrollProgressCircle) {
-      const percentage = Math.round(nextProgress * 100);
-      scrollProgressCircleValue?.style.setProperty(
-        "stroke-dashoffset",
-        `${(100 - nextProgress * 100).toFixed(2)}`,
-      );
-      scrollProgressCircleLabel && (scrollProgressCircleLabel.textContent = `${percentage}%`);
-      scrollProgressCircle.setAttribute("aria-label", `页面滚动进度 ${percentage}%`);
     }
   }
 
@@ -1838,16 +1816,6 @@ function disableAnimation() {
 
     // 使用批量DOM操作优化性能
     const operations: (() => void)[] = [];
-
-    if (backToTopBtn) {
-      operations.push(() => {
-        if (scrollTop > bannerHeight) {
-          backToTopBtn.classList.remove("hide");
-        } else {
-          backToTopBtn.classList.add("hide");
-        }
-      });
-    }
 
     if (bannerEnabled && toc) {
       operations.push(() => {

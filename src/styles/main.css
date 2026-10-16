@@ -605,7 +605,7 @@ html[data-sharp-corners="true"] *::after {
 }
 
 /* fullscreen/overlay 模式下隐藏壁纸底部的水波纹和渐变过渡，
-   避免滚动后壁纸滚走时残留遮挡背景图（cherry-border） */
+   避免滚动后壁纸滚走时残留遮挡背景图（border-ornament） */
 body.no-banner-layout #header-waves,
 body.no-banner-layout #wallpaper-gradient {
   display: none !important;

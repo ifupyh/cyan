@@ -72,7 +72,7 @@ export const zh_TW: Translation = {
 	[Key.tagsCount]: "個標籤",
 	[Key.noData]: "暫無資料",
 
-	[Key.themeColor]: "主題色相",
+	[Key.themeColor]: "主題色",
 
 	[Key.lightMode]: "亮色",
 	[Key.darkMode]: "暗色",
@@ -269,7 +269,8 @@ export const zh_TW: Translation = {
 	[Key.wallpaperCarousel]: "壁紙輪播",
 	[Key.wavesAnimation]: "水波紋動畫",
 	[Key.gradientTransition]: "漸變過渡",
-	[Key.sakuraEffect]: "櫻花特效",
+	[Key.sakuraEffect]: "粒子特效",
+	[Key.selectParticle]: "選擇特效圖案",
 	[Key.effectsSettings]: "特效設定",
 	[Key.overlaySettings]: "透明設定",
 	[Key.overlayOpacity]: "桌布透明度",

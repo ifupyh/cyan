@@ -181,7 +181,10 @@ const config = sakuraConfig;
 				try {
 					// 创建图片对象
 					this.img = new Image();
-					this.img.src = '/assets/images/effects/sakura.webp'; // 使用樱花图片
+					var particles = this.config.particles || [];
+					var currentParticleId = this.config.particleId || this.config.defaultParticleId;
+					var particle = particles.find(function(p) { return p.id === currentParticleId; }) || particles[0];
+					this.img.src = particle ? particle.src : '/assets/images/effects/particle-01.webp';
 
 					// 等待图片加载完成
 					await new Promise((resolve, reject) => {
@@ -392,8 +395,10 @@ const config = sakuraConfig;
 				// 检查用户是否在设置中关闭了樱花特效
 				var storedEnabled = localStorage.getItem("sakuraEnabled");
 				var isEnabled = storedEnabled !== null ? storedEnabled === "true" : sakuraConfig.enable;
+				var storedParticleId = localStorage.getItem("particleId");
+				var particleId = storedParticleId || sakuraConfig.defaultParticleId;
 				// 创建管理器并根据用户偏好决定是否启动
-				var cfg = Object.assign({}, sakuraConfig, { enable: isEnabled });
+				var cfg = Object.assign({}, sakuraConfig, { enable: isEnabled, particleId: particleId });
 				initSakura(cfg);
 				window.sakuraInitialized = true;
 			};
@@ -418,6 +423,18 @@ const config = sakuraConfig;
 				mgr.init();
 			} else if (!enabled) {
 				mgr.stop();
+			}
+		});
+
+		// 监听设置面板的特效图案切换事件
+		window.addEventListener('particleChange', function(e) {
+			var particleId = e.detail.particleId;
+			var mgr = window.sakuraManager;
+			if (!mgr) return;
+			mgr.config.particleId = particleId;
+			if (mgr.getIsRunning()) {
+				mgr.stop();
+				mgr.init();
 			}
 		});
 

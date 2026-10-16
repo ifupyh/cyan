@@ -1391,6 +1391,36 @@ export function setSakuraEnabled(enabled: boolean): void {
 	);
 }
 
+// Particle effect functions
+export function getDefaultParticleId(): string {
+	return sakuraConfig?.defaultParticleId ?? "";
+}
+
+export function getStoredParticleId(): string {
+	if (typeof localStorage === "undefined") {
+		return getDefaultParticleId();
+	}
+	const stored = localStorage.getItem("particleId");
+	if (stored === null) {
+		return getDefaultParticleId();
+	}
+	return stored;
+}
+
+export function setParticleId(id: string): void {
+	if (
+		typeof localStorage === "undefined" ||
+		typeof localStorage.setItem !== "function"
+	) {
+		return;
+	}
+	localStorage.setItem("particleId", id);
+	document.documentElement.setAttribute("data-particle-id", id);
+	window.dispatchEvent(
+		new CustomEvent("particleChange", { detail: { particleId: id } }),
+	);
+}
+
 // Sharp corners (直角模式) functions
 export function getDefaultSharpCorners(): boolean {
 	return siteConfig.card.sharpCorners ?? false;

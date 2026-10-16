@@ -72,7 +72,7 @@ export const zh_CN: Translation = {
 	[Key.tagsCount]: "个标签",
 	[Key.noData]: "暂无数据",
 
-	[Key.themeColor]: "主题色相",
+	[Key.themeColor]: "主题色",
 
 	[Key.lightMode]: "亮色",
 	[Key.darkMode]: "暗色",
@@ -267,7 +267,8 @@ export const zh_CN: Translation = {
 	[Key.wallpaperCarousel]: "壁纸轮播",
 	[Key.wavesAnimation]: "水波纹动画",
 	[Key.gradientTransition]: "渐变过渡",
-	[Key.sakuraEffect]: "樱花特效",
+	[Key.sakuraEffect]: "粒子特效",
+	[Key.selectParticle]: "选择特效图案",
 	[Key.effectsSettings]: "特效设置",
 	[Key.overlaySettings]: "透明设置",
 	[Key.overlayOpacity]: "壁纸透明度",

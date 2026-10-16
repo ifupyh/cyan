@@ -1,15 +1,23 @@
+export type ParticleOption = {
+	id: string; // 特效图案唯一标识
+	label: string; // 特效图案显示名称
+	src: string; // 特效图案图片路径
+};
+
 export type SakuraConfig = {
-	enable: boolean; // 是否启用樱花特效
-	switchable?: boolean; // 是否允许用户在设置中切换樱花特效
-	sakuraNum: number; // 樱花数量，默认21
-	limitTimes: number; // 樱花越界限制次数，-1为无限循环
+	enable: boolean; // 是否启用特效
+	switchable?: boolean; // 是否允许用户在设置中切换特效
+	particles: ParticleOption[]; // 可选特效图案列表
+	defaultParticleId: string; // 默认特效图案
+	sakuraNum: number; // 粒子数量，默认21
+	limitTimes: number; // 粒子越界限制次数，-1为无限循环
 	size: {
-		min: number; // 樱花最小尺寸倍数
-		max: number; // 樱花最大尺寸倍数
+		min: number; // 粒子最小尺寸倍数
+		max: number; // 粒子最大尺寸倍数
 	};
 	opacity: {
-		min: number; // 樱花最小不透明度
-		max: number; // 樱花最大不透明度
+		min: number; // 粒子最小不透明度
+		max: number; // 粒子最大不透明度
 	};
 	speed: {
 		horizontal: {
@@ -23,5 +31,5 @@ export type SakuraConfig = {
 		rotation: number; // 旋转速度
 		fadeSpeed: number; // 消失速度，不应大于最小不透明度
 	};
-	zIndex: number; // 层级，确保樱花在合适的层级显示
+	zIndex: number; // 层级，确保特效在合适的层级显示
 };

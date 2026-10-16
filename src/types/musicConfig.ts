@@ -42,7 +42,8 @@ export type MusicPlayerConfig = {
 			name: string; // 歌曲名称
 			artist: string; // 艺术家
 			url: string; // 音乐文件路径（相对于 public 目录）
-			cover?: string; // 封面图片路径（相对于 public 目录）
+			cover?: string; // 背景图路径（相对于 public 目录，支持图片或视频）
+			vinyl?: string; // 黑胶唱片封面图路径（相对于 public 目录）
 			lrc?: string; // 歌词内容，支持 LRC 格式
 		}>;
 	};

@@ -2,7 +2,6 @@
 import { getEntry, render } from "astro:content";
 import Comment from "@components/comment/index.astro";
 import AiRecommendationNote from "@components/common/AiRecommendationNote.astro";
-import FriendsMagicLink from "@components/friends/FriendsMagicLink.astro";
 import Markdown from "@components/common/Markdown.astro";
 import { Icon } from "astro-icon/components";
 import {
@@ -17,7 +16,6 @@ import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import CommunityBar from "@/components/layout/CommunityBar.astro";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
-import "@/styles/friends-magic-link.css";
 
 // 检查页面是否启用
 if (!siteConfig.pages.friends) {
@@ -151,7 +149,6 @@ const friendsAiRecommendation = friendsAiRecommendationSegments
           }
         </div>
 
-        <FriendsMagicLink />
       </div>
 
       <div class="friends-ai-recommendation-mobile">

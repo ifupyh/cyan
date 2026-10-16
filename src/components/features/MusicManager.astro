@@ -19,6 +19,11 @@ const localPlaylist =
 							? song.cover
 							: url(song.cover)
 						: undefined,
+					vinyl: song.vinyl
+						? isFullUrl(song.vinyl)
+							? song.vinyl
+							: url(song.vinyl)
+						: undefined,
 					lrc: song.lrc
 						? isFullUrl(song.lrc)
 							? song.lrc

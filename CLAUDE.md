@@ -11,15 +11,16 @@ Cyan is a personal blog site built on **Astro 7** with **Svelte 5** for interact
 | Command | Purpose |
 |---|---|
 | `pnpm dev` | Dev server at `localhost:4321` |
-| `pnpm build` | Production build (icons → LQIPs → Astro build → Pagefind indexing) |
+| `pnpm build` | Production build (icons → LQIPs → Astro build → font subsets → Pagefind indexing) |
 | `pnpm preview` | Preview production build |
 | `pnpm check` | `astro check` for type/error checking |
 | `pnpm type-check` | `tsc --noEmit --isolatedDeclarations` |
 | `pnpm lint` | Biome lint + auto-fix |
 | `pnpm format` | Biome format |
 | `pnpm new-post <filename>` | Scaffold a new blog post |
+| `pnpm post-studio` | Launch local post editing tool |
 
-Package manager is **pnpm** (enforced). Node.js >= 22 required.
+Package manager is **pnpm** (enforced via `preinstall`). Node.js >= 22 required.
 
 ## Architecture
 
@@ -27,15 +28,21 @@ Package manager is **pnpm** (enforced). Node.js >= 22 required.
 
 - `.astro` components for static content and layouts
 - `.svelte` components for interactive UI (search, settings, pagination, archive) — mounted with `client:load` or `client:visible`
-- Swup.js handles SPA-like page transitions with multiple container targets
+- Swup.js handles SPA-like page transitions with multiple container targets; `/portfolio/` and `/music/` are full-bleed layouts that deliberately bypass Swup (see the `ignore` option in `astro.config.mjs`)
 
 ### Configuration-Driven
 
 All features are toggled/configured via TypeScript files in `src/config/`, exported through the barrel at `src/config/index.ts`. Key configs:
 
-- `siteConfig.ts` — core site settings, theme, pagination
+- `siteConfig.ts` — core site settings, theme, pagination, site_url
 - `sidebarConfig.ts` — sidebar layout (left/right/both, widget ordering)
 - `commentConfig.ts`, `analyticsConfig.ts`, `fontConfig.ts`, etc.
+
+Types live in `src/types/` and must stay aligned with `src/config/`.
+
+### Fonts (Astro Fonts API)
+
+Font definitions live in `fontConfig.ts` (`fontsList` + `fontConfig`). `astro.config.mjs` filters the list to only fonts actually referenced by `fontConfig.selected` and region fields (via `collectUsedFontCssVars`), then maps each to its provider (local / fontsource / google / etc.). Local font files are in `public/assets/fonts/`; `scripts/subset-fonts.ts` further subsets local fonts during build.
 
 ### Layout System
 
@@ -65,17 +72,23 @@ Defined in `src/content.config.ts`:
 
 - **Biome** enforces: tab indentation, double quotes, recommended lint rules
 - Relaxed rules for `.svelte`/`.astro` files (useConst off, noUnusedVariables off)
+- Naming: components `PascalCase` (`PostCard.astro`), config modules `camelCase` ending in `Config.ts`, utilities kebab-case (`date-utils.ts`)
 - Commit convention: **Conventional Commits** (`feat:`, `fix:`, `chore:`, etc.)
+- No unit-test framework is configured; validate changes with `pnpm check`, `pnpm type-check`, and `pnpm build`
 
 ## Build Pipeline
 
-Multi-step: `scripts/generate-icons.js` → `scripts/generate-lqips.ts` → `astro build` → `pagefind --site dist`
+Multi-step: `scripts/generate-icons.js` → `scripts/generate-lqips.ts` → `astro build` → `scripts/subset-fonts.ts` → `pagefind --site dist`
 
 Icons/LQIP data are generated into `src/constants/` and committed. Regenerate with `pnpm icons` or `pnpm lqips`.
 
 ## Deployment
 
-- Deployment-specific configuration is kept outside this public snapshot. Use
-  the Astro deployment adapter and platform configuration appropriate for the
-  target environment without committing credentials or host-specific files.
-- Static output to `dist/`
+- Static output to `dist/`, deployed to **Cloudflare Pages** (project `cyan-7g4`; site_url in `siteConfig.ts`).
+- `astro.config.mjs` enables the Cloudflare adapter **only when the `CF_WORKERS` env var is set**; otherwise it remains pure static. Do not set `CF_WORKERS` unless SSR is intended.
+- Deploy via Cloudflare Pages Git integration: build command `pnpm build` (full pipeline, not `astro build`), output directory `dist`, env `NODE_VERSION=22`.
+- Keep credentials/host-specific files out of this public snapshot; use platform environment variables instead.
+
+## Known Gaps
+
+- Comment system: `commentConfig.ts` sets `type: "waline"` but `serverURL` is empty, so comments do not work until a Waline backend is configured or `type` is switched to `giscus` (giscus params are already filled in).

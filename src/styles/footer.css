@@ -26,25 +26,6 @@
 	gap: 0.72rem;
 }
 
-.site-footer-animals {
-	display: flex;
-	width: min(100%, 53.25rem);
-	min-height: 4.85rem;
-	align-items: flex-end;
-	justify-content: center;
-	overflow: hidden;
-}
-
-.site-footer-animals img {
-	display: block;
-	width: min(100%, 53.25rem);
-	height: auto;
-	max-height: 6.8rem;
-	object-fit: contain;
-	object-position: center bottom;
-	filter: drop-shadow(0 0.55rem 0.8rem rgb(35 92 155 / 0.13));
-}
-
 .site-footer-stack {
 	display: flex;
 	flex-wrap: wrap;
@@ -563,7 +544,6 @@
 		gap: 0.62rem;
 	}
 
-	.site-footer-animals { min-height: 3.8rem; }
 	.site-footer-stack { gap: 0.32rem; }
 	.site-footer-stack__badge { min-height: 1.5rem; padding-inline: 0.48rem; font-size: 0.63rem; }
 	.site-footer__nav { gap: 1.1rem; }
