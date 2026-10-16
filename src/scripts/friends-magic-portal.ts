@@ -35,11 +35,11 @@ type PortalRevealState = {
 
 declare global {
 	interface Window {
-		__rainztFriendsPortalRuntime?: PortalRuntime;
+		__cyanFriendsPortalRuntime?: PortalRuntime;
 	}
 }
 
-const runtimeKey = "__rainztFriendsPortalRuntime";
+const runtimeKey = "__cyanFriendsPortalRuntime";
 const HOLD_TO_JUMP_MS = 1200;
 const CRUISE_SPEED = 1;
 const BOOST_START_SPEED = 4;

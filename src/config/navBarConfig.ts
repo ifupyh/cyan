@@ -48,14 +48,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		icon: "material-symbols:info",
 	});
 
-	// 文档链接
-	// links.push({
-	// 	name: "文档",
-	// 	url: "https://docs-rainzt.cn",
-	// 	external: true,
-	// 	icon: "material-symbols:docs",
-	// });
-
 	return { links } as NavBarConfig;
 };
 

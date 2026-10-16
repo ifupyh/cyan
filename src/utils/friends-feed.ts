@@ -295,7 +295,7 @@ async function fetchText(url: string, accept: string): Promise<FeedDocument | nu
 				headers: {
 					Accept: accept,
 					"Cache-Control": "no-cache",
-					"User-Agent": "Rainzt-Moments/1.1 (+https://rainzt.cn/)",
+					"User-Agent": "Cyan-Moments/1.1 (+https://cyan.cn/)",
 				},
 			});
 			if (response.ok) {

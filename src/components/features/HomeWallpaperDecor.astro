@@ -92,16 +92,20 @@ const mobileStickerKeys = [
 			</div>
 		))}
 
-		<div
-			class="home-wallpaper-sticker home-wallpaper-sticker--note home-wallpaper-sticker--fixed"
-			style="inset: 60.079825% auto auto 60.952083%;"
-		>
-			<span>欢迎访问</span>
-		</div>
+		
 	</div>
 
 	<article class="home-wallpaper-card">
+		<span class="home-wallpaper-card__corner home-wallpaper-card__corner--tl" aria-hidden="true"></span>
+		<span class="home-wallpaper-card__corner home-wallpaper-card__corner--tr" aria-hidden="true"></span>
+		<span class="home-wallpaper-card__corner home-wallpaper-card__corner--bl" aria-hidden="true"></span>
+		<span class="home-wallpaper-card__corner home-wallpaper-card__corner--br" aria-hidden="true"></span>
+
 		<div class="home-wallpaper-card__content">
+			<div class="home-wallpaper-card__sigil" aria-hidden="true">
+				<span class="home-wallpaper-card__sigil-glyph"></span>
+			</div>
+
 			<div class="home-wallpaper-card__avatar-wrap">
 				<ImageWrapper
 					src={profileConfig.avatar || "assets/images/rain-avatar.webp"}
@@ -112,53 +116,62 @@ const mobileStickerKeys = [
 				/>
 			</div>
 
-    <p class="home-wallpaper-card__identity">
-      <span class="home-wallpaper-card__identity-mark" aria-hidden="true"></span>
-      <span class="home-wallpaper-card__motion-text">{profileConfig.name}</span>
-    </p>
-    <h1><span class="home-wallpaper-card__motion-text">{siteConfig.title}</span></h1>
-    <p class="home-wallpaper-card__subtitle">
-      <span class="home-wallpaper-card__motion-text">{siteConfig.subtitle}</span>
-    </p>
+			<p class="home-wallpaper-card__identity">
+				<span class="home-wallpaper-card__motion-text">{profileConfig.name}</span>
+			</p>
+			<h1><span class="home-wallpaper-card__motion-text">{siteConfig.title}</span></h1>
+			<p class="home-wallpaper-card__subtitle">
+				<span class="home-wallpaper-card__motion-text">{siteConfig.subtitle}</span>
+			</p>
 
-    <nav class="home-wallpaper-card__nav" aria-label="首页快捷导航">
-      {quickLinks.map((link) => (
-        <a href={link.href}>
-          <span class="home-wallpaper-card__motion-text">{link.label}</span>
-        </a>
-      ))}
-    </nav>
+			<div class="home-wallpaper-card__divider" aria-hidden="true"></div>
+
+			<nav class="home-wallpaper-card__nav" aria-label="首页快捷导航">
+				{quickLinks.map((link) => (
+					<a href={link.href}>
+						<span class="home-wallpaper-card__motion-text">{link.label}</span>
+					</a>
+				))}
+			</nav>
 
 			{socialLinks.length > 0 && (
-				<div class="home-wallpaper-card__socials" aria-label="社交链接">
-					{socialLinks.map((link) =>
-						link.url.startsWith("copy:") ? (
-							<button
-								type="button"
-								class="home-wallpaper-card__social-link"
-								aria-label={`${link.name}，点击复制`}
-								data-home-wallpaper-copy={link.url.slice("copy:".length)}
-							>
-								<span class="home-wallpaper-card__social-icon" aria-hidden="true">
-									<Icon is:inline name={link.icon} aria-hidden="true" />
-								</span>
-							</button>
-						) : (
-							<a
-								class="home-wallpaper-card__social-link"
-								rel="me noopener noreferrer"
-								aria-label={link.name}
-								href={link.url}
-								target="_blank"
-							>
-								<span class="home-wallpaper-card__social-icon" aria-hidden="true">
-									<Icon is:inline name={link.icon} aria-hidden="true" />
-								</span>
-							</a>
-						),
-					)}
-				</div>
+				<>
+					<div class="home-wallpaper-card__divider home-wallpaper-card__divider--social" aria-hidden="true"></div>
+					<div class="home-wallpaper-card__socials" aria-label="社交链接">
+						{socialLinks.map((link) =>
+							link.url.startsWith("copy:") ? (
+								<button
+									type="button"
+									class="home-wallpaper-card__social-link"
+									aria-label={`${link.name}，点击复制`}
+									data-home-wallpaper-copy={link.url.slice("copy:".length)}
+								>
+									<span class="home-wallpaper-card__social-icon" aria-hidden="true">
+										<Icon is:inline name={link.icon} aria-hidden="true" />
+									</span>
+								</button>
+							) : (
+								<a
+									class="home-wallpaper-card__social-link"
+									rel="me noopener noreferrer"
+									aria-label={link.name}
+									href={link.url}
+									target="_blank"
+								>
+									<span class="home-wallpaper-card__social-icon" aria-hidden="true">
+										<Icon is:inline name={link.icon} aria-hidden="true" />
+									</span>
+								</a>
+							),
+						)}
+					</div>
+				</>
 			)}
+
+			<div class="home-wallpaper-card__record">
+				<span class="home-wallpaper-card__record-title">TRAVELER'S RECORD</span>
+				<span class="home-wallpaper-card__record-desc">在破碎的世界中，记录旅途、思想与那些尚未遗忘的故事。</span>
+			</div>
 
 			<div
 				class="home-wallpaper-copy-toast"

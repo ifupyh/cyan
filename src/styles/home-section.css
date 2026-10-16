@@ -18,7 +18,7 @@ body.is-home #content-wrapper {
 }
 
 /* 主页壁纸那屏要清晰：去掉覆盖在壁纸/装饰上的白色 40% 遮罩，
-   否则鸣潮壁纸和社交图标/贴纸立绘都被压白变淡。 */
+   否则壁纸和社交图标/贴纸立绘都被压白变淡。 */
 body.is-home #bg-white-veil {
 	opacity: 0 !important;
 }

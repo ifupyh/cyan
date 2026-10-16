@@ -1,10 +1,3 @@
-# 每行一个图片 URL，支持 jpg/png/webp/avif/gif后缀
+# 每行一个图片 URL，支持 jpg/png/webp/avif/gif 后缀
 # # 号开头的行为注释，空行会被忽略
-# 示例：
-https://s41.ax1x.com/2026/05/13/peXsfit.webp
-https://s41.ax1x.com/2026/05/13/peXyh79.jpg
-https://s41.ax1x.com/2026/05/13/peXshJP.webp
-https://s41.ax1x.com/2026/05/13/peXyWm4.jpg
-https://s41.ax1x.com/2026/05/13/peXsRII.webp
-https://s41.ax1x.com/2026/05/13/peXyf0J.jpg
-https://s41.ax1x.com/2026/05/13/peXs2dA.webp
+# 预留的空加密相册，之后需要时把图片 URL 或本地图片放进来即可

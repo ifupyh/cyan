@@ -76,8 +76,8 @@ const initialStyle = initialHome
 	</div>
 	<div class="home-portfolio-intro__band">
 		<div class="home-portfolio-intro__title" aria-hidden="true">
-			<span class="home-portfolio-intro__word home-portfolio-intro__word--left">鸣潮</span>
-			<span class="home-portfolio-intro__word home-portfolio-intro__word--right">往复</span>
+			<span class="home-portfolio-intro__word home-portfolio-intro__word--left">交界地</span>
+			<span class="home-portfolio-intro__word home-portfolio-intro__word--right">归途</span>
 		</div>
 	</div>
 	<img
@@ -103,20 +103,20 @@ const initialStyle = initialHome
 		let activeTimer = 0;
 		let playbackToken = 0;
 		let navbarRevealAnimation = null;
-		const introSessionKey = "rainzt.home-portfolio-intro-seen.v1";
+		const introSessionKey = "cyan.home-portfolio-intro-seen.v1";
 		const intro = document.getElementById("home-portfolio-intro");
 		const introEnabledStorageKey =
 			intro?.getAttribute("data-enabled-storage-key") ||
-			"rainzt.home-portfolio-intro-enabled.v1";
+			"cyan.home-portfolio-intro-enabled.v1";
 		const introCharacterStorageKey =
 			intro?.getAttribute("data-character-storage-key") ||
-			"rainzt.home-portfolio-intro-character.v1";
+			"cyan.home-portfolio-intro-character.v1";
 		const introTopBannerStorageKey =
 			intro?.getAttribute("data-top-banner-storage-key") ||
-			"rainzt.home-portfolio-intro-top-banner.v1";
+			"cyan.home-portfolio-intro-top-banner.v1";
 		const introBottomBannerStorageKey =
 			intro?.getAttribute("data-bottom-banner-storage-key") ||
-			"rainzt.home-portfolio-intro-bottom-banner.v1";
+			"cyan.home-portfolio-intro-bottom-banner.v1";
 		const defaultCharacterId =
 			intro?.getAttribute("data-default-character") || "character-03";
 		const defaultTopBannerId =
@@ -789,7 +789,7 @@ const initialStyle = initialHome
 
 		.home-portfolio-intro__character {
 			left: 50%;
-			/* 留出中央标题的安全区，避免角色立绘压住“鸣潮 / 往复”。 */
+			/* 留出中央标题的安全区，避免角色立绘压住“交界地 / 归途”。 */
 			max-width: 72vw;
 			height: min(49svh, 32rem);
 		}
