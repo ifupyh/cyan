@@ -15,7 +15,7 @@ export const siteConfig: SiteConfig = {
 	themeVersion: "V0.1.0",
 
 	// 站点 URL
-	site_url: "https://cyan.pages.dev",
+	site_url: "https://cyan-7g4.pages.dev",
 
 	// 站点描述
 	description:
