@@ -8,14 +8,16 @@ const blogChangelogNoteCount = blogChangelogEntries.reduce(
 	0,
 );
 
-const blogChangelogMilestoneVersions = [
-	"V1.0.0",
-	"V1.5.0",
-	"V2.0.0",
-	"V2.3.0",
-	"V3.0.0",
-	blogChangelogEntries[0].version,
-];
+const blogChangelogMilestoneVersions = blogChangelogEntries.map(
+	(entry) => entry.version,
+);
+
+const blogChangelogDateSpan = (() => {
+	const dates = blogChangelogEntries.map((entry) => entry.date).sort();
+	const start = dates[0]?.slice(0, 7).replaceAll("-", ".") ?? "";
+	const end = dates[dates.length - 1]?.slice(0, 7).replaceAll("-", ".") ?? "";
+	return start === end ? start : `${start}—${end}`;
+})();
 
 const blogChangelogMilestones = blogChangelogMilestoneVersions.map((version) => {
 	const entry = blogChangelogEntries.find((item) => item.version === version) ?? blogChangelogEntries[0];
@@ -29,7 +31,7 @@ const blogChangelogMilestones = blogChangelogMilestoneVersions.map((version) => 
 
 ---
 
-<MainGridLayout title="博客更新日志" description="朝朝听雨博客建站以来的每日更新记录">
+<MainGridLayout title="博客更新日志" description="遗忘王域博客建站以来的每日更新记录">
 	<section class="blog-changelog-page" aria-labelledby="blog-changelog-title">
 		<header class="blog-changelog-hero card-base">
 			<div class="blog-changelog-hero__topline">
@@ -38,7 +40,7 @@ const blogChangelogMilestones = blogChangelogMilestoneVersions.map((version) => 
 			<div class="blog-changelog-hero__main">
 				<div class="blog-changelog-hero__copy">
 					<h1 id="blog-changelog-title">博客更新日志</h1>
-					<p class="blog-changelog-hero__lead">这里记录朝朝听雨从上线、写作到页面迭代的每一个重要节点。每一天都按真实建设过程整理，展开即可查看完整变更说明。</p>
+					<p class="blog-changelog-hero__lead">这里记录遗忘王域从上线、写作到页面迭代的每一个重要节点。每一天都按真实建设过程整理，展开即可查看完整变更说明。</p>
 					<p class="blog-changelog-hero__rule">版本规则：Major 代表结构级升级 · Minor 代表新功能 · Patch 代表修复、内容与维护</p>
 				</div>
 			</div>
@@ -48,7 +50,7 @@ const blogChangelogMilestones = blogChangelogMilestoneVersions.map((version) => 
 			<span><Icon is:inline name="material-symbols:workspace-premium-rounded" aria-hidden="true" /><strong>{blogChangelogEntries[0].version}</strong><small>当前版本</small></span>
 			<span><Icon is:inline name="material-symbols:calendar-month-rounded" aria-hidden="true" /><strong>{blogChangelogEntries.length}</strong><small>个更新日</small></span>
 			<span><Icon is:inline name="material-symbols:description-rounded" aria-hidden="true" /><strong>{blogChangelogNoteCount}</strong><small>条详细记录</small></span>
-			<span><Icon is:inline name="material-symbols:date-range-rounded" aria-hidden="true" /><strong>2026.07—09</strong><small>时间跨度</small></span>
+			<span><Icon is:inline name="material-symbols:date-range-rounded" aria-hidden="true" /><strong>{blogChangelogDateSpan}</strong><small>时间跨度</small></span>
 		</section>
 
 		<nav class="blog-changelog-nav card-base" aria-label="日志页面导航">
@@ -140,7 +142,7 @@ const blogChangelogMilestones = blogChangelogMilestoneVersions.map((version) => 
 
 <script is:inline>
 	(() => {
-		const runtimeKey = "__rainztBlogChangelogMotionV3";
+		const runtimeKey = "__cyanBlogChangelogMotionV3";
 		const runtime = window[runtimeKey] || {
 			activeRoot: null,
 			observer: null,

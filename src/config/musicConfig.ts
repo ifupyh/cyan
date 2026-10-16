@@ -50,13 +50,6 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	local: {
 		playlist: [
 			{
-				name: "小小奇迹",
-				artist: "鸣潮先约电台 / jixwang / 飞行雪绒",
-				url: "/assets/music/小小奇迹 - 鸣潮先约电台.mp3",
-				cover: "/assets/music/cover/elden-ring-lady.jpg",
-				lrc: "/assets/music/lrc/小小奇迹 - 鸣潮先约电台.lrc",
-			},
-			{
 				name: "Nightreign",
 				artist: "Elden Ring Nightreign",
 				url: "/assets/music/01-nightreign.mp3",

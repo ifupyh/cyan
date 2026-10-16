@@ -7,10 +7,10 @@ import "@waline/client/style";
 
 	(() => {
 		const runtimeWindow = window as typeof window & {
-			__rainztWalineManagerStarted?: boolean;
+			__cyanWalineManagerStarted?: boolean;
 		};
-		if (runtimeWindow.__rainztWalineManagerStarted) return;
-		runtimeWindow.__rainztWalineManagerStarted = true;
+		if (runtimeWindow.__cyanWalineManagerStarted) return;
+		runtimeWindow.__cyanWalineManagerStarted = true;
 
 		const rootSelector = "[data-waline-root]";
 		const localPreviewHosts = new Set(["localhost", "127.0.0.1", "::1", "0.0.0.0"]);

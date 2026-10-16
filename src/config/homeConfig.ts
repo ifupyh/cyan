@@ -15,7 +15,7 @@ export const homeConfig: HomeConfig = {
 	displayName: "Cyan",
 
 	// 职业/身份标签
-	occupation: "[嵌入式程师 / 技术博主]",
+	occupation: "[嵌入式工程师 / 技术博主]",
 
 	// 个人签名（支持多条，会循环打字+删除效果）
 	bio: ["且视他人之疑目如盏盏鬼火，大胆地去走你的夜路"],

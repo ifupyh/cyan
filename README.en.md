@@ -1,16 +1,18 @@
-# Aemeath
+# Forgotten Realm
 
-> The public source snapshot of Rainzt.cn, the personal blog of Rain
+> All things return to dust; only stories cross the dark.
 
-Aemeath is the source code of the personal site maintained by Rain (朝朝听雨), available at [rainzt.cn](https://rainzt.cn/). It is an Astro static site that brings together writing, technical notes, project records, friend links, RSS snapshots, and small tools in one maintainable codebase.
+Forgotten Realm (遗忘王域) is the source code of Cyan's personal blog, built on Astro static generation. It brings together embedded-systems practice, technical exploration, project records, friend links, and small tools in one maintainable codebase, with a Souls-like aesthetic (Elden Ring, Dark Souls) as its visual theme.
 
-The current public snapshot includes the **V3.4.0** site work: the white-hair essay, article film, Lottie gallery, tool-card recommendations, global reading progress, and the public analytics page.
+## About the author
+
+Cyan is an embedded software engineer. His stack covers C / C++ / Qt / Linux / LVGL, FreeRTOS / STM32, T113-S3, and OTA. He has worked on a smart multimedia advertising machine and a Buildroot + LVGL embedded desktop display terminal. In his spare time he enjoys Souls-like games and various AAA titles.
 
 ## What is included
 
-- Articles, archives, categories, tags, and Pagefind search
+- Articles, archives, categories, tags, and full-text search
 - About, friend links, RSS snapshots, guestbook, and tools
-- Galleries, Lottie animations, and article media
+- Galleries, anime tracking, Lottie animations, and article media
 - Responsive layouts, dark mode, page transitions, and configurable sidebars
 - Waline comment client and public Umami metrics
 - A Chinese-first multilingual interface
