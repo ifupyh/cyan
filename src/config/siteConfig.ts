@@ -222,9 +222,9 @@ keywords: [
 	// Steam 游戏库配置
 	steam: {
 		// Steam Web API Key（从环境变量 STEAM_API_KEY 读取）
-		apiKey: import.meta.env.STEAM_API_KEY || "",
+		apiKey: import.meta.env?.STEAM_API_KEY || "",
 		// SteamID64（从环境变量 STEAM_ID 读取）
-		steamId: import.meta.env.STEAM_ID || "",
+		steamId: import.meta.env?.STEAM_ID || "",
 		// 浮光集指定展示的游戏（不按时长）
 		featured: [
 			{ appid: 1245620, name: "ELDEN RING" },
