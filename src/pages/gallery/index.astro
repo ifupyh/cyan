@@ -64,9 +64,6 @@ const tagGroups = [...tagMap.entries()].map(([tag, items]) => ({ tag, items }));
 					<h2 class="text-xl font-semibold text-black/85 dark:text-white/85">
 						{group.tag}
 					</h2>
-					<span class="text-[0.7rem] text-black/40 dark:text-white/40 uppercase tracking-[0.18em]">
-						{group.items.length}
-					</span>
 				</div>
 				<div class="album-polaroid-grid" data-grid>
 					{group.items.map((album) => (

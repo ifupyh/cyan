@@ -110,34 +110,6 @@
 </script>
 
 <section class="lottie-page" aria-labelledby="lottie-page-title">
-	<header class="lottie-intro">
-		<div class="lottie-intro__copy">
-			<h1 id="lottie-page-title">动态表情库</h1>
-			<p>每张卡片默认显示动画的静态首帧，鼠标移上去即可播放，方便先看清它到底长什么样。</p>
-		</div>
-		<div class="lottie-intro__meta">
-			<strong>{items.length}</strong>
-			<span>个 Lottie 表情</span>
-			<small>首帧预览 · 悬停播放</small>
-		</div>
-	</header>
-
-	<div class="lottie-toolbar">
-		<div class="lottie-search">
-			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m20 20-4.4-4.4m2.4-5.1a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
-			<label class="sr-only" for="lottie-search-input">搜索表情</label>
-			<input id="lottie-search-input" type="search" bind:value={query} placeholder="搜索名称、编号或文件名…" />
-			{#if query}<button type="button" class="lottie-clear" on:click={() => (query = "")} aria-label="清空搜索">×</button>{/if}
-		</div>
-		<div class="lottie-filters" role="group" aria-label="表情分类">
-			{#each ["全部", "精选", "QQ"] as option}
-				<button type="button" class:active={filter === option} aria-pressed={filter === option} on:click={() => changeFilter(option as "全部" | "精选" | "QQ")}>
-					{option}<span>{option === "全部" ? items.length : items.filter((item) => item.group === option).length}</span>
-				</button>
-			{/each}
-		</div>
-	</div>
-
 	<div class="lottie-results-head">
 		<div>
 			<strong>{loading ? "正在读取" : filteredItems.length}</strong>
@@ -231,7 +203,7 @@
 	.lottie-notice { margin: 0 0 1rem; padding: .7rem .85rem; border: 1px solid rgb(239 131 103 / .3); border-radius: .7rem; background: rgb(239 131 103 / .08); color: var(--lottie-ink); font-size: .78rem; }
 
 	.lottie-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; }
-	.lottie-card { position: relative; overflow: hidden; min-width: 0; border: 1px solid var(--lottie-line); border-radius: 1.05rem; background: color-mix(in oklab, var(--card-bg) 90%, transparent); box-shadow: 0 .6rem 1.4rem rgb(42 63 102 / .045); animation: lottie-in .5s both; animation-delay: calc(var(--card-index) * 35ms); cursor: pointer; outline: 0; content-visibility: auto; contain-intrinsic-size: 12rem; transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease; }
+	.lottie-card { position: relative; overflow: hidden; min-width: 0; border: 1px solid var(--lottie-line); border-radius: 1.05rem; background: transparent; box-shadow: 0 .6rem 1.4rem rgb(42 63 102 / .045); animation: lottie-in .5s both; animation-delay: calc(var(--card-index) * 35ms); cursor: pointer; outline: 0; content-visibility: auto; contain-intrinsic-size: 12rem; transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease; }
 	.lottie-card:hover { z-index: 1; border-color: color-mix(in oklab, var(--primary) 48%, transparent); box-shadow: 0 1rem 2rem rgb(42 63 102 / .13); transform: translateY(-.24rem); }
 	.lottie-card:focus-visible { border-color: var(--primary); box-shadow: 0 0 0 .24rem color-mix(in oklab, var(--primary) 13%, transparent), 0 1rem 2rem rgb(42 63 102 / .13); }
 	.lottie-card__topline { display: flex; align-items: center; justify-content: space-between; padding: .7rem .75rem .42rem; color: var(--lottie-muted); font: 700 .59rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .06em; }

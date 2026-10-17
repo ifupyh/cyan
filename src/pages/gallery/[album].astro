@@ -6,8 +6,9 @@ import { galleryConfig, siteConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
-import { scanAlbumPhotos } from "@/utils/gallery-utils";
+import { scanAlbumPhotoCards } from "@/utils/gallery-utils";
 import { url } from "@/utils/url-utils";
+import "@fontsource-variable/cinzel";
 
 // 检查页面是否启用
 if (!siteConfig.pages.gallery) {
@@ -27,29 +28,39 @@ if (!albumMeta) {
 	return Astro.redirect("/404/");
 }
 
-const photos = scanAlbumPhotos(albumMeta.id);
+const photoCards = scanAlbumPhotoCards(albumMeta.id);
 const columnWidth = galleryConfig.columnWidth || 240;
+const englishTitle = albumMeta.id.toUpperCase().replace(/-/g, " ");
 ---
 
 <MainGridLayout title={albumMeta.name} description={albumMeta.description || ""}>
-	<!-- 返回 + 标题 -->
-	<div class="mb-6">
-		<a
-			href={url("/gallery/")}
-			class="inline-flex items-center gap-1.5 text-sm text-(--primary) hover:underline mb-3"
-		>
-			<Icon is:inline name="material-symbols:arrow-back" class="text-base" />
-			{i18n(I18nKey.galleryBackToAlbums)}
-		</a>
-		<h1 class="text-3xl md:text-4xl font-medium tracking-tight text-black/85 dark:text-white/85 leading-tight">
-			{albumMeta.name}
-		</h1>
-	</div>
+	<a
+		href={url("/gallery/")}
+		class="inline-flex items-center gap-1.5 text-sm text-(--primary) hover:underline mb-6"
+	>
+		<Icon is:inline name="material-symbols:arrow-back" class="text-base" />
+		{i18n(I18nKey.galleryBackToAlbums)}
+	</a>
 
-	<!-- 照片瀑布流 -->
+	{
+		albumMeta.titleLink && (
+			<a
+				href={albumMeta.titleLink}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="gallery-title-card"
+				style={`--title-color: ${albumMeta.titleColor || "#a98b4e"}`}
+			>
+				<span class="gallery-title-card__text">{englishTitle}</span>
+				<span class="gallery-title-card__hint">Steam ↗</span>
+			</a>
+		)
+	}
+
+	<!-- 画廊 -->
 	<div class="card-base-transparent px-5 py-5 md:px-7 md:py-6">
 		{
-			photos.length > 0 ? (
+			photoCards.length > 0 || albumMeta.titleLink ? (
 				albumMeta.password ? (
 					<EncryptedContent
 						password={albumMeta.password}
@@ -60,8 +71,14 @@ const columnWidth = galleryConfig.columnWidth || 240;
 							class="gallery-masonry"
 							style={`column-count: 2; column-gap: 0.75rem; --col-width: ${columnWidth}px;`}
 						>
-							{photos.map((photo) => (
-								<PhotoCard src={photo} albumId={albumMeta.id} />
+							{photoCards.map((photo, i) => (
+								<PhotoCard
+									src={photo.src}
+									albumId={albumMeta.id}
+									index={i + 1}
+									title={photo.title}
+									caption={photo.caption}
+								/>
 							))}
 						</div>
 					</EncryptedContent>
@@ -70,8 +87,14 @@ const columnWidth = galleryConfig.columnWidth || 240;
 						class="gallery-masonry"
 						style={`column-count: 2; column-gap: 0.75rem; --col-width: ${columnWidth}px;`}
 					>
-						{photos.map((photo) => (
-							<PhotoCard src={photo} albumId={albumMeta.id} />
+						{photoCards.map((photo, i) => (
+							<PhotoCard
+								src={photo.src}
+								albumId={albumMeta.id}
+								index={i + 1}
+								title={photo.title}
+								caption={photo.caption}
+							/>
 						))}
 					</div>
 				)
@@ -84,3 +107,35 @@ const columnWidth = galleryConfig.columnWidth || 240;
 		}
 	</div>
 </MainGridLayout>
+
+<style>
+	.gallery-title-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+		padding: 0.25rem 0 1.5rem;
+		text-decoration: none;
+	}
+
+	.gallery-title-card:hover .gallery-title-card__text {
+		opacity: 0.78;
+	}
+
+	.gallery-title-card__text {
+		font-family: "Cinzel Variable", serif;
+		font-size: clamp(1.4rem, 3vw, 2rem);
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		line-height: 1.15;
+		color: var(--title-color, #a98b4e);
+		white-space: nowrap;
+	}
+
+	.gallery-title-card__hint {
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: var(--content-meta);
+	}
+</style>

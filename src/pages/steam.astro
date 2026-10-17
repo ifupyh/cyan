@@ -1,0 +1,140 @@
+---
+import { Icon } from "astro-icon/components";
+import { siteConfig } from "@/config";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { getSteamGames } from "@/utils/steam-utils";
+
+const buildTime = new Date().toLocaleString("zh-CN", {
+	year: "numeric",
+	month: "2-digit",
+	day: "2-digit",
+	hour: "2-digit",
+	minute: "2-digit",
+});
+
+const steamGames = await getSteamGames();
+const isConfigured = !!(siteConfig.steam?.apiKey && siteConfig.steam?.steamId);
+
+function formatPlaytime(minutes: number): string {
+	const hours = Math.round(minutes / 60);
+	if (hours < 1) return `${minutes} 分钟`;
+	return `${hours} 小时`;
+}
+---
+
+<MainGridLayout title="Steam 游戏" description="我的 Steam 游戏库">
+	<!-- Hero -->
+	<div class="mb-8 md:mb-10">
+		<a
+			href="/glimmer/"
+			class="inline-flex items-center gap-1 text-sm text-(--primary) hover:underline mb-4"
+		>
+			<Icon is:inline name="material-symbols:arrow-back" class="text-base" />
+			返回浮光集
+		</a>
+		<h1 class="text-4xl md:text-5xl font-medium tracking-tight text-black/85 dark:text-white/85 leading-tight">
+			Steam 游戏
+		</h1>
+		<p class="mt-3 text-base text-black/55 dark:text-white/55 leading-relaxed max-w-xl">
+			我的 Steam 游戏库，按游玩时长排序。
+		</p>
+		<p class="mt-2 text-xs text-black/45 dark:text-white/45">
+			最近更新 {buildTime}
+		</p>
+	</div>
+
+	{
+		!isConfigured ? (
+			<div class="card-base-transparent px-5 py-10 text-center">
+				<div class="inline-flex items-center justify-center w-16 h-16 bg-(--btn-regular-bg) rounded-full mb-6 border border-(--line-divider)">
+					<Icon is:inline name="material-symbols:settings" class="text-[2rem] text-(--btn-content)" />
+				</div>
+				<h2 class="text-xl font-semibold text-black/80 dark:text-white/80 mb-3">
+					未配置 Steam
+				</h2>
+				<p class="text-black/60 dark:text-white/60 mb-4 max-w-md mx-auto">
+					需要在环境变量中配置 STEAM_API_KEY 和 STEAM_ID。
+				</p>
+			</div>
+		) : steamGames.length > 0 ? (
+			<div class="steam-grid">
+				{steamGames.map((game) => (
+					<a
+						href={game.link}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="steam-card group"
+					>
+						<img src={game.header} alt={game.name} loading="lazy" decoding="async" />
+						<div class="steam-card__body">
+							<strong class="steam-card__name">{game.name}</strong>
+							<span class="steam-card__time">{formatPlaytime(game.playtimeForever)}</span>
+						</div>
+					</a>
+				))}
+			</div>
+		) : (
+			<p class="text-sm text-black/50 dark:text-white/50 py-6 text-center">暂无 Steam 游戏数据</p>
+		)
+	}
+</MainGridLayout>
+
+<style>
+	.steam-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 0.75rem;
+	}
+
+	.steam-card {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.75rem;
+		border: 1px solid var(--line-divider);
+		border-radius: 0.6rem;
+		background: color-mix(in oklab, var(--card-bg) 70%, transparent);
+		text-decoration: none;
+		transition: border-color 0.2s ease, transform 0.2s ease;
+	}
+
+	.steam-card:hover {
+		border-color: var(--primary);
+		transform: translateY(-2px);
+	}
+
+	.steam-card img {
+		width: 3.5rem;
+		height: 1.6rem;
+		border-radius: 0.3rem;
+		object-fit: cover;
+		flex-shrink: 0;
+	}
+
+	.steam-card__body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+		min-width: 0;
+	}
+
+	.steam-card__name {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		font-size: 0.88rem;
+		font-weight: 600;
+		color: var(--deep-text);
+	}
+
+	.steam-card__time {
+		font-size: 0.72rem;
+		color: var(--content-meta);
+	}
+
+	@media (max-width: 640px) {
+		.steam-grid {
+			grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+		}
+	}
+</style>

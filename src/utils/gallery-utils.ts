@@ -59,3 +59,53 @@ export function getAlbumCover(album: GalleryAlbum, photos: string[]): string {
 	const coverFile = photos.find((p) => /\/cover\./i.test(p));
 	return coverFile || photos[0] || "";
 }
+
+/**
+ * 相册单张照片（含可选的文字信息）
+ */
+export type GalleryPhoto = {
+	src: string;
+	title?: string;
+	caption?: string;
+};
+
+/**
+ * 扫描相册照片，支持 urls.txt 里用 `URL | 标题 | 说明` 形式附带文字
+ */
+export function scanAlbumPhotoCards(albumId: string): GalleryPhoto[] {
+	const dir = path.join(process.cwd(), "public", "gallery", albumId);
+	const result: GalleryPhoto[] = [];
+	if (!fs.existsSync(dir)) return result;
+
+	// 目录图片（无文字信息）
+	const files = fs
+		.readdirSync(dir)
+		.filter((f) => /\.(jpe?g|png|webp|avif|gif)$/i.test(f))
+		.sort();
+	const coverIdx = files.findIndex((f) => /^cover\./i.test(f));
+	if (coverIdx > 0) {
+		const [coverFile] = files.splice(coverIdx, 1);
+		files.unshift(coverFile);
+	}
+	for (const f of files) {
+		result.push({ src: withBase(`/gallery/${albumId}/${f}`) });
+	}
+
+	// urls.txt：每行 `URL | 标题 | 说明`（标题/说明可选）
+	const urlsFile = path.join(dir, "urls.txt");
+	if (fs.existsSync(urlsFile)) {
+		const lines = fs.readFileSync(urlsFile, "utf-8").split("\n");
+		for (const raw of lines) {
+			const line = raw.trim();
+			if (!line || line.startsWith("#")) continue;
+			const parts = line.split("|").map((p) => p.trim());
+			result.push({
+				src: parts[0],
+				title: parts[1] || undefined,
+				caption: parts[2] || undefined,
+			});
+		}
+	}
+
+	return result;
+}

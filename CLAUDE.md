@@ -63,6 +63,7 @@ Defined in `src/content.config.ts`:
 - `src/utils/` — content sorting, crypto (encrypted posts), date formatting, image processing/LQIP, TOC generation
 - `src/pages/` — Astro file-based routing
 - `scripts/` — build-time utilities (`generate-icons.js`, `generate-lqips.ts`, `new-post.js`)
+- `docs/modules/` — per-module docs (e.g. `music.md`); keep each module's usage/editing guide here
 
 ### Path Aliases (tsconfig.json)
 

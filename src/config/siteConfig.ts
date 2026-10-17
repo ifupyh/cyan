@@ -219,6 +219,25 @@ keywords: [
 		// },
 	},
 
+	// Steam 游戏库配置
+	steam: {
+		// Steam Web API Key（从环境变量 STEAM_API_KEY 读取）
+		apiKey: import.meta.env.STEAM_API_KEY || "",
+		// SteamID64（从环境变量 STEAM_ID 读取）
+		steamId: import.meta.env.STEAM_ID || "",
+		// 浮光集指定展示的游戏（不按时长）
+		featured: [
+			{ appid: 1245620, name: "ELDEN RING" },
+			{ appid: 2622380, name: "ELDEN RING NIGHTREIGN" },
+			{ appid: 374320, name: "DARK SOULS III" },
+			{ appid: 2358720, name: "黑神话：悟空" },
+			{ appid: 814380, name: "只狼" },
+			{ appid: 1174180, name: "荒野大镖客2" },
+			{ appid: 1903340, name: "33号远征队" },
+			{ appid: 1091500, name: "赛博朋克2077" },
+		],
+	},
+
 	// 分页配置
 	pagination: {
 		// 每页显示的文章数量

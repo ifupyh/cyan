@@ -8,6 +8,7 @@ import { myTools, thirdPartyTools } from "@/data/tools";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import { getAnimeList } from "@/utils/anime-utils";
 import { getBangumiData } from "@/utils/bangumi-utils";
+import { getFeaturedSteamGames } from "@/utils/steam-utils";
 import { getAlbumCover, scanAlbumPhotos } from "@/utils/gallery-utils";
 import { url } from "@/utils/url-utils";
 
@@ -17,7 +18,14 @@ const albums = galleryConfig.albums.map((album) => {
 	const cover = getAlbumCover(album, photos);
 	return { ...album, cover, photoCount: photos.length };
 });
-const previewAlbums = albums.slice(0, 8);
+// 按标签分组：每个标签一个容器入口（游戏/生活/学习/工作/加密）
+const tagMap = new Map<string, string>();
+for (const album of albums) {
+	for (const tag of album.tags || []) {
+		if (!tagMap.has(tag)) tagMap.set(tag, album.cover);
+	}
+}
+const albumTagGroups = [...tagMap.entries()].map(([tag, cover]) => ({ tag, cover }));
 
 // 追番摘要
 const animeList = await getAnimeList();
@@ -27,7 +35,8 @@ const previewAnime = animeList.slice(0, 4);
 const { bangumiData } = await getBangumiData();
 const previewBook = (bangumiData.book || []).slice(0, 4);
 const previewMusic = (bangumiData.music || []).slice(0, 4);
-const previewGame = (bangumiData.game || []).slice(0, 4);
+const steamGames = getFeaturedSteamGames();
+const previewSteam = steamGames;
 
 // 工具摘要
 const previewTools = [...myTools, ...thirdPartyTools].slice(0, 4);
@@ -65,19 +74,64 @@ const previewTools = [...myTools, ...thirdPartyTools].slice(0, 4);
       </a>
     </div>
     {
-      previewAlbums.length > 0 ? (
+      albumTagGroups.length > 0 ? (
         <div class="glimmer-album-grid">
-          {previewAlbums.map((album) => (
+          {albumTagGroups.map((group) => (
             <GlimmerPolaroid
-              id={album.id}
-              name={album.name}
-              cover={album.cover}
-              photoCount={album.photoCount}
+              id={group.tag}
+              name={group.tag}
+              cover={group.cover}
+              href={url("/gallery/")}
             />
           ))}
         </div>
       ) : (
         <p class="text-sm text-black/50 dark:text-white/50 py-6 text-center">暂无相册</p>
+      )
+    }
+  </section>
+
+  <!-- Steam 游戏库 -->
+  <section class="card-base-transparent px-5 py-5 md:px-7 md:py-6 mb-8 onload-animation">
+    <div class="flex items-end justify-between gap-4 mb-5">
+      <div class="flex items-baseline gap-3">
+        <h2 class="text-xl font-semibold text-black/85 dark:text-white/85">Steam 游戏</h2>
+        <span class="text-[0.7rem] text-black/40 dark:text-white/40 uppercase tracking-[0.18em]">
+          Steam
+        </span>
+      </div>
+      <a
+        href={url("/steam/")}
+        class="inline-flex items-center gap-1 text-xs font-medium text-(--primary) hover:underline whitespace-nowrap"
+      >
+        查看全部
+        <Icon is:inline name="fa7-solid:arrow-right" class="text-[0.7rem]" />
+      </a>
+    </div>
+    {
+      previewSteam.length > 0 ? (
+        <div class="glimmer-tilt-grid">
+          {previewSteam.map((game) => (
+            <a
+              href={game.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="glimmer-tilt-card group"
+            >
+              <div class="glimmer-tilt-card__media">
+                <img
+                  src={game.cover}
+                  alt={game.name}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="glimmer-tilt-card__title">{game.name}</span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="text-sm text-black/50 dark:text-white/50 py-6 text-center">暂无 Steam 游戏数据</p>
       )
     }
   </section>
@@ -216,53 +270,6 @@ const previewTools = [...myTools, ...thirdPartyTools].slice(0, 4);
         </div>
       ) : (
         <p class="text-sm text-black/50 dark:text-white/50 py-6 text-center">暂无音乐数据</p>
-      )
-    }
-  </section>
-
-  <!-- 游戏 -->
-  <section class="card-base-transparent px-5 py-5 md:px-7 md:py-6 mb-8 onload-animation">
-    <div class="flex items-end justify-between gap-4 mb-5">
-      <div class="flex items-baseline gap-3">
-        <h2 class="text-xl font-semibold text-black/85 dark:text-white/85">游戏</h2>
-        <span class="text-[0.7rem] text-black/40 dark:text-white/40 uppercase tracking-[0.18em]">
-          Game
-        </span>
-      </div>
-      <a
-        href={url("/bangumi/game/")}
-        class="inline-flex items-center gap-1 text-xs font-medium text-(--primary) hover:underline whitespace-nowrap"
-      >
-        查看全部
-        <Icon is:inline name="fa7-solid:arrow-right" class="text-[0.7rem]" />
-      </a>
-    </div>
-    {
-      previewGame.length > 0 ? (
-        <div class="glimmer-tilt-grid">
-          {previewGame.map((item) => (
-            <a
-              href={`https://bangumi.one/subject/${item.subject.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="glimmer-tilt-card group"
-            >
-              <div class="glimmer-tilt-card__media">
-                <img
-                  src={item.subject.images.common}
-                  alt={item.subject.name_cn || item.subject.name}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              <span class="glimmer-tilt-card__title">
-                {item.subject.name_cn || item.subject.name}
-              </span>
-            </a>
-          ))}
-        </div>
-      ) : (
-        <p class="text-sm text-black/50 dark:text-white/50 py-6 text-center">暂无游戏数据</p>
       )
     }
   </section>

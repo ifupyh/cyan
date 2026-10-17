@@ -152,6 +152,16 @@ export type SiteConfig = {
 		};
 	};
 
+	// Steam 游戏库配置
+	steam?: {
+		apiKey: string; // Steam Web API Key
+		steamId: string; // SteamID64
+		featured?: Array<{
+			appid: number; // 游戏 appid
+			name: string; // 展示名称
+		}>; // 浮光集指定展示的游戏（不按时长）
+	};
+
 	// 分页配置
 	pagination: {
 		postsPerPage: number; // 每页显示的文章数量

@@ -54,15 +54,6 @@ const isCategoryBarPath =
       文章
     </a>
     <a
-      href={archiveUrl}
-      class="category-pill text-sm px-4 py-1.5 whitespace-nowrap shrink-0
-             transition-colors duration-150 ease-out flex items-center justify-center"
-      data-category-name="__archive__"
-    >
-      {i18n(I18nKey.archive)}
-      <span class="pill-count">{totalPosts}</span>
-    </a>
-    <a
       href={categoriesUrl}
       class="category-pill text-sm px-4 py-1.5 whitespace-nowrap shrink-0
              transition-colors duration-150 ease-out flex items-center justify-center"
@@ -79,12 +70,12 @@ const isCategoryBarPath =
       {i18n(I18nKey.tags)}
     </a>
     <a
-      href={changelogUrl}
+      href={archiveUrl}
       class="category-pill text-sm px-4 py-1.5 whitespace-nowrap shrink-0
              transition-colors duration-150 ease-out flex items-center justify-center"
-      data-category-name="__changelog__"
+      data-category-name="__archive__"
     >
-      项目更新日志
+      {i18n(I18nKey.archive)}
     </a>
     <a
       href={blogChangelogUrl}
@@ -94,26 +85,14 @@ const isCategoryBarPath =
     >
       博客日志
     </a>
-    <div class="category-divider shrink-0"></div>
-    <div class="scroll-area relative">
-      <div class="scroll-fade scroll-fade-left" aria-hidden="true"></div>
-      <div class="category-scroll flex gap-2 overflow-x-auto">
-        {
-          categories.map((cat) => (
-            <a
-              href={cat.url}
-              class="category-pill text-sm px-4 py-1.5 whitespace-nowrap
-                     transition-colors duration-150 ease-out flex items-center justify-center"
-              data-category-name={cat.name}
-            >
-              {cat.name}
-              <span class="pill-count">{cat.count}</span>
-            </a>
-          ))
-        }
-      </div>
-      <div class="scroll-fade scroll-fade-right" aria-hidden="true"></div>
-    </div>
+    <a
+      href={changelogUrl}
+      class="category-pill text-sm px-4 py-1.5 whitespace-nowrap shrink-0
+             transition-colors duration-150 ease-out flex items-center justify-center"
+      data-category-name="__changelog__"
+    >
+      项目更新日志
+    </a>
   </div>
 </div>
 

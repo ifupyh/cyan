@@ -1,0 +1,2 @@
+# 每行一个图片 URL，支持 jpg/png/webp/avif/gif 后缀
+# 或 URL | 标题 | 说明 形式附带文字

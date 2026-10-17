@@ -18,6 +18,20 @@ export type BlogChangelogEntry = {
  */
 export const blogChangelogEntries: BlogChangelogEntry[] = [
 	{
+		date: "2026-10-17",
+		version: "V0.1.1",
+		displayDate: "2026 年 10 月 17 日",
+		kind: "内容更新",
+		title: "首篇博文发布",
+		summary: "发布建站复盘《从 Fuwari 到 Cyan：我的博客魔改记》，记录基于开源主题二次开发的完整过程。",
+		details: [
+			"发布首篇博文，回顾技术选型、二次开发改动与三个踩坑经历。",
+			"补充首页、目录结构、文章页三张截图与 ASCII 架构示意图。",
+		],
+		tags: ["文章", "建站"],
+		tone: "blue",
+	},
+	{
 		date: "2026-10-16",
 		version: "V0.1.0",
 		displayDate: "2026 年 10 月 16 日",

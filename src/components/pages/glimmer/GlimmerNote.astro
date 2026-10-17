@@ -38,7 +38,7 @@ const { moment } = Astro.props;
 		position: relative;
 		min-height: 150px;
 		overflow: visible;
-		border: 1px solid rgba(244, 143, 177, 0.28);
+		border: 1px solid color-mix(in srgb, var(--primary) 28%, transparent);
 		border-radius: 6px;
 		background: var(--card-bg);
 		padding: 22px 22px 20px;
@@ -58,8 +58,8 @@ const { moment } = Astro.props;
 		height: 16px;
 		transform: translateX(-50%) rotate(-2deg);
 		border-radius: 3px;
-		background: rgba(255, 183, 201, 0.5);
-		box-shadow: 0 2px 6px rgb(255 183 201 / 0.16);
+		background: color-mix(in srgb, var(--primary) 50%, transparent);
+		box-shadow: 0 2px 6px color-mix(in srgb, var(--primary) 16%, transparent);
 		pointer-events: none;
 	}
 
@@ -91,7 +91,7 @@ const { moment } = Astro.props;
 	}
 
 	.glimmer-note__meta span {
-		color: rgb(244 143 177 / 0.9);
+		color: color-mix(in srgb, var(--primary) 90%, transparent);
 		font-size: 0.72rem;
 		font-weight: 700;
 		letter-spacing: 0.06em;

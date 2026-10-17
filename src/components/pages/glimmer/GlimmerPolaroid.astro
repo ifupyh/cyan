@@ -3,14 +3,16 @@ interface Props {
 	id: string;
 	name: string;
 	cover: string;
-	photoCount: number;
+	photoCount?: number;
+	href?: string;
 }
 
-const { id, name, cover, photoCount } = Astro.props;
+const { id, name, cover, href } = Astro.props;
+const link = href ?? `/gallery/${id}/`;
 ---
 
 <a
-	href={`/gallery/${id}/`}
+	href={link}
 	class="glimmer-polaroid group"
 	aria-label={`打开${name}相册`}
 >
@@ -23,7 +25,7 @@ const { id, name, cover, photoCount } = Astro.props;
 			)
 		}
 	</div>
-	<span class="glimmer-polaroid__title">{name} [{photoCount}]</span>
+	<span class="glimmer-polaroid__title">{name}</span>
 </a>
 
 <style>

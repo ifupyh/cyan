@@ -470,6 +470,11 @@
 		cursor: pointer;
 		touch-action: none;
 	}
+	.music-fs__progress::before {
+		content: "";
+		position: absolute;
+		inset: -9px 0;
+	}
 	.music-fs__progress-fill {
 		position: absolute;
 		left: 0;
