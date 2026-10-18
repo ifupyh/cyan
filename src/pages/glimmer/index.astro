@@ -9,6 +9,7 @@ import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import { getAnimeList } from "@/utils/anime-utils";
 import { getBangumiData } from "@/utils/bangumi-utils";
 import { getFeaturedSteamGames } from "@/utils/steam-utils";
+import { getInterviewCategories } from "@/utils/interview-utils";
 import { getAlbumCover, scanAlbumPhotos } from "@/utils/gallery-utils";
 import { url } from "@/utils/url-utils";
 
@@ -40,6 +41,9 @@ const previewSteam = steamGames;
 
 // 工具摘要
 const previewTools = [...myTools, ...thirdPartyTools].slice(0, 4);
+
+// 面试题库（八股文）摘要
+const previewInterviewCategories = (await getInterviewCategories()).slice(0, 8);
 ---
 
 <MainGridLayout
@@ -308,6 +312,40 @@ const previewTools = [...myTools, ...thirdPartyTools].slice(0, 4);
             </span>
           </div>
           <span class="glimmer-tilt-card__title">{tool.name}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 面试题库（八股文） -->
+  <section class="card-base-transparent px-5 py-5 md:px-7 md:py-6 mb-8 onload-animation">
+    <div class="flex items-end justify-between gap-4 mb-5">
+      <div class="flex items-baseline gap-3">
+        <h2 class="text-xl font-semibold text-black/85 dark:text-white/85">八股文</h2>
+        <span class="text-[0.7rem] text-black/40 dark:text-white/40 uppercase tracking-[0.18em]">
+          Interview
+        </span>
+      </div>
+      <a
+        href={url("/interview/")}
+        class="inline-flex items-center gap-1 text-xs font-medium text-(--primary) hover:underline whitespace-nowrap"
+      >
+        查看更多
+        <Icon is:inline name="fa7-solid:arrow-right" class="text-[0.7rem]" />
+      </a>
+    </div>
+    <div class="glimmer-tilt-grid">
+      {previewInterviewCategories.map((cat) => (
+        <a
+          href={url(`/interview/${cat.slug}/`)}
+          class="glimmer-tilt-card group"
+        >
+          <div class="glimmer-tilt-card__media glimmer-tilt-card__media--tool">
+            <span class="glimmer-tilt-card__tool-icon" style="background: var(--primary)">
+              <Icon is:inline name={cat.icon} class="text-[1.5rem]" />
+            </span>
+          </div>
+          <span class="glimmer-tilt-card__title">{cat.name}</span>
         </a>
       ))}
     </div>

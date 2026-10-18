@@ -18,6 +18,20 @@ export type BlogChangelogEntry = {
  */
 export const blogChangelogEntries: BlogChangelogEntry[] = [
 	{
+		date: "2026-10-18",
+		version: "V0.1.2",
+		displayDate: "2026 年 10 月 18 日",
+		kind: "内容更新",
+		title: "第二篇博文发布",
+		summary: "发布《从 C 到 Qt：拆解华为 Linux 编码规范的三层演进》，以嵌入式视角解读华为 C/C++/Qt 三份编码规范。",
+		details: [
+			"发布第二篇博文，从嵌入式工程师视角拆解华为三份 Linux 编码规范的演进主线。",
+			"补充面试速记清单，并对照「体积 / 实时性 / 确定性」三条嵌入式约束。",
+		],
+		tags: ["文章", "嵌入式"],
+		tone: "mint",
+	},
+	{
 		date: "2026-10-17",
 		version: "V0.1.1",
 		displayDate: "2026 年 10 月 17 日",

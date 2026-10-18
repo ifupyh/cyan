@@ -16,9 +16,6 @@ const getDepth = (count: number) => {
 	return (count - minCount) / (maxCount - minCount);
 };
 
-// Top 10 标签排行
-const topTags = [...tags].sort((a, b) => b.count - a.count).slice(0, 10);
-const topMaxCount = topTags.length > 0 ? topTags[0].count : 1;
 ---
 
 <MainGridLayout title={i18n(I18nKey.tags)} description={i18n(I18nKey.allTags)}>
@@ -57,40 +54,4 @@ const topMaxCount = topTags.length > 0 ? topTags[0].count : 1;
             </div>
         )
     }
-
-    <!-- Top 10 标签排行 -->
-    {topTags.length > 0 && (
-        <div class="card-base px-8 py-6 mt-4">
-            <h2 class="text-lg font-bold text-75 mb-4">
-                Top 10
-            </h2>
-            <div class="flex flex-col gap-3">
-                {topTags.map((t, i) => (
-                    <a href={getTagUrl(t.name)}
-                       class="flex items-center gap-3 group hover:bg-(--btn-card-bg-hover) rounded-lg px-3 py-2 -mx-3 transition-colors"
-                    >
-                        <span class="text-sm font-bold text-(--primary) w-5 text-right shrink-0">
-                            {i + 1}
-                        </span>
-                        <div class="flex-1 min-w-0">
-                            <div class="flex items-center justify-between mb-1">
-                                <span class="text-sm font-medium text-50 truncate group-hover:text-(--primary) transition-colors">
-                                    #{t.name.trim()}
-                                </span>
-                                <span class="text-xs text-(--primary) ml-2 shrink-0">
-                                    {t.count} {i18n(I18nKey.postsCount)}
-                                </span>
-                            </div>
-                            <div class="h-2 rounded-full bg-(--primary)/10 overflow-hidden">
-                                <div
-                                    class="h-full rounded-full bg-(--primary) transition-all duration-500"
-                                    style={`width: ${(t.count / topMaxCount) * 100}%`}
-                                />
-                            </div>
-                        </div>
-                    </a>
-                ))}
-            </div>
-        </div>
-    )}
 </MainGridLayout>

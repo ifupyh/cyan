@@ -43,6 +43,7 @@ import { remarkPlantuml } from "./src/plugins/remark-plantuml.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import { remarkWikiLink } from "./src/plugins/remark-wiki-link.mjs";
 import { rehypeCodeGroup } from "./src/plugins/rehype-code-group.mjs";
+import rehypeSplitAnswer from "./src/plugins/rehype-split-answer.mjs";
 
 if (process.env.NODE_ENV === "development") {
 	setMaxListeners(20);
@@ -258,6 +259,7 @@ export default defineConfig({
 				[remarkPlantuml, plantumlConfig],
 			],
 			rehypePlugins: [
+				rehypeSplitAnswer,
 				[rehypeKatex, { katex }],
 				[rehypeCallouts, { theme: siteConfig.post.rehypeCallouts.theme }],
 				rehypeSlug,

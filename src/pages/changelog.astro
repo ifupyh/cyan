@@ -3,8 +3,6 @@ import { Icon } from "astro-icon/components";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import noticeHtml from "@/data/notice.html?raw";
 
-const noticePath = "src/data/notice.html";
-
 const articlePattern =
 	/<article class="notice-main notice-view" data-notice-version="([^"]+)"(?: hidden)?>([\s\S]*?)<\/article>/g;
 
@@ -60,41 +58,10 @@ const noticeMetaJson = JSON.stringify(
 					<strong data-notice-version>{latestNotice.version}</strong>
 				</div>
 			</section>
-
-			<nav class="notice-nav" aria-label="公告目录">
-				<p class="notice-nav-title">快速查看</p>
-				<a href="#summary" data-section="summary"><i></i>本次更新内容</a>
-				<a href="#sheet-maker" data-section="sheet-maker"><i></i>表格制作变化</a>
-				<a href="#export-order" data-section="universal"><i></i>检查方法</a>
-				<a href="#history" data-section="interface"><i></i>公告历史</a>
-				<a href="#checklist" data-section="checklist"><i></i>更新后检查</a>
-			</nav>
-
-			<section class="notice-history" aria-label="历史公告">
-				<div class="notice-history-title">
-					<Icon is:inline name="material-symbols:history-rounded" />
-					<span>历史公告</span>
-				</div>
-				<div class="history-card">
-					{availableNotices.map((notice, index) => (
-						<button
-							class:list={["history-entry", index === 0 && "active"]}
-							type="button"
-							data-notice-button={notice.version}
-						>
-							<strong>
-								{notice.version.replaceAll("-", ".").replace(".0", ".")} {index === 0 ? "最新公告" : "更新公告"}
-								{index === 0 && <span class="history-new-badge">NEW</span>}
-							</strong>
-							<span>{notice.brief}</span>
-						</button>
-					))}
-				</div>
-			</section>
 		</aside>
 
 		<div class="notice-content">
-			{availableNotices.length > 0 ? (
+			{availableNotices.length > 0 &&
 				availableNotices.map((notice, index) => (
 					<article
 						class="notice-main notice-view"
@@ -102,13 +69,7 @@ const noticeMetaJson = JSON.stringify(
 						hidden={index !== 0}
 						set:html={articleByVersion.get(notice.version)}
 					/>
-				))
-			) : (
-				<article class="notice-main notice-empty">
-					<h2>暂时没有读取到公告</h2>
-					<p>请确认主项目公告文件存在：{noticePath}</p>
-				</article>
-			)}
+				))}
 		</div>
 	</section>
 </MainGridLayout>
@@ -143,8 +104,6 @@ const noticeMetaJson = JSON.stringify(
 	}
 
 	.notice-hero,
-	.notice-nav,
-	.notice-history,
 	.notice-main,
 	.notice-section,
 	.notice-lead,
@@ -158,8 +117,6 @@ const noticeMetaJson = JSON.stringify(
 	}
 
 	.notice-hero,
-	.notice-nav,
-	.notice-history,
 	.notice-main {
 		border-radius: var(--radius-large);
 	}
@@ -181,8 +138,7 @@ const noticeMetaJson = JSON.stringify(
 		font-weight: 850;
 	}
 
-	.notice-new-badge,
-	.history-new-badge {
+	.notice-new-badge {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -254,118 +210,6 @@ const noticeMetaJson = JSON.stringify(
 
 	.notice-version strong {
 		color: var(--primary);
-	}
-
-	.notice-nav {
-		padding: 0.7rem;
-	}
-
-	.notice-nav-title,
-	.notice-history-title {
-		display: flex;
-		align-items: center;
-		gap: 0.38rem;
-		margin: 0 0 0.55rem;
-		color: var(--notice-soft);
-		font-size: 0.76rem;
-		font-weight: 900;
-	}
-
-	.notice-nav a {
-		display: flex;
-		align-items: center;
-		gap: 0.45rem;
-		min-height: 2rem;
-		padding: 0.45rem 0.55rem;
-		border-radius: 0.5rem;
-		color: var(--notice-muted);
-		text-decoration: none;
-		font-size: 0.82rem;
-		font-weight: 850;
-		transition:
-			background 0.2s ease,
-			color 0.2s ease,
-			transform 0.2s ease;
-	}
-
-	.notice-nav a:hover {
-		color: var(--primary);
-		background: color-mix(in oklab, var(--primary) 12%, transparent);
-		transform: translateX(0.12rem);
-	}
-
-	.notice-nav i {
-		width: 0.42rem;
-		height: 0.42rem;
-		border-radius: 999px;
-		background: var(--primary);
-		flex: 0 0 auto;
-	}
-
-	.notice-history {
-		padding: 0.7rem;
-	}
-
-	.history-card {
-		display: grid;
-		gap: 0.45rem;
-	}
-
-	.history-entry {
-		position: relative;
-		width: 100%;
-		display: grid;
-		gap: 0.25rem;
-		padding: 0.78rem 0.75rem;
-		border: 1px solid transparent;
-		border-radius: 0.55rem;
-		background: transparent;
-		color: inherit;
-		text-align: left;
-		cursor: pointer;
-		font: inherit;
-		transition:
-			background 0.2s ease,
-			border-color 0.2s ease,
-			transform 0.2s ease;
-	}
-
-	.history-entry:hover,
-	.history-entry.active {
-		border-color: color-mix(in oklab, var(--primary) 24%, var(--line-divider));
-		background: color-mix(in oklab, var(--primary) 11%, transparent);
-		transform: translateX(0.1rem);
-	}
-
-	.history-entry strong {
-		display: flex;
-		align-items: center;
-		gap: 0.38rem;
-		color: var(--notice-ink);
-		font-size: 0.83rem;
-		line-height: 1.35;
-	}
-
-	.history-new-badge {
-		position: absolute;
-		top: -0.5rem;
-		right: 0.45rem;
-		min-height: 1.35rem;
-		padding: 0.18rem 0.5rem;
-		border: 2px solid color-mix(in oklab, var(--card-bg) 92%, transparent);
-		border-radius: 999px;
-		font-size: 0.66rem;
-		transform: rotate(4deg);
-	}
-
-	.history-entry .history-new-badge {
-		color: white !important;
-	}
-
-	.history-entry span {
-		color: var(--notice-muted);
-		font-size: 0.75rem;
-		line-height: 1.48;
 	}
 
 	.notice-content {
@@ -825,16 +669,6 @@ const noticeMetaJson = JSON.stringify(
 		}
 	}
 
-	.notice-empty {
-		display: grid;
-		gap: 0.4rem;
-	}
-
-	.notice-empty h2,
-	.notice-empty p {
-		margin: 0;
-	}
-
 	@media (max-width: 1020px) {
 		.notice-page {
 			grid-template-columns: 1fr;
@@ -842,10 +676,6 @@ const noticeMetaJson = JSON.stringify(
 
 		.notice-aside {
 			position: static;
-		}
-
-		.notice-nav {
-			display: none;
 		}
 	}
 

@@ -30,8 +30,17 @@ type PostData = {
 	nextSlug: string;
 };
 
+type InterviewData = {
+	title: string;
+	category: string;
+	difficulty: "easy" | "medium" | "hard";
+	order: number;
+	tags: string[];
+};
+
 type PostsCollection = CollectionConfig<z.ZodType<PostData>>;
 type SpecCollection = CollectionConfig<z.ZodType<Record<string, never>>>;
+type InterviewCollection = CollectionConfig<z.ZodType<InterviewData>>;
 
 const postsCollection: PostsCollection = defineCollection({
 	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/posts" }),
@@ -70,10 +79,23 @@ const specCollection: SpecCollection = defineCollection({
 	schema: z.object({}),
 });
 
+const interviewCollection: InterviewCollection = defineCollection({
+	loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/interview" }),
+	schema: z.object({
+		title: z.string(),
+		category: z.string(),
+		difficulty: z.enum(["easy", "medium", "hard"]),
+		order: z.number().optional().default(0),
+		tags: z.array(z.string()).optional().default([]),
+	}),
+});
+
 export const collections: {
 	posts: typeof postsCollection;
 	spec: typeof specCollection;
+	interview: typeof interviewCollection;
 } = {
 	posts: postsCollection,
 	spec: specCollection,
+	interview: interviewCollection,
 };

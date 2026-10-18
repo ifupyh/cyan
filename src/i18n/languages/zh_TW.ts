@@ -49,7 +49,7 @@ export const zh_TW: Translation = {
 
 	[Key.comments]: "評論",
 	[Key.commentSection]: "評論區",
-	[Key.commentSubtitle]: "分享你的想法，與大家交流討論",
+	[Key.commentSubtitle]: "暫未開放",
 	[Key.commentNotConfigured]: "評論系統暫未配置",
 	[Key.guestbookCommentHint]:
 		"您還未在配置文件中啟用評論系統，啟用後訪客才可在此留言",

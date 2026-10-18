@@ -1,16 +1,13 @@
 ---
 import { Icon } from "astro-icon/components";
 import ImageWrapper from "@/components/common/ImageWrapper.astro";
-import { profileConfig, siteConfig } from "@/config";
+import { navBarConfig, profileConfig, siteConfig } from "@/config";
 import { url } from "@/utils/url-utils";
 
-const quickLinks = [
-	{ label: "文章", href: url("/archive/") },
-	{ label: "友链", href: url("/friends/") },
-	{ label: "朋友圈", href: url("/moments/") },
-	{ label: "留言板", href: url("/guestbook/") },
-	{ label: "关于", href: url("/about/") },
-];
+const quickLinks = navBarConfig.links.map((link) => ({
+	label: link.name,
+	href: url(link.url),
+}));
 
 const socialLinks = [
 	...profileConfig.links,

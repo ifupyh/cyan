@@ -49,7 +49,7 @@ export const ja: Translation = {
 
 	[Key.comments]: "コメント",
 	[Key.commentSection]: "コメント欄",
-	[Key.commentSubtitle]: "あなたの考えを共有し、みんなと議論しましょう",
+	[Key.commentSubtitle]: "未開放",
 	[Key.commentNotConfigured]: "コメントシステムが設定されていません",
 	[Key.guestbookCommentHint]:
 		"設定ファイルでコメントシステムをまだ有効にしていません。有効にすると、訪問者がここにメッセージを残せるようになります",

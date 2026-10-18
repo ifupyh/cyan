@@ -47,14 +47,6 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	local: {
 		playlist: [
 			{
-				name: "Nightreign",
-				artist: "Elden Ring Nightreign",
-				url: "/assets/music/audio/nightreign-01.mp3",
-				cover: "/assets/music/cover/nightreign-01.mp4",
-				vinyl: "/assets/music/vinyl-record/nightreign-01.jpg",
-				lrc: "/assets/music/lyrics/nightreign-01.lrc",
-			},
-			{
 				name: "The Outset",
 				artist: "Elden Ring Nightreign",
 				url: "/assets/music/audio/the-outset-02.mp3",
@@ -63,20 +55,28 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				lrc: "/assets/music/lyrics/the-outset-02.lrc",
 			},
 			{
-				name: "The Shrouded Roundtable Hold",
-				artist: "Elden Ring Nightreign",
-				url: "/assets/music/audio/the-shrouded-roundtable-hold-03.mp3",
-				cover: "/assets/music/cover/the-shrouded-roundtable-hold-03.mp4",
-				vinyl: "/assets/music/vinyl-record/nightreign-01.jpg",
-				lrc: "/assets/music/lyrics/the-shrouded-roundtable-hold-03.lrc",
-			},
-			{
 				name: "The Nightfarers",
 				artist: "Elden Ring Nightreign",
 				url: "/assets/music/audio/the-nightfarers-04.mp3",
 				cover: "/assets/music/cover/the-nightfarers-04.mp4",
 				vinyl: "/assets/music/vinyl-record/nightreign-01.jpg",
 				lrc: "/assets/music/lyrics/the-nightfarers-04.lrc",
+			},
+			{
+				name: "Nightreign",
+				artist: "Elden Ring Nightreign",
+				url: "/assets/music/audio/nightreign-01.mp3",
+				cover: "/assets/music/cover/nightreign-01.mp4",
+				vinyl: "/assets/music/vinyl-record/nightreign-01.jpg",
+				lrc: "/assets/music/lyrics/nightreign-01.lrc",
+			},
+			{
+				name: "The Shrouded Roundtable Hold",
+				artist: "Elden Ring Nightreign",
+				url: "/assets/music/audio/the-shrouded-roundtable-hold-03.mp3",
+				cover: "/assets/music/cover/the-shrouded-roundtable-hold-03.mp4",
+				vinyl: "/assets/music/vinyl-record/nightreign-01.jpg",
+				lrc: "/assets/music/lyrics/the-shrouded-roundtable-hold-03.lrc",
 			},
 			{
 				name: "Limveld",

@@ -528,11 +528,8 @@
 	.music-fs__btn--primary {
 		width: 2.9rem;
 		height: 2.9rem;
-		color: #1a1408;
-		background: #a98b4e;
 	}
 	.music-fs__btn--primary:hover {
-		color: #1a1408;
 		transform: scale(1.05);
 	}
 	.music-fs__btn svg {
