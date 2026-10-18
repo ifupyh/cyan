@@ -37,7 +37,7 @@ export const blogChangelogEntries: BlogChangelogEntry[] = [
 		displayDate: "2026 年 10 月 17 日",
 		kind: "内容更新",
 		title: "首篇博文发布",
-		summary: "发布建站复盘《从 Fuwari 到 Cyan：我的博客魔改记》，记录基于开源主题二次开发的完整过程。",
+		summary: "发布建站复盘《从 Aemeath 到 Cyan：我的博客诞生记》。",
 		details: [
 			"发布首篇博文，回顾技术选型、二次开发改动与三个踩坑经历。",
 			"补充首页、目录结构、文章页三张截图与 ASCII 架构示意图。",
