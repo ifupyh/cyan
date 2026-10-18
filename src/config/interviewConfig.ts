@@ -62,5 +62,10 @@ export const interviewConfig: InterviewConfig = {
 			name: "Linux 驱动",
 			icon: "material-symbols:terminal",
 		},
+		{
+			slug: "ad-machine",
+			name: "广告机项目",
+			icon: "material-symbols:tv",
+		},
 	],
 };

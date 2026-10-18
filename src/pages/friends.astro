@@ -1,7 +1,6 @@
 ---
 import { getEntry, render } from "astro:content";
 import Comment from "@components/comment/index.astro";
-import AiRecommendationNote from "@components/common/AiRecommendationNote.astro";
 import Markdown from "@components/common/Markdown.astro";
 import { Icon } from "astro-icon/components";
 import {
@@ -68,57 +67,11 @@ const latencySnapshot = friendsLatencySnapshot as FriendLatencySnapshot;
 const title = friendsPageConfig.title || i18n(I18nKey.friends);
 const description =
 	friendsPageConfig.description || i18n(I18nKey.friendsDescription);
-const friendsAiRecommendationSegments: Array<{
-	text: string;
-	tone?: "default" | "accent";
-	href?: string;
-}> = [
-	{
-		text: "本月推荐：\n• ",
-	},
-	{ text: "AIOVTUE-雪", tone: "accent" },
-	{ text: "、" },
-	{ text: "Homulilly", tone: "accent" },
-	{ text: "、" },
-	{ text: "番茄主理人", tone: "accent" },
-	{ text: "、" },
-	{ text: "小曦的园子", tone: "accent" },
-	{ text: "、" },
-	{ text: "Detached", tone: "accent" },
-	{
-		text: "、",
-	},
-	{ text: "Ditto", tone: "accent" },
-	{ text: "、" },
-	{ text: "桃之夭夭", tone: "accent" },
-	{ text: "、" },
-	{ text: "爱吃猫的鱼", tone: "accent" },
-	{ text: "、" },
-	{ text: "Petrichor's Blog", tone: "accent" },
-	{ text: "、" },
-	{ text: "MingBlog", tone: "accent" },
-	{
-		text: "\n\n评选规则与完整推荐理由，见本期",
-	},
-	{
-		text: "《月刊》",
-		tone: "accent",
-		href: "/posts/monthly-2026-08/#评选规则",
-	},
-	{ text: "。" },
-];
-const friendsAiRecommendation = friendsAiRecommendationSegments
-	.map((segment) => segment.text)
-	.join("");
 ---
 
 <MainGridLayout
 	 title={title}
 	description={description}
-	bannerPageAiRecommendation={{
-		text: friendsAiRecommendation,
-		segments: friendsAiRecommendationSegments,
-	}}
 >
   <CommunityBar active="friends" />
 
@@ -149,14 +102,6 @@ const friendsAiRecommendation = friendsAiRecommendationSegments
           }
         </div>
 
-      </div>
-
-      <div class="friends-ai-recommendation-mobile">
-        <AiRecommendationNote
-          text={friendsAiRecommendation}
-		  segments={friendsAiRecommendationSegments}
-          class="friends-ai-recommendation--inline"
-        />
       </div>
 
       <!-- 搜索框 -->
@@ -1419,10 +1364,6 @@ const friendsAiRecommendation = friendsAiRecommendationSegments
       margin: 0;
     }
 
-    .friends-ai-recommendation-mobile {
-      display: none;
-    }
-
     .ai-recommendation-note p {
       max-height: none;
       overflow: visible;
@@ -1490,62 +1431,6 @@ const friendsAiRecommendation = friendsAiRecommendationSegments
 
     .friend-filter-tags-toggle.hidden {
       display: none;
-    }
-
-    @media (max-width: 1023px) {
-      .friends-ai-recommendation-mobile {
-        display: block;
-        margin-top: 1rem;
-      }
-
-      .friends-ai-recommendation--inline {
-        display: block !important;
-        width: 100%;
-        margin-top: 0;
-        background: color-mix(in srgb, var(--primary) 12%, var(--card-bg));
-        border-color: color-mix(in srgb, var(--primary) 26%, var(--line-divider));
-        box-shadow: 0 0.75rem 1.5rem color-mix(in srgb, var(--primary) 10%, transparent);
-        color: #243447;
-        text-shadow: none;
-        -webkit-backdrop-filter: none;
-        backdrop-filter: none;
-      }
-
-      .friends-ai-recommendation--inline .banner-post-ai-summary__label {
-        color: #20344d;
-      }
-
-      .friends-ai-recommendation--inline .banner-post-ai-summary__provider {
-        color: rgba(44, 68, 94, 0.68);
-      }
-
-      .friends-ai-recommendation--inline .banner-post-ai-summary__label svg {
-        color: var(--primary);
-        filter: drop-shadow(0 0 0.45rem color-mix(in srgb, var(--primary) 45%, transparent));
-      }
-
-      .friends-ai-recommendation--inline p {
-        color: rgba(36, 52, 71, 0.88);
-      }
-
-      :root.dark .friends-ai-recommendation--inline {
-        border-color: color-mix(in srgb, var(--primary) 34%, var(--line-divider));
-        background: color-mix(in srgb, var(--card-bg) 82%, var(--primary) 18%);
-        box-shadow: 0 0.75rem 1.5rem rgb(0 0 0 / 0.24);
-        color: #edf5ff;
-      }
-
-      :root.dark .friends-ai-recommendation--inline .banner-post-ai-summary__label {
-        color: #f5f8ff;
-      }
-
-      :root.dark .friends-ai-recommendation--inline .banner-post-ai-summary__provider {
-        color: rgba(216, 229, 243, 0.72);
-      }
-
-      :root.dark .friends-ai-recommendation--inline p {
-        color: rgba(235, 243, 251, 0.9);
-      }
     }
 
     .friend-card-avatar {
