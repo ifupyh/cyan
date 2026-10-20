@@ -18,6 +18,20 @@ export type BlogChangelogEntry = {
  */
 export const blogChangelogEntries: BlogChangelogEntry[] = [
 	{
+		date: "2026-10-20",
+		version: "V0.1.3",
+		displayDate: "2026 年 10 月 20 日",
+		kind: "内容更新",
+		title: "第三篇博文发布",
+		summary: "发布《智能多媒体广告机 — 架构梳理》，复盘广告机项目的系统架构与设备端四进程设计。",
+		details: [
+			"发布第三篇博文，梳理广告机项目的整体系统架构与设备端四进程关系。",
+			"补充 QT 播放进程的启动、播放列表下载与命令处理三个关键流程。",
+		],
+		tags: ["文章", "嵌入式"],
+		tone: "violet",
+	},
+	{
 		date: "2026-10-18",
 		version: "V0.1.2",
 		displayDate: "2026 年 10 月 18 日",
