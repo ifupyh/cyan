@@ -64,8 +64,13 @@ export const interviewConfig: InterviewConfig = {
 		},
 		{
 			slug: "ad-machine",
-			name: "广告机项目",
+			name: "广告机（速通精选）",
 			icon: "material-symbols:tv",
+		},
+		{
+			slug: "ad-machine-full",
+			name: "广告机（全套）",
+			icon: "material-symbols:menu-book",
 		},
 	],
 };
