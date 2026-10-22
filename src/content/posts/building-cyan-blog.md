@@ -1,6 +1,6 @@
 ---
 title: 从Aemeath 到 Cyan：我的博客诞生记
-published: 2026-10-17
+published: 2026-09-03
 description: 我的个人博客:基于魂系主题定制、功能增改与踩坑复盘。
 image: ""
 tags: [Astro, 个人博客, 建站, 前端]
