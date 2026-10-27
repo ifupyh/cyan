@@ -18,6 +18,21 @@ export type BlogChangelogEntry = {
  */
 export const blogChangelogEntries: BlogChangelogEntry[] = [
 	{
+		date: "2026-10-27",
+		version: "V0.1.6",
+		displayDate: "2026 年 10 月 27 日",
+		kind: "内容更新",
+		title: "第六篇博文发布",
+		summary:
+			"发布《OpenCV 图像处理实战：画框、二值化、滤波与视频流》，串起几何绘制、阈值分割、归一化、噪声滤波与视频读写的关键函数与取舍。",
+		details: [
+			"发布第六篇博文，整理 OpenCV 图像处理进阶与视频读写的常用操作。",
+			"补充五种阈值模式对照、三种滤波的选型依据，以及视频链路的静默失败陷阱。",
+		],
+		tags: ["文章", "OpenCV"],
+		tone: "blue",
+	},
+	{
 		date: "2026-10-20",
 		version: "V0.1.5",
 		displayDate: "2026 年 10 月 20 日",
