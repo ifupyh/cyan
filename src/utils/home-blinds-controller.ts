@@ -1399,6 +1399,104 @@ function setupHeadline(context: SetupContext) {
 	};
 }
 
+/**
+ * pin 顺序守卫 —— 竞态兜底，正常路径上什么都不做。
+ *
+ * 影像层的 pin 起点是按「建 trigger 那一刻的文档高度」量的。首页在 SPA 导航后
+ * 有一段窗口：内容已经渲染，hero 的 pin-spacer 还没插进来（文档矮约 3400px）。
+ * 影像层若恰好在这个窗口里完成初始化，pin 起点就整段前移，表现是马赛克刚结束
+ * 就看到背景揭示，随后 Ticker 与数据层从固定舞台上面滚过去，直到整页刷新才恢复。
+ *
+ * 正常兜底是各层建完后那一帧的统一 refresh；只有当那次 refresh 落在过渡态
+ * （祖先 transform 未复位、pin-spacer 被临时 revert）时，错误测量才会留下来。
+ * 所以这里不比大小技巧，只做一件便宜的事：量一次「影像层 pin-spacer 的文档顶」
+ * 是否低于「数据层底」——顺序正确说明 pin 起点没错，什么都不用做；错位才补一次
+ * refresh，并且限量，避免在真正的异常布局上反复刷新。
+ */
+function isPinOrderBroken(root: HTMLElement): boolean {
+	const scenes = root.querySelector<HTMLElement>("[data-home-blinds-scenes]");
+	const spacer = scenes?.closest<HTMLElement>(".pin-spacer");
+	if (!spacer) return false;
+	const data = document.querySelector<HTMLElement>(".home-data-layer");
+	if (!data) return false;
+	const spacerTop = spacer.getBoundingClientRect().top + window.scrollY;
+	const dataBottom = data.getBoundingClientRect().bottom + window.scrollY;
+	// 1px 容差：子像素取整不该被当成错位
+	return spacerTop < dataBottom - 1;
+}
+
+function createPinOrderGuard(
+	root: HTMLElement,
+	ScrollTrigger: ScrollTriggerPlugin,
+) {
+	const timers: number[] = [];
+	let refreshesLeft = 2;
+	let disposed = false;
+
+	const check = () => {
+		if (disposed || !root.isConnected) return;
+		// 过渡中的文档尺寸和祖先 transform 都还没落定，这时候量出来的值不可信，
+		// 刷新反而会把错误值固化下来；skipped 的检查由后面几次定时补上
+		if (document.documentElement.classList.contains("is-changing")) return;
+		if (!isPinOrderBroken(root)) return;
+		if (refreshesLeft <= 0) {
+			console.warn(
+				"[home-blinds] 影像层 pin 起点仍低于数据层，留待下次导航重建",
+			);
+			return;
+		}
+		refreshesLeft -= 1;
+		ScrollTrigger.refresh();
+	};
+
+	// 覆盖三个时点：加载后立刻、过渡动画结束后、字体/图片这类迟到资源落定后
+	for (const delay of [0, 600, 1400, 2600]) {
+		timers.push(window.setTimeout(check, delay));
+	}
+
+	return () => {
+		disposed = true;
+		for (const timer of timers) window.clearTimeout(timer);
+		timers.length = 0;
+	};
+}
+
+/**
+ * 等 hero 先把 pin 建好再量影像层的起点。
+ *
+ * 两层是各自独立的岛，脚本执行顺序在 Swup 换页后不保证：影像层要走
+ * `await import("gsap")`，hero 是同步建 pin，但 hero 的模块脚本有时反而更晚执行。
+ * 这时影像层会在一份**还没有 hero pin-spacer** 的文档上算 pin 起点，整段前移约
+ * 3400px（hero 的 pin padding）；能不能恢复全看 hero 落地后那次 refresh，
+ * 一旦错过，就停在「马赛克刚结束就看到背景揭示、Ticker 从舞台上面滚过去」的状态，
+ * 直到整页刷新。
+ *
+ * hero 的挂载是同步的，`dataset.heroMounted` 一置位，它的 pin 就已经在文档里了。
+ * 所以只等这一帧标记，超时（hero 不该挂载的情况）就照常往下走，交给 pin 顺序守卫兜底。
+ *
+ * 实测复现路径：进 /music/（Swup 忽略，整页加载）→ 任何普通页（如 /friends/）→
+ * 点左上角头像回首页。此时影像层会在 hero pin 之前落地，稳定踩中这个窗口。
+ */
+async function waitForHeroPin(generation: number): Promise<void> {
+	const hero = document.querySelector<HTMLElement>("[data-home-hero]");
+	if (!hero || hero.dataset.heroMounted === "true") return;
+	const deadline = performance.now() + 1500;
+	await new Promise<void>((resolve) => {
+		const tick = () => {
+			if (
+				generation !== bootGeneration ||
+				hero.dataset.heroMounted === "true" ||
+				performance.now() > deadline
+			) {
+				resolve();
+				return;
+			}
+			requestAnimationFrame(tick);
+		};
+		requestAnimationFrame(tick);
+	});
+}
+
 async function initializeHomeBlinds(root: HTMLElement, generation: number) {
 	const config = parseRuntimeConfig(root);
 	const [{ gsap }, { ScrollTrigger }] = await Promise.all([
@@ -1406,6 +1504,7 @@ async function initializeHomeBlinds(root: HTMLElement, generation: number) {
 		import("gsap/ScrollTrigger"),
 	]);
 
+	await waitForHeroPin(generation);
 	if (generation !== bootGeneration || !root.isConnected || activeRoot !== root)
 		return null;
 	gsap.registerPlugin(ScrollTrigger);
@@ -1437,6 +1536,7 @@ async function initializeHomeBlinds(root: HTMLElement, generation: number) {
 		cleanups.push(setupReveal(context));
 		cleanups.push(setupHeadline(context));
 		cleanups.push(setupScenes(context));
+		cleanups.push(createPinOrderGuard(root, ScrollTrigger));
 	} catch (error) {
 		teardown();
 		throw error;
