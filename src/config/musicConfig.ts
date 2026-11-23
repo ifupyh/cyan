@@ -126,6 +126,14 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 				vinyl: "/assets/music/vinyl-record/nightreign-01.jpg",
 				lrc: "/assets/music/lyrics/return-10.lrc",
 			},
+			{
+				name: "心湖",
+				artist: "张靓颖",
+				url: "/assets/music/audio/heart-lake-11.mp3",
+				cover: "/assets/music/cover/heart-lake-11.mp4",
+				vinyl: "/assets/music/vinyl-record/heart-lake-11.jpg",
+				lrc: "/assets/music/lyrics/heart-lake-11.lrc",
+			},
 		],
 	},
 };
