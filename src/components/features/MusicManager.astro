@@ -225,6 +225,11 @@ const managerConfigStr = JSON.stringify({
         var ver = ++loadVersion;
 
         audio.src = track.url;
+        pendingSeek = null;
+        seekTargetTime = null;
+        staleSeekTicks = 0;
+        metadataRequested = false;
+        emit('fm:buffered', { percent: 0 });
 
         loadLyrics(track);
 
@@ -338,14 +343,80 @@ const managerConfigStr = JSON.stringify({
         emit('fm:volume', { volume: state.volume, isMuted: state.isMuted });
     }
 
+    /**
+     * 已下载到的位置（百分比）。
+     * 大文件边下边播时，progress 只走到真正缓冲到的位置；进度条上那层浅色
+     * 就是它，用来告诉用户「点这里之前得先等它下过来」。
+     */
+    function bufferedPercent() {
+        var d = audio.duration;
+        if (!d || !isFinite(d) || audio.buffered.length === 0) return 0;
+        var end = audio.buffered.end(audio.buffered.length - 1);
+        return Math.max(0, Math.min(100, (end / d) * 100));
+    }
+
+    function emitBuffered() {
+        emit('fm:buffered', { percent: bufferedPercent() });
+    }
+
+    function emitTime(ct, dur) {
+        if (!dur || !isFinite(dur)) return;
+        emit('fm:time', {
+            currentTime: ct,
+            duration: dur,
+            progress: Math.max(0, Math.min(100, (ct / dur) * 100)),
+            currentTimeStr: formatTime(ct),
+            durationStr: formatTime(dur)
+        });
+    }
+
+    /**
+     * 元数据还没到、或者目标位置还没下载时，先把目标记下来。
+     * duration 一有值就立刻落到 audio.currentTime，浏览器会带着 Range 请求
+     * 去那段位置接着下，不会丢掉这次点击。
+     */
+    var pendingSeek = null; // { percent } 或 { time }
+    var seekTargetTime = null; // 跳转目标，用来屏蔽跳转途中浏览器报上来的旧位置
+    var staleSeekTicks = 0;
+    var metadataRequested = false;
+
+    /**
+     * preload="none" 时，歌还没开始播就点进度条拿不到 duration。
+     * 真点了才去拉元数据（只有一小段 Range 请求），不点就不花流量。
+     */
+    function requestMetadataIfNeeded() {
+        if (Number.isFinite(audio.duration) && audio.duration > 0) return;
+        // 正在播/正在加载时别调 load()，那会中止 play()；元数据马上就到，
+        // 挂起的跳转会在 durationchange 里自己落地
+        if (state.isPlaying || state.isLoading) return;
+        if (metadataRequested) return;
+        metadataRequested = true;
+        audio.preload = 'metadata';
+        audio.load();
+    }
+
+    function applyPendingSeek() {
+        var d = audio.duration;
+        if (!pendingSeek || !d || !isFinite(d)) return false;
+        var target = pendingSeek.time != null ? pendingSeek.time : pendingSeek.percent * d;
+        pendingSeek = null;
+        target = Math.max(0, Math.min(target, d));
+        seekTargetTime = target;
+        staleSeekTicks = 0;
+        audio.currentTime = target;
+        emitTime(target, d);
+        emitBuffered();
+        return true;
+    }
+
     function seek(percent) {
-        if (!audio.duration) return;
-        audio.currentTime = Math.max(0, Math.min(1, percent)) * audio.duration;
+        pendingSeek = { percent: Math.max(0, Math.min(1, percent)) };
+        if (!applyPendingSeek()) requestMetadataIfNeeded();
     }
 
     function seekToTime(time) {
-        if (!audio.duration) return;
-        audio.currentTime = Math.max(0, Math.min(time, audio.duration));
+        pendingSeek = { time: Math.max(0, time) };
+        if (!applyPendingSeek()) requestMetadataIfNeeded();
     }
 
     function playTrackByIndex(index) {
@@ -361,15 +432,20 @@ const managerConfigStr = JSON.stringify({
         if (isNaN(audio.duration)) return;
         var ct = audio.currentTime;
         var dur = audio.duration;
-        var pct = (ct / dur) * 100;
 
-        emit('fm:time', {
-            currentTime: ct,
-            duration: dur,
-            progress: pct,
-            currentTimeStr: formatTime(ct),
-            durationStr: formatTime(dur)
-        });
+        // 跳转还没落定：浏览器这段时间报的还是旧位置（常常是 0），
+        // 直接吞掉，否则进度条会先跳过去再弹回起点。
+        // 设了上限（约 3 秒），真跳不过去时也要把控制权还给真实进度
+        if (seekTargetTime != null) {
+            if (Math.abs(ct - seekTargetTime) > 0.75 && staleSeekTicks < 12) {
+                staleSeekTicks += 1;
+                return;
+            }
+            seekTargetTime = null;
+            staleSeekTicks = 0;
+        }
+
+        emitTime(ct, dur);
 
         // Lyrics sync
         if (state.lyrics.length > 0) {
@@ -397,6 +473,26 @@ const managerConfigStr = JSON.stringify({
         state.error = 'Audio playback error';
         emitPlayState();
         emit('fm:error', { message: state.error });
+    });
+
+    // 元数据/缓冲变化：补放挂起的跳转，并同步已下载进度
+    audio.addEventListener('loadedmetadata', function () {
+        applyPendingSeek();
+        emitBuffered();
+    });
+    audio.addEventListener('durationchange', function () {
+        applyPendingSeek();
+        emitBuffered();
+    });
+    audio.addEventListener('canplay', function () {
+        applyPendingSeek();
+        emitBuffered();
+    });
+    audio.addEventListener('progress', emitBuffered);
+    audio.addEventListener('seeked', function () {
+        seekTargetTime = null;
+        emitTime(audio.currentTime, audio.duration);
+        emitBuffered();
     });
 
     audio.addEventListener('waiting', function () {
@@ -487,6 +583,7 @@ const managerConfigStr = JSON.stringify({
                 currentTime: audio.currentTime,
                 duration: audio.duration || 0,
                 progress: audio.duration ? (audio.currentTime / audio.duration) * 100 : 0,
+                buffered: bufferedPercent(),
                 currentTimeStr: formatTime(audio.currentTime),
                 durationStr: formatTime(audio.duration),
                 lyrics: state.lyrics,

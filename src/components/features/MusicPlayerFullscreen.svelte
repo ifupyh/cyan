@@ -19,6 +19,7 @@
 			track: Track | null;
 			isPlaying: boolean;
 			progress: number;
+			buffered: number;
 			currentTimeStr: string;
 			durationStr: string;
 			lyrics: Lyric[];
@@ -38,6 +39,7 @@
 	let track = $state<Track | null>(null);
 	let isPlaying = $state(false);
 	let progress = $state(0);
+	let buffered = $state(0);
 	let currentTimeStr = $state("0:00");
 	let durationStr = $state("0:00");
 	let lyrics = $state<Lyric[]>([]);
@@ -57,6 +59,7 @@
 		track = s.track ?? null;
 		isPlaying = !!s.isPlaying;
 		progress = s.progress ?? 0;
+		buffered = s.buffered ?? 0;
 		currentTimeStr = s.currentTimeStr ?? "0:00";
 		durationStr = s.durationStr ?? "0:00";
 		lyrics = s.lyrics ?? [];
@@ -86,6 +89,9 @@
 			currentTimeStr = d.currentTimeStr;
 			durationStr = d.durationStr;
 		};
+		const onBuffered = (e: Event) => {
+			buffered = (e as CustomEvent).detail?.percent ?? 0;
+		};
 		const onLyrics = (e: Event) => {
 			lyrics = (e as CustomEvent).detail?.lyrics ?? [];
 		};
@@ -102,6 +108,7 @@
 		window.addEventListener("fm:track", onTrack);
 		window.addEventListener("fm:play-state", onPlayState);
 		window.addEventListener("fm:time", onTime);
+		window.addEventListener("fm:buffered", onBuffered);
 		window.addEventListener("fm:lyrics", onLyrics);
 		window.addEventListener("fm:lrc-index", onLrcIndex);
 		window.addEventListener("fm:init", onInit);
@@ -113,6 +120,7 @@
 			window.removeEventListener("fm:track", onTrack);
 			window.removeEventListener("fm:play-state", onPlayState);
 			window.removeEventListener("fm:time", onTime);
+			window.removeEventListener("fm:buffered", onBuffered);
 			window.removeEventListener("fm:lyrics", onLyrics);
 			window.removeEventListener("fm:lrc-index", onLrcIndex);
 			window.removeEventListener("fm:init", onInit);
@@ -228,6 +236,10 @@
 				onpointerup={onProgressUp}
 				onpointercancel={onProgressUp}
 			>
+				<div
+					class="music-fs__progress-buffered"
+					style:width={`${Math.max(buffered, progress)}%`}
+				></div>
 				<div class="music-fs__progress-fill" style:width={`${progress}%`}></div>
 			</div>
 
@@ -476,6 +488,16 @@
 		content: "";
 		position: absolute;
 		inset: -9px 0;
+	}
+	/* 已下载区间：比填充条浅，压在下面，只做提示不进交互 */
+	.music-fs__progress-buffered {
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		border-radius: 999px;
+		background: rgb(232 224 208 / 0.26);
+		pointer-events: none;
 	}
 	.music-fs__progress-fill {
 		position: absolute;

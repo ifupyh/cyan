@@ -94,6 +94,7 @@ const widgetId =
 <!-- Progress Bar (Slim) -->
 <div class="px-1">
     <div class="progress-container relative w-full h-1 bg-neutral-300/60 dark:bg-neutral-500/40 rounded-full cursor-pointer touch-none mb-2 group mt-2" role="slider" aria-label={i18n(I18nKey.musicProgress)} aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progress-buffered absolute left-0 top-0 h-full bg-neutral-400/60 dark:bg-neutral-400/35 rounded-full w-0 transition-[width] duration-200 pointer-events-none"></div>
         <div class="progress-bar absolute left-0 top-0 h-full bg-(--primary) rounded-full w-0 transition-[width] duration-100"></div>
         <!-- Hover Thumb -->
         <div class="progress-thumb absolute top-1/2 -mt-1.5 -ml-1.5 w-3 h-3 bg-(--primary) ring-2 ring-white dark:ring-neutral-800 rounded-full shadow-sm scale-0 group-hover:scale-100 transition-transform duration-200"></div>
@@ -199,6 +200,7 @@ const widgetId =
         title: widget.querySelector('.music-title'),
         artist: widget.querySelector('.music-artist'),
         progressBar: widget.querySelector('.progress-bar'),
+        progressBuffered: widget.querySelector('.progress-buffered'),
         progressThumb: widget.querySelector('.progress-thumb'),
         progressContainer: widget.querySelector('.progress-container'),
         currentTime: widget.querySelector('.current-time'),
@@ -356,6 +358,7 @@ const widgetId =
         // Reset progress
         ui.progressBar.style.width = '0%';
         ui.progressThumb.style.left = '0%';
+        if (ui.progressBuffered) ui.progressBuffered.style.width = '0%';
         ui.progressContainer.setAttribute('aria-valuenow', '0');
         ui.currentTime.innerText = '0:00';
         ui.totalTime.innerText = '0:00';
@@ -607,6 +610,9 @@ const widgetId =
         updateVolumeUI(s.volume, s.isMuted);
 
         // Progress
+        if (ui.progressBuffered) {
+            ui.progressBuffered.style.width = Math.max(s.buffered || 0, s.progress || 0) + '%';
+        }
         if (s.duration > 0) {
             ui.progressBar.style.width = s.progress + '%';
             ui.progressThumb.style.left = s.progress + '%';
@@ -674,6 +680,18 @@ const widgetId =
         ui.progressContainer.setAttribute('aria-valuenow', Math.round(d.progress).toString());
         ui.currentTime.innerText = d.currentTimeStr;
         ui.totalTime.innerText = d.durationStr;
+        // 已下载层永远不短于播放头，跳进未缓冲区域时不会出现「填充条超过缓冲条」
+        if (ui.progressBuffered) {
+            var buf = Math.max(parseFloat(ui.progressBuffered.style.width) || 0, d.progress);
+            ui.progressBuffered.style.width = buf + '%';
+        }
+    });
+
+    on('fm:buffered', function (e) {
+        if (!ui.progressBuffered) return;
+        var played = parseFloat(ui.progressBar.style.width) || 0;
+        var buf = Math.max(played, e.detail.percent || 0);
+        ui.progressBuffered.style.width = buf + '%';
     });
 
     on('fm:volume', function (e) {
