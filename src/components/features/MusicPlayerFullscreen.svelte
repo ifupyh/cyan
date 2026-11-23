@@ -368,6 +368,8 @@
 	}
 	.music-fs__lyric {
 		margin: 0;
+		/* 长句折行后每行居中，和整列的对齐方式保持一致 */
+		text-align: center;
 		color: rgb(232 224 208 / 0.42);
 		font-size: clamp(0.82rem, 1.4vw, 1.05rem);
 		line-height: 1.5;
