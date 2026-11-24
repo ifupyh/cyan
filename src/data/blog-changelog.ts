@@ -18,6 +18,21 @@ export type BlogChangelogEntry = {
  */
 export const blogChangelogEntries: BlogChangelogEntry[] = [
 	{
+		date: "2026-11-10",
+		version: "V0.1.7",
+		displayDate: "2026 年 11 月 10 日",
+		kind: "内容更新",
+		title: "第七篇博文发布",
+		summary:
+			"发布《Claude Code 安装与配置：没有官方账号也能用》，从 npm 与原生安装、PATH 排错，到 API + CC Switch 接入国产模型，一条链路走通。",
+		details: [
+			"发布第七篇博文，整理 Claude Code 的两种安装方式与常见安装故障。",
+			"补充 DeepSeek、智谱 GLM、Kimi 等平台的 Key 获取路径，以及 CC Switch 的一键切换与健康检查用法。",
+		],
+		tags: ["文章", "Claude Code", "AI"],
+		tone: "violet",
+	},
+	{
 		date: "2026-10-27",
 		version: "V0.1.6",
 		displayDate: "2026 年 10 月 27 日",
