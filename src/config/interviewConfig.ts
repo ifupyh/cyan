@@ -33,6 +33,11 @@ export const interviewConfig: InterviewConfig = {
 			icon: "material-symbols:lock",
 		},
 		{
+			slug: "stm32",
+			name: "STM32",
+			icon: "material-symbols:developer-board",
+		},
+		{
 			slug: "qt",
 			name: "Qt",
 			icon: "material-symbols:widgets",
@@ -56,6 +61,11 @@ export const interviewConfig: InterviewConfig = {
 			slug: "communication",
 			name: "通信协议",
 			icon: "material-symbols:swap-vert",
+		},
+		{
+			slug: "project-experience",
+			name: "项目经验",
+			icon: "material-symbols:work",
 		},
 		{
 			slug: "ad-machine",
