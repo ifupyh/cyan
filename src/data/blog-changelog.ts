@@ -18,6 +18,21 @@ export type BlogChangelogEntry = {
  */
 export const blogChangelogEntries: BlogChangelogEntry[] = [
 	{
+		date: "2026-11-22",
+		version: "V0.1.10",
+		displayDate: "2026 年 11 月 22 日",
+		kind: "内容更新",
+		title: "第十篇博文发布",
+		summary:
+			"发布《让 AI 直接画原理图：嘉立创EDA 接入 AI Agent 实测》，记录 Run API Gateway 桥接、skill 安装与一次 STM32 最小系统的真实产出。",
+		details: [
+			"发布第十篇博文，实测 AI Agent 通过 WebSocket 在嘉立创EDA 画布内放器件、连线并跑 DRC。",
+			"记录 DRC 全绿但可读性不足的问题，以及用约束型 skill 兜住图纸规范的做法。",
+		],
+		tags: ["文章", "嘉立创EDA", "AI"],
+		tone: "violet",
+	},
+	{
 		date: "2026-11-18",
 		version: "V0.1.9",
 		displayDate: "2026 年 11 月 18 日",
