@@ -366,13 +366,20 @@ const config = sakuraConfig;
 		}
 
 		// 创建全局樱花管理器实例
-		let globalSakuraManager = null;
-		window.sakuraManager = null;
+		// 注意：这个脚本是 is:inline，Swup 每次换页都会重新执行一遍。
+		// 所以 window.sakuraManager 不能在这里清空——画布挂在 body 上会跨页存活，
+		// 清了引用就只剩一个没人能停掉的孤儿 rAF，设置面板切特效时全被 `if (!mgr) return` 吃掉，
+		// 表现为「改了不生效，刷新才好」。
+		let globalSakuraManager = window.sakuraManager || null;
 
 		// 初始化樱花特效
 		function initSakura(config) {
-			if (globalSakuraManager) {
-				globalSakuraManager.updateConfig(config);
+			// 脚本重复执行时，本模块的 globalSakuraManager 是新的 null，
+			// 但 window 上可能还挂着上一轮的管理器：优先接管它，避免建出第二个画布
+			var existing = globalSakuraManager || window.sakuraManager;
+			if (existing) {
+				globalSakuraManager = existing;
+				existing.updateConfig(config);
 			} else {
 				globalSakuraManager = new SakuraManager(config);
 				window.sakuraManager = globalSakuraManager;
@@ -384,14 +391,14 @@ const config = sakuraConfig;
 
 		// 樱花特效初始化
 		(function() {
-			// 全局标记，确保樱花特效只初始化一次
-			if (window.sakuraInitialized) {
-				return;
-			}
-			
 			// 初始化樱花特效的函数
 			const setupSakura = () => {
-				if (window.sakuraInitialized) return;
+				// 换页后脚本会重执行，但管理器挂在 window 上、画布也还在跑：
+				// 这种情况直接复用，重复创建会多出一块 canvas。
+				if (window.sakuraManager) {
+					window.sakuraInitialized = true;
+					return;
+				}
 				// 检查用户是否在设置中关闭了樱花特效
 				var storedEnabled = localStorage.getItem("sakuraEnabled");
 				var isEnabled = storedEnabled !== null ? storedEnabled === "true" : sakuraConfig.enable;
@@ -402,7 +409,7 @@ const config = sakuraConfig;
 				initSakura(cfg);
 				window.sakuraInitialized = true;
 			};
-			
+
 			// 页面加载完成后初始化樱花特效
 			if (document.readyState === 'loading') {
 				document.addEventListener('DOMContentLoaded', setupSakura);
@@ -411,40 +418,46 @@ const config = sakuraConfig;
 			}
 		})();
 
-		// 监听设置面板的樱花特效切换事件
-		window.addEventListener('sakuraToggle', function(e) {
-			var enabled = e.detail.enabled;
-			var mgr = window.sakuraManager;
-			if (!mgr) return;
-			// 同步配置后再切换，确保关闭操作也能取消尚未完成的图片加载。
-			mgr.config.enable = enabled;
-			if (enabled && !mgr.getIsRunning()) {
-				mgr.config.enable = true;
-				mgr.init();
-			} else if (!enabled) {
-				mgr.stop();
-			}
-		});
+		// 事件只绑一次：脚本换页会重复执行，重复绑定会让一次切换触发多次 stop/init。
+		// 回调里始终现查 window.sakuraManager，因此管理器被替换后也能作用到最新的那个。
+		if (!window.__sakuraEventsBound) {
+			window.__sakuraEventsBound = true;
 
-		// 监听设置面板的特效图案切换事件
-		window.addEventListener('particleChange', function(e) {
-			var particleId = e.detail.particleId;
-			var mgr = window.sakuraManager;
-			if (!mgr) return;
-			mgr.config.particleId = particleId;
-			if (mgr.getIsRunning()) {
-				mgr.stop();
-				mgr.init();
-			}
-		});
+			// 监听设置面板的樱花特效切换事件
+			window.addEventListener('sakuraToggle', function(e) {
+				var enabled = e.detail.enabled;
+				var mgr = window.sakuraManager;
+				if (!mgr) return;
+				// 同步配置后再切换，确保关闭操作也能取消尚未完成的图片加载。
+				mgr.config.enable = enabled;
+				if (enabled && !mgr.getIsRunning()) {
+					mgr.config.enable = true;
+					mgr.init();
+				} else if (!enabled) {
+					mgr.stop();
+				}
+			});
 
-		// 全屏友链漫游打开时暂停樱花 Canvas，避免与 WebGL 隧道争抢帧；关闭后恢复。
-		window.addEventListener('friends-portal-open', function() {
-			window.__friendsPortalActive = true;
-			window.sakuraManager?.pause?.();
-		});
-		window.addEventListener('friends-portal-close', function() {
-			window.__friendsPortalActive = false;
-			window.sakuraManager?.resume?.();
-		});
+			// 监听设置面板的特效图案切换事件
+			window.addEventListener('particleChange', function(e) {
+				var particleId = e.detail.particleId;
+				var mgr = window.sakuraManager;
+				if (!mgr) return;
+				mgr.config.particleId = particleId;
+				if (mgr.getIsRunning()) {
+					mgr.stop();
+					mgr.init();
+				}
+			});
+
+			// 全屏友链漫游打开时暂停樱花 Canvas，避免与 WebGL 隧道争抢帧；关闭后恢复。
+			window.addEventListener('friends-portal-open', function() {
+				window.__friendsPortalActive = true;
+				window.sakuraManager?.pause?.();
+			});
+			window.addEventListener('friends-portal-close', function() {
+				window.__friendsPortalActive = false;
+				window.sakuraManager?.resume?.();
+			});
+		}
 	</script>
