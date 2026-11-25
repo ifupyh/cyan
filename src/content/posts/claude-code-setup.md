@@ -1,10 +1,10 @@
 ---
-title: "Claude Code 安装与配置：没有官方账号也能用"
+title: "Claude Code 安装、配置与使用"
 published: 2026-11-10
 description: "从 npm 与原生安装、PATH 排错，到用 API + CC Switch 接入 DeepSeek、GLM 等国产模型，一步步把 Claude Code 在没有官方账号的机器上跑起来。"
 image: ""
 tags: [Claude Code, AI, 开发工具, 配置]
-category: 技术
+category: 工具
 draft: false
 ---
 

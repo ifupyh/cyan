@@ -18,6 +18,37 @@ export type BlogChangelogEntry = {
  */
 export const blogChangelogEntries: BlogChangelogEntry[] = [
 	{
+		date: "2026-11-18",
+		version: "V0.1.9",
+		displayDate: "2026 年 11 月 18 日",
+		kind: "内容更新",
+		title: "第九篇博文发布",
+		summary:
+			"发布《DeepSeek Harness 好用的插件：装完这 10 个，它才真正开始替你干活》，整理一个月里实际留下的插件组合、安装方式与踩过的坑。",
+		details: [
+			"发布第九篇博文，覆盖插件市场、上下文压缩、费用计量、安全网、记忆、Office、桌面控制与 IM 机器人。",
+			"附三套按场景搭配的插件组合，以及安装顺序与权限边界上的注意事项。",
+		],
+		tags: ["文章", "DeepSeek", "AI"],
+		tone: "gold",
+	},
+	{
+		date: "2026-11-12",
+		version: "V0.1.8",
+		displayDate: "2026 年 11 月 12 日",
+		kind: "内容更新",
+		title: "第八篇博文发布",
+		summary:
+			"发布《Codex 安装、配置与使用》，把桌面应用、CLI 与 IDE 插件三种入口的安装、登录和第一次运行串成一条线，并新增「工具」分类。",
+		details: [
+			"发布第八篇博文，覆盖 Codex 三种使用形态与各自的适用场景。",
+			"整理 Node 环境、npm 安装、PowerShell 脚本策略拦截等常见问题。",
+			"新增「工具」分类，Claude Code 安装与配置一文同步归入该分类。",
+		],
+		tags: ["文章", "Codex", "AI"],
+		tone: "mint",
+	},
+	{
 		date: "2026-11-10",
 		version: "V0.1.7",
 		displayDate: "2026 年 11 月 10 日",
