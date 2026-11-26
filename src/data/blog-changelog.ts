@@ -18,6 +18,21 @@ export type BlogChangelogEntry = {
  */
 export const blogChangelogEntries: BlogChangelogEntry[] = [
 	{
+		date: "2026-11-26",
+		version: "V0.1.11",
+		displayDate: "2026 年 11 月 26 日",
+		kind: "内容更新",
+		title: "第十一篇博文发布",
+		summary:
+			"发布《名企国企招聘官网：嵌入式岗位投递入口整理》，把 80 家企业的嵌入式岗位入口按行业整理成清单，并新增「资源」分类。",
+		details: [
+			"发布第十一篇博文，覆盖芯片、汽车、通信、消费电子、工业能源、安防机器人与军工航天七个板块。",
+			"新增「资源」分类，用于存放链接清单类内容。",
+		],
+		tags: ["文章", "求职", "嵌入式"],
+		tone: "blue",
+	},
+	{
 		date: "2026-11-22",
 		version: "V0.1.10",
 		displayDate: "2026 年 11 月 22 日",
