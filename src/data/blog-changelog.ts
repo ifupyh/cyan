@@ -18,6 +18,21 @@ export type BlogChangelogEntry = {
  */
 export const blogChangelogEntries: BlogChangelogEntry[] = [
 	{
+		date: "2026-11-27",
+		version: "V0.1.12",
+		displayDate: "2026 年 11 月 27 日",
+		kind: "内容更新",
+		title: "第十二篇博文发布",
+		summary:
+			"发布《5 分钟，从一句需求到串口出温度：用 embed-ai-tool 跑通 STM32 全流程》，完整记录 AI 写代码、编译、烧录、抓日志的一次实机运行。",
+		details: [
+			"发布第十二篇博文，拆解环境自检、模块划分、Keil 编译与 ST-Link 烧录的每一步。",
+			"记录了串口独占、map 解析失败等人机协作的边界问题。",
+		],
+		tags: ["文章", "嵌入式", "AI Agent"],
+		tone: "mint",
+	},
+	{
 		date: "2026-11-26",
 		version: "V0.1.11",
 		displayDate: "2026 年 11 月 26 日",
